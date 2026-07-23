@@ -13,18 +13,22 @@
 </script>
 <style>
   :root{
-    --bg:#0E2A47;
-    --panel:#123A5E;
-    --panel-2:#0F3252;
+    --bg:#0D1117;
+    --panel:#161B26;
+    --panel-2:#1C2330;
     --grid-minor:rgba(255,255,255,0.05);
     --grid-major:rgba(111,214,196,0.10);
-    --ink:#EAF3FA;
-    --ink-muted:#87ADC9;
-    --ink-dim:#5C82A0;
-    --teal:#6FD6C4;
-    --amber:#F2C14E;
-    --border:#28527A;
-    --border-soft:#1D4468;
+    --ink:#E6EDF3;
+    --ink-muted:#9BA7B4;
+    --ink-dim:#6B7684;
+    --teal:#5EEAD4;
+    --amber:#FBBF24;
+    --border:#2A313D;
+    --border-soft:#1F2530;
+    --radius:12px;
+    --radius-sm:8px;
+    --shadow:0 8px 30px rgba(0,0,0,0.35);
+    --shadow-sm:0 2px 10px rgba(0,0,0,0.25);
   }
   html[data-theme="light"]{
     --bg:#F5F8FA;
@@ -39,6 +43,10 @@
     --amber:#9A6B0C;
     --border:#D6E1E8;
     --border-soft:#E6EDF2;
+    --radius:12px;
+    --radius-sm:8px;
+    --shadow:0 8px 30px rgba(20,40,60,0.10);
+    --shadow-sm:0 2px 10px rgba(20,40,60,0.07);
   }
   html[data-theme="light"] .titleblock,
   html[data-theme="light"] .ruler-wrap,
@@ -64,14 +72,12 @@
   body{
     margin:0;
     background:
-      linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0/88px 88px,
-      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0/88px 88px,
-      linear-gradient(var(--grid-minor) 1px, transparent 1px) 0 0/22px 22px,
-      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px) 0 0/22px 22px,
+      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(111,214,196,0.05), transparent),
       var(--bg);
     color:var(--ink);
-    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    font-family: -apple-system, "Inter", "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
     min-height:100vh;
   }
   .font-tech{
@@ -876,6 +882,116 @@
   }
 
   :focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+
+  /* ========================================================= */
+  /* MODERN REDESIGN — overrides the "blueprint" look above.    */
+  /* Same classes/ids throughout — visual polish only.          */
+  /* ========================================================= */
+
+  h1,h2,h3,h4,h5,h6{margin:0;font-weight:700;}
+  a{text-decoration:none;}
+
+  /* Softer, friendlier eyebrow labels instead of drafting-caps everywhere */
+  .font-tech{
+    font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif;
+    letter-spacing:0.04em;
+    font-weight:600;
+  }
+
+  /* Rounded, elevated surfaces */
+  .titleblock, .ruler-wrap, .phase, .notes, .resource-card,
+  .fc-modal, .dm-modal, .quiz-modal, .auth-shell, .auth-box,
+  .wb-canvas-wrap, .fc-card .fc-face{
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-soft) !important;
+    overflow:hidden;
+  }
+  .titleblock{overflow:visible;}
+  .titleblock .cell{border-right-color:var(--border-soft) !important;}
+  .day-cell{
+    border-radius: var(--radius-sm) !important;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .day-cell:hover{
+    transform:translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color:var(--teal) !important;
+  }
+  .day-check{border-radius:6px;}
+  .phase{box-shadow:none;}
+  .phase-header{border-radius: var(--radius) var(--radius) 0 0;}
+  .phase.collapsed .phase-header{border-radius: var(--radius);}
+  .resource-card{border-radius: var(--radius-sm) !important;}
+
+  /* Buttons — real buttons instead of flat rectangles */
+  .btn, .sp-btn, .auth-btn, .auth-guest-btn, .oauth-btn, .signout-btn, .guest-banner-btn{
+    border-radius: var(--radius-sm) !important;
+    transition: all .15s ease;
+    font-weight:600;
+  }
+  .btn:hover, .sp-btn:hover{
+    transform:translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .auth-btn{border-radius: var(--radius-sm) !important; box-shadow: var(--shadow-sm);}
+  .auth-btn:hover{transform:translateY(-1px); box-shadow:var(--shadow);}
+
+  /* Inputs — friendlier fields */
+  input[type="email"], input[type="password"], input[type="date"], textarea, select,
+  .controls input[type="date"], .sp-select{
+    border-radius: var(--radius-sm) !important;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none !important;
+    border-color:var(--teal) !important;
+    box-shadow:0 0 0 3px rgba(94,234,212,0.15);
+  }
+
+  /* Tabs — pill-style instead of hairline underline blocks */
+  .dm-tabs, .fc-tabs{border-bottom:none !important;gap:6px !important;}
+  .dm-tab, .fc-tab{
+    border-radius:999px !important;
+    border:1px solid transparent !important;
+    background:var(--panel-2);
+  }
+  .dm-tab.active, .fc-tab.active{
+    background:rgba(94,234,212,0.12) !important;
+    border-color:var(--teal) !important;
+  }
+  .wb-tab, .wb-btn{border-radius:8px !important;}
+  .wb-swatch{border-radius:50% !important;}
+
+  /* Quiz options as friendly rows */
+  .quiz-option{border-radius: var(--radius-sm) !important;}
+
+  /* Modal close buttons, softened */
+  .fc-modal-close, .sp-close, .dm-modal-close{border-radius:50% !important;}
+
+  /* Side panel gets its own elevation instead of a hard hairline seam */
+  .side-panel{box-shadow: var(--shadow) !important; border-right-color:transparent !important;}
+  .sp-toggle{border-radius:0 var(--radius-sm) var(--radius-sm) 0 !important; box-shadow:var(--shadow-sm);}
+
+  /* Floating timer + guest banner get real elevation */
+  .floating-timer{border-radius:999px !important;}
+  .guest-banner{border-radius: var(--radius-sm) !important; box-shadow:var(--shadow-sm);}
+
+  /* Ruler / progress bar rounded */
+  .ruler, .ruler-fill{border-radius:6px;}
+
+  /* Week bar chart rounded */
+  .sp-week-bar-track, .sp-week-bar-fill{border-radius:4px;}
+
+  /* Auth illustration container gets a touch more breathing room */
+  .auth-brand{background:var(--panel-2) !important;}
+
+  /* Smoother scrollbars where supported */
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--ink-dim);}
+
 </style>
 </head>
 <body>
