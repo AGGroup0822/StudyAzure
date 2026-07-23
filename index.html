@@ -6,8 +6,6 @@
 <title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
-  // See setup instructions — Project Settings → API in your Supabase dashboard.
   window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
   window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
 </script>
@@ -532,6 +530,68 @@
   }
   .signout-btn:hover{border-color:var(--amber);color:var(--amber);}
 
+  /* ===== Day detail (training) modal ===== */
+  .dm-modal{
+    background:var(--panel);
+    border:1px solid var(--border);
+    max-width:820px;
+    width:100%;
+    max-height:92vh;
+    overflow-y:auto;
+    padding:20px;
+    position:relative;
+  }
+  .dm-head{padding-right:36px;margin-bottom:14px;}
+  .dm-phase{font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+  .dm-title{font-size:17px;font-weight:700;line-height:1.3;}
+  .dm-timer{
+    font-family:ui-monospace,monospace;font-size:11px;color:var(--teal);
+    margin-top:6px;display:flex;align-items:center;gap:6px;
+  }
+  .dm-timer .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:dmpulse 1.5s infinite;}
+  @keyframes dmpulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .dm-tabs{display:flex;gap:2px;margin-bottom:14px;flex-wrap:wrap;border-bottom:1px solid var(--border-soft);}
+  .dm-tab{
+    background:transparent;border:none;border-bottom:2px solid transparent;
+    color:var(--ink-muted);padding:8px 14px;font-size:11px;
+    text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;font-family:inherit;
+  }
+  .dm-tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+  .dm-panel{display:none;}
+  .dm-panel.active{display:block;}
+  .dm-overview-block{margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink);}
+  .dm-overview-block b{
+    display:block;font-size:10px;color:var(--ink-dim);text-transform:uppercase;
+    letter-spacing:0.05em;margin-bottom:4px;
+  }
+  .dm-embed-wrap{
+    position:relative;width:100%;
+    background:var(--panel-2);border:1px solid var(--border-soft);
+  }
+  .dm-embed-wrap.video{aspect-ratio:16/9;}
+  .dm-embed-wrap.docs{height:60vh;}
+  .dm-embed-wrap iframe{width:100%;height:100%;border:0;display:block;}
+  .dm-fallback-note{
+    font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
+  }
+  .dm-fallback-note a{color:var(--teal);}
+  .dm-notes textarea{
+    width:100%;min-height:140px;
+    background:var(--panel-2);border:1px solid var(--border);
+    color:var(--ink);padding:10px;font-family:inherit;font-size:13px;
+    line-height:1.6;resize:vertical;
+  }
+  .dm-notes-saved{font-size:10px;color:var(--ink-dim);margin-top:6px;}
+  .dm-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:16px;padding-top:14px;border-top:1px solid var(--border-soft);
+    flex-wrap:wrap;gap:10px;
+  }
+  .day-time-badge{
+    font-family:ui-monospace,monospace;font-size:10px;color:var(--ink-dim);
+  }
+
+
   @media (max-width:640px){
     .titleblock{grid-template-columns:1fr;}
     .titleblock .divider{display:none;}
@@ -586,7 +646,7 @@
     </div>
     <div class="cell">
       <div class="tb-label">Span</div>
-      <div class="tb-value">91 days</div>
+      <div class="tb-value">145 days</div>
     </div>
     <div class="cell">
       <div class="tb-label">Sheet</div>
@@ -606,7 +666,7 @@
   <div class="ruler-wrap">
     <div class="ruler-head">
       <div class="label font-tech">Overall progress</div>
-      <div class="stat font-mono" id="overall-stat">0 / 91 days · 0%</div>
+      <div class="stat font-mono" id="overall-stat">0 / 145 days · 0%</div>
     </div>
     <div class="ruler" id="ruler">
       <div class="ruler-fill" id="ruler-fill" style="width:0%"></div>
@@ -617,6 +677,7 @@
       <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-900 · days 1–14</div>
       <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-104 · days 15–56</div>
       <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-305 · days 57–91</div>
+      <div class="item"><span class="swatch" style="background:rgba(242,193,78,0.4)"></span>Phase 4 (real-world) · days 92–145</div>
     </div>
     <div class="controls">
       <label class="font-tech">Start date
@@ -726,6 +787,49 @@
     </div>
   </div>
 
+</div>
+
+<div class="fc-modal-overlay" id="dm-overlay">
+  <div class="dm-modal">
+    <button class="fc-modal-close" id="dm-close" aria-label="Close">✕</button>
+    <div class="dm-head">
+      <div class="dm-phase font-tech" id="dm-phase">—</div>
+      <div class="dm-title" id="dm-title">—</div>
+      <div class="dm-timer"><span class="dot"></span><span id="dm-timer-text">0m spent this session</span> · <span id="dm-total-time">total: 0m</span></div>
+    </div>
+    <div class="dm-tabs">
+      <button class="dm-tab active" data-panel="dm-overview">Overview</button>
+      <button class="dm-tab" data-panel="dm-video">Video</button>
+      <button class="dm-tab" data-panel="dm-docs">Docs</button>
+      <button class="dm-tab" data-panel="dm-notes">Notes</button>
+    </div>
+
+    <div class="dm-panel active" id="dm-overview">
+      <div class="dm-overview-block"><b>Lab</b><span id="dm-lab"></span></div>
+      <div class="dm-overview-block" id="dm-usecase-wrap"><b>Use case</b><span id="dm-usecase"></span></div>
+    </div>
+
+    <div class="dm-panel" id="dm-video">
+      <div class="dm-embed-wrap video"><iframe id="dm-video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    </div>
+
+    <div class="dm-panel" id="dm-docs">
+      <div class="dm-embed-wrap docs"><iframe id="dm-docs-iframe" src=""></iframe></div>
+      <div class="dm-fallback-note">Some sites (including most Microsoft Learn pages) block embedding for security and won't render above — if the panel looks blank, use <a id="dm-docs-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
+    </div>
+
+    <div class="dm-panel" id="dm-notes">
+      <textarea id="dm-notes-text" placeholder="Jot down anything you want to remember about this topic — saved automatically to your account."></textarea>
+      <div class="dm-notes-saved" id="dm-notes-saved"></div>
+    </div>
+
+    <div class="dm-footer">
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-muted);">
+        <input type="checkbox" id="dm-complete-check"> Mark day complete
+      </label>
+      <button class="btn" id="dm-flashcard-btn">Open flashcard</button>
+    </div>
+  </div>
 </div>
 
 <div class="fc-modal-overlay" id="fc-modal-overlay">
@@ -1123,8 +1227,208 @@
             "—", V305]
         ]}
       ]
+    },
+    {
+      code:"PHASE 4", title:"Real-World Practice",
+      sub:"Infrastructure as Code · Azure DevOps CI/CD · Landing Zones & CAF · Security &amp; FinOps · Portfolio",
+      weeks:[
+        { label:"Week 1 · Well-Architected &amp; networking hands-on · Days 92–97", days:[
+          [92,"Well-Architected Framework — Reliability &amp; Security pillars, applied", "https://learn.microsoft.com/en-us/training/paths/azure-well-architected-framework/",
+            "Pick a real (or past-job) architecture and score it against the Reliability and Security pillars.",
+            "A team retrofits WAF pillar reviews into their existing architecture instead of just designing new systems with them.", "https://youtu.be/vq9LuCM4YP4"],
+          [93,"Hands-on lab — deploy a VNet with subnets and NSGs via the Azure Portal", "https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-portal",
+            "Build a VNet with 2 subnets and NSGs from scratch in the portal, no template.",
+            "Getting comfortable in the raw portal UI matters before automating it — you'll debug portal-created resources on the job.", "https://youtu.be/0Knf9nub4-k"],
+          [94,"Deep dive — Azure networking (VNets, peering, routing) in practice", "https://learn.microsoft.com/en-us/training/paths/az-104-manage-virtual-networks/",
+            "Watch a networking deep-dive video, then rebuild what it demos yourself instead of just following along.",
+            "Architects are expected to explain routing/peering decisions in design reviews, not just deploy them.", "https://youtu.be/0Knf9nub4-k"],
+          [95,"Hands-on lab — deploy a VM and connect via Azure Bastion", "https://learn.microsoft.com/en-us/azure/bastion/quickstart-host-portal",
+            "Deploy a VM with no public IP and connect to it only through Bastion.",
+            "Most real environments block direct RDP/SSH — Bastion (or equivalent) is the actual access pattern you'll use daily.", "https://youtu.be/0Knf9nub4-k"],
+          [96,"Study the Hub-Spoke reference architecture on the Architecture Center", "https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke",
+            "Read the reference architecture, then list 3 things you'd change for a company with strict compliance needs.",
+            "This is the exact pattern most enterprises actually run — worth knowing cold, not just for the exam.", "https://learn.microsoft.com/en-us/azure/architecture/"],
+          [97,"Project — design a hub-spoke network diagram for a fictional company", "https://app.diagrams.net",
+            "Draw a full hub-spoke diagram (firewall, gateway, 3 spokes) for a made-up 3-region retail company.",
+            "This becomes portfolio piece #1 — a diagram you can show and explain in an interview.", "https://learn.microsoft.com/en-us/azure/architecture/"]
+        ]},
+        { label:"Week 2 · Infrastructure as Code — Bicep · Days 98–103", days:[
+          [98,"Bicep fundamentals — syntax, parameters, resources", "https://learn.microsoft.com/en-us/training/paths/fundamentals-bicep/",
+            "Work through Bicep Fundamentals Module 1 in the free sandbox.",
+            "Most Azure teams have moved off manual portal clicking — Bicep is now the default deployment method at many companies.", "https://youtu.be/0Knf9nub4-k"],
+          [99,"Hands-on lab — write your first Bicep template to deploy a storage account", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/quickstart-create-bicep-use-visual-studio-code",
+            "Write and deploy a Bicep file for a storage account entirely from VS Code.",
+            "This is the actual daily workflow of an infrastructure engineer — editor, not portal.", "https://youtu.be/0Knf9nub4-k"],
+          [100,"Bicep modules, parameters, and reusable patterns", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules",
+            "Refactor yesterday's storage account template into a reusable module with parameters.",
+            "Real Bicep codebases are built from small reusable modules, not one giant file.", "https://youtu.be/0Knf9nub4-k"],
+          [101,"Hands-on lab — deploy a VNet + VM using Bicep", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/quickstart-create-template-use-visual-studio-code",
+            "Recreate Day 93's VNet + NSG setup, but entirely in Bicep this time.",
+            "Comparing manual vs. code-based deployment of the same thing cements why IaC matters.", "https://youtu.be/0Knf9nub4-k"],
+          [102,"Bicep what-if and deployment stacks", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks",
+            "Run 'what-if' on a template before deploying, then intentionally break something to see it flagged.",
+            "Catching unintended changes before they hit production is the whole point of what-if in real pipelines.", "https://youtu.be/0Knf9nub4-k"],
+          [103,"Project — deploy a full hub-spoke network using Bicep", "https://github.com/Azure/azure-quickstart-templates",
+            "Turn your Week 1 hub-spoke diagram into working Bicep code and deploy it end to end.",
+            "Portfolio piece #2 — a working IaC repo, not just a diagram.", "https://learn.microsoft.com/en-us/azure/architecture/"]
+        ]},
+        { label:"Week 3 · Infrastructure as Code — Terraform · Days 104–109", days:[
+          [104,"Terraform on Azure — get started", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started",
+            "Install Terraform and run through HashiCorp's official Azure quickstart.",
+            "Many companies (especially multi-cloud ones) standardize on Terraform over Bicep — worth knowing both.", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"],
+          [105,"Hands-on lab — deploy a VNet using Terraform", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build",
+            "Deploy the same VNet from Day 93/101, this time in Terraform, and compare the experience.",
+            "By now you've built the same resource 3 ways — portal, Bicep, Terraform — and can speak to the trade-offs of each.", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"],
+          [106,"Terraform state management and modules", "https://developer.hashicorp.com/terraform/language/state",
+            "Set up remote state in an Azure Storage account instead of leaving state local.",
+            "Local state files are a rookie mistake that breaks team collaboration — remote state is standard practice.", "https://developer.hashicorp.com/terraform/language/state"],
+          [107,"Terraform modules and reusable code patterns", "https://developer.hashicorp.com/terraform/language/modules",
+            "Break your Terraform config into a reusable module, same way you did with Bicep in Week 2.",
+            "Module design is what separates a script from a maintainable infrastructure codebase.", "https://developer.hashicorp.com/terraform/language/modules"],
+          [108,"Terraform vs. Bicep — when would you actually choose each?", "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "Write a one-paragraph decision memo: which would you pick for a new Azure-only startup vs. a multi-cloud enterprise?",
+            "This exact question comes up in real architecture decisions and in interviews.", "https://learn.microsoft.com/en-us/azure/developer/terraform/overview"],
+          [109,"Project — deploy the hub-spoke network via Terraform, push to GitHub", "https://github.com",
+            "Rebuild your Bicep hub-spoke project in Terraform and push both to a public GitHub repo.",
+            "Portfolio piece #3 — now you have the same architecture in two IaC languages, a strong interview talking point.", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"]
+        ]},
+        { label:"Week 4 · Azure DevOps &amp; CI/CD pipelines · Days 110–115", days:[
+          [110,"Azure DevOps fundamentals", "https://learn.microsoft.com/en-us/training/paths/evolve-your-devops-practices/",
+            "Create a free Azure DevOps organization and explore Boards, Repos, and Pipelines.",
+            "Infrastructure without a pipeline in front of it doesn't scale past a solo project.", "https://youtu.be/0Knf9nub4-k"],
+          [111,"Hands-on lab — create your first Azure DevOps pipeline", "https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline",
+            "Create a basic YAML pipeline that just echoes a message on every push.",
+            "Every real deployment goes through a pipeline, not someone's laptop running 'terraform apply' manually.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/"],
+          [112,"YAML pipeline structure for CI/CD", "https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/",
+            "Extend yesterday's pipeline into a real build + deploy pipeline with stages.",
+            "Understanding YAML pipeline stages is table stakes for any DevOps-adjacent architect role.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/"],
+          [113,"Hands-on lab — build a pipeline that deploys your Terraform code", "https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/terraform",
+            "Wire your Week 3 Terraform project into an Azure DevOps pipeline that plans and applies automatically.",
+            "This connects everything so far — IaC code now deploys itself on every commit instead of manually.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/terraform"],
+          [114,"Branch strategies and pull request workflows", "https://learn.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance",
+            "Set up branch policies requiring a PR + approval before merging to main on your repo.",
+            "Uncontrolled direct-to-main commits are how production infrastructure gets accidentally broken.", "https://learn.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance"],
+          [115,"Project — add a destroy stage with a manual approval gate", "https://learn.microsoft.com/en-us/azure/devops/pipelines/process/approvals",
+            "Add a 'terraform destroy' stage to your pipeline that requires manual sign-off before running.",
+            "Manual approval gates on destructive actions are a non-negotiable safety pattern in real pipelines.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/process/approvals"]
+        ]},
+        { label:"Week 5 · Landing Zones &amp; Cloud Adoption Framework · Days 116–121", days:[
+          [116,"Service Principals and managed identities for pipeline auth", "https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints",
+            "Replace any hardcoded credentials in your pipeline with a service connection using a managed identity.",
+            "Hardcoded secrets in pipelines are one of the most common real-world security incidents.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints"],
+          [117,"Cloud Adoption Framework overview", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/",
+            "Read the CAF overview and map its phases (Strategy, Plan, Ready, Adopt, Govern, Manage) to a real migration.",
+            "CAF is the playbook most enterprise Azure engagements are actually run against.", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/"],
+          [118,"Hands-on — explore the Azure Landing Zone accelerator", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/",
+            "Read through the Landing Zone accelerator's architecture and identify its core building blocks.",
+            "Most large Azure environments you'll ever work in were bootstrapped from a landing zone accelerator like this one.", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/"],
+          [119,"Landing Zones deep dive", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/",
+            "Watch a landing zone deep-dive video and sketch the management group hierarchy it describes.",
+            "Being able to draw a landing zone hierarchy from memory is a strong architect-interview signal.", "https://youtu.be/vq9LuCM4YP4"],
+          [120,"Hands-on lab — deploy Azure Policy and create a custom initiative", "https://learn.microsoft.com/en-us/azure/governance/policy/tutorials/create-and-manage",
+            "Create a custom Policy initiative bundling 3+ policies (e.g. allowed regions, required tags, no public IPs).",
+            "Real governance is rarely a single policy — it's bundled initiatives applied at scale.", "https://learn.microsoft.com/en-us/azure/governance/policy/tutorials/create-and-manage"],
+          [121,"Review — Management Groups and RBAC hierarchy design", "https://learn.microsoft.com/en-us/azure/governance/management-groups/overview",
+            "Sketch a management group + RBAC design for a company with 3 business units and 2 environments each.",
+            "This is the exact whiteboard exercise many architect interviews actually ask for.", "https://learn.microsoft.com/en-us/azure/governance/management-groups/overview"]
+        ]},
+        { label:"Week 6 · Landing Zone project &amp; security · Days 122–127", days:[
+          [122,"Project — design a landing zone HLD for a fictional company", "https://app.diagrams.net",
+            "Produce a high-level design (HLD) diagram for a landing zone serving a fictional financial services company.",
+            "Portfolio piece #4 — landing zone design is one of the highest-value skills for a Solutions Architect role.", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/"],
+          [123,"Azure Blueprints and deployment stacks", "https://learn.microsoft.com/en-us/azure/governance/blueprints/overview",
+            "Compare Blueprints (legacy) against Deployment Stacks (current) and note which Microsoft now recommends.",
+            "Knowing what's deprecated vs. current matters — Blueprints are being phased out in favor of newer patterns.", "https://learn.microsoft.com/en-us/azure/governance/blueprints/overview"],
+          [124,"Microsoft Defender for Cloud, in depth", "https://learn.microsoft.com/en-us/training/modules/azure-security-center/",
+            "Go beyond the AZ-900-level overview — study Defender's plans (per-resource-type) and secure score mechanics.",
+            "Understanding secure score is what lets you actually prioritize a real remediation backlog.", "https://learn.microsoft.com/en-us/training/modules/azure-security-center/"],
+          [125,"Hands-on lab — enable Defender for Cloud, review recommendations", "https://learn.microsoft.com/en-us/azure/defender-for-cloud/getting-started",
+            "Enable Defender on your lab subscription and fix 2 real recommendations it surfaces.",
+            "Chasing down real recommendations, not hypothetical ones, is what the job actually looks like.", "https://learn.microsoft.com/en-us/azure/defender-for-cloud/getting-started"],
+          [126,"Microsoft Sentinel overview and KQL basics", "https://learn.microsoft.com/en-us/training/paths/security-ops-sentinel/",
+            "Connect a data source to Sentinel and write one basic KQL query against it.",
+            "SIEM/SOAR familiarity is increasingly expected of architects designing security-conscious systems.", "https://learn.microsoft.com/en-us/training/paths/security-ops-sentinel/"],
+          [127,"Hands-on lab — Azure Monitor alerts and a Log Analytics workspace", "https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-overview",
+            "Set up a real alert on your lab environment that would actually page someone.",
+            "Alert fatigue from badly-tuned rules is a real operational problem — designing good alerts is a skill.", "https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-overview"]
+        ]},
+        { label:"Week 7 · FinOps, Arc &amp; security project · Days 128–133", days:[
+          [128,"Cost Management and tagging strategy for FinOps", "https://learn.microsoft.com/en-us/azure/cost-management-billing/",
+            "Design a tagging taxonomy (cost center, environment, owner) and apply it across your lab resources.",
+            "Untagged resources are the #1 reason FinOps teams can't answer 'who owns this cost.'", "https://learn.microsoft.com/en-us/azure/cost-management-billing/"],
+          [129,"Azure Arc — managing on-premises servers from Azure", "https://learn.microsoft.com/en-us/azure/azure-arc/servers/overview",
+            "Read how Arc extends Azure management to on-prem/multi-cloud servers; note where it would fit a hybrid client.",
+            "Almost no real enterprise is 100% cloud — Arc-style hybrid management comes up constantly in practice.", "https://learn.microsoft.com/en-us/azure/azure-arc/servers/overview"],
+          [130,"Project — deploy Defender for Cloud + Sentinel on your lab environment", "https://learn.microsoft.com/en-us/azure/defender-for-cloud/getting-started",
+            "Wire together everything from Week 6 into one documented security baseline for your lab subscription.",
+            "Portfolio piece #5 — a documented security baseline is exactly what a client engagement kickoff produces.", "https://learn.microsoft.com/en-us/azure/defender-for-cloud/getting-started"],
+          [131,"Review — justify your security/monitoring architecture decisions", "https://learn.microsoft.com/en-us/azure/well-architected/security/",
+            "Write a short doc explaining WHY you made each Week 6-7 security decision, not just what you did.",
+            "Being able to justify decisions, not just execute them, is the difference between admin and architect level.", "https://learn.microsoft.com/en-us/azure/well-architected/security/"],
+          [132,"KQL practice — write 3 real queries against your own Log Analytics data", "https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/",
+            "Write queries answering: failed logins today, top resource by alert count, and cost anomaly by resource.",
+            "Real KQL fluency comes from querying your own messy data, not textbook examples.", "https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/"],
+          [133,"Cost optimization pass — right-size and tag your lab resources", "https://learn.microsoft.com/en-us/azure/advisor/advisor-cost-recommendations",
+            "Act on every cost recommendation Advisor gives you for your lab subscription.",
+            "Running an actual cost-optimization pass, even on a tiny lab, builds the habit for when it's a real budget.", "https://learn.microsoft.com/en-us/azure/advisor/advisor-cost-recommendations"]
+        ]},
+        { label:"Week 8 · Build your portfolio · Days 134–139", days:[
+          [134,"Polish your Terraform hub-spoke project and write a README", "https://github.com",
+            "Write a proper README for your Week 3 Terraform repo — architecture, how to deploy, decisions made.",
+            "A repo without a README is invisible to a recruiter skimming your GitHub in 30 seconds.", "https://github.com"],
+          [135,"Complete a hybrid connectivity architecture design (HLD + diagram)", "https://app.diagrams.net",
+            "Design an HLD showing on-prem-to-Azure connectivity (VPN or ExpressRoute) for a fictional client.",
+            "Portfolio piece #6 — hybrid connectivity design is a very commonly requested architect deliverable.", "https://learn.microsoft.com/en-us/azure/architecture/"],
+          [136,"Write a short article about one thing you've built or learned", "https://www.linkedin.com",
+            "Publish a short LinkedIn post or article on ONE specific thing from this track (e.g. Bicep vs Terraform).",
+            "Publicly explaining what you built is what turns quiet study into visible, discoverable expertise.", "https://www.linkedin.com"],
+          [137,"Add your GitHub portfolio links to your LinkedIn Featured section", "https://www.linkedin.com",
+            "Pin your best 2-3 repos and diagrams to LinkedIn's Featured section on your profile.",
+            "Recruiters skim Featured sections before reading anything else — make the best work visible first.", "https://www.linkedin.com"],
+          [138,"Build and document a combined security + monitoring baseline project", "https://github.com",
+            "Package Week 6-7's security work into one clean repo with docs and diagrams, like a real client deliverable.",
+            "Portfolio piece #7 — a documented, presentable security baseline you can walk an interviewer through.", "https://github.com"],
+          [139,"Final portfolio review — ensure every project is documented on GitHub", "https://github.com",
+            "Go through all 7 portfolio pieces from this track and confirm each has a clear README and diagram.",
+            "An incomplete portfolio undersells months of real work — this pass makes sure nothing's half-finished.", "https://github.com"]
+        ]},
+        { label:"Week 9 · Case studies &amp; what's next · Days 140–145", days:[
+          [140,"Optional — review HashiCorp Terraform Associate exam objectives", "https://www.hashicorp.com/certification/terraform-associate",
+            "Read the Terraform Associate exam objectives and compare against what you've already practiced.",
+            "A 4th certification is optional, but it's a strong, low-effort addition given how much Terraform you've now done.", "https://developer.hashicorp.com/terraform/tutorials/certification-003"],
+          [141,"Case study — design a cloud migration for a fictional retail company", "https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview",
+            "Write a one-page migration plan: assessment, wave sequencing, and target architecture for a fictional retailer.",
+            "This end-to-end exercise mirrors exactly what a first real client engagement looks like.", "https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview"],
+          [142,"Case study — present your architecture decisions (mock client presentation)", "https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/",
+            "Record yourself (or present to a friend) walking through Day 141's plan like a real client meeting.",
+            "Architects spend as much time explaining decisions as making them — this is a genuinely underrated skill to practice.", "https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/"],
+          [143,"Review — what did this track actually change about how you think?", "https://learn.microsoft.com/en-us/azure/architecture/",
+            "Write down 3 things you'd design differently now vs. before starting this track.",
+            "Noticing your own growth is how you'll articulate it convincingly in an interview.", "https://learn.microsoft.com/en-us/azure/architecture/"],
+          [144,"Plan your next specialization (Security, Data, DevOps, or another cloud)", "https://learn.microsoft.com/en-us/credentials/browse/?resource_type=certification",
+            "Browse Microsoft's certification catalog and pick one realistic next target for the next 3-6 months.",
+            "Certifications compound — AZ-305 plus a specialization is a materially stronger resume than AZ-305 alone.", "https://learn.microsoft.com/en-us/credentials/browse/?resource_type=certification"],
+          [145,"Wrap-up — job search prep or internal promotion case, using this portfolio", "https://learn.microsoft.com/en-us/azure/architecture/",
+            "Update your resume/CV with the 7 portfolio pieces and the 3 certifications from this entire plan.",
+            "This is the actual point of the last 145 days — turning study time into a documented, provable track record.", "https://learn.microsoft.com/en-us/azure/architecture/"]
+        ]}
+      ]
     }
   ];
+
+  // Flat lookup: day number -> {topic, link, video, lab, usecase, phaseTitle}
+  var DAY_INFO = {};
+  DATA.forEach(function(phase){
+    phase.weeks.forEach(function(week){
+      week.days.forEach(function(row){
+        DAY_INFO[row[0]] = {
+          topic: row[1], link: row[2], lab: row[3], usecase: row[4], video: row[5],
+          phaseTitle: phase.code + " — " + phase.title
+        };
+      });
+    });
+  });
+
 
   var FLASHCARDS = {
   az900: [["What is IaaS (Infrastructure as a Service)?", "A cloud model where you rent virtualized compute, storage, and networking, and manage the OS and everything above it yourself."], ["What is PaaS (Platform as a Service)?", "A cloud model where the provider manages the runtime/OS, and you only manage your application and data."], ["What is SaaS (Software as a Service)?", "A cloud model where the provider manages the entire application; you just use it (e.g. Outlook, Teams)."], ["CapEx vs OpEx — which does cloud computing use?", "OpEx (Operational Expenditure) — pay-as-you-go, no large upfront hardware investment (CapEx)."], ["What is an Azure Region?", "A geographic area containing one or more datacenters, connected by a low-latency network."], ["What is a Region Pair?", "Two regions in the same geography, at least 300 miles apart, used together for disaster recovery."], ["What is an Availability Zone?", "A physically separate datacenter within an Azure region, each with independent power, cooling, and networking."], ["What is a Resource Group?", "A logical container that holds related Azure resources for a solution."], ["What is a Management Group?", "A container that organizes multiple subscriptions to apply governance (policy, RBAC) at scale."], ["What is Azure Resource Manager (ARM)?", "The deployment and management service for Azure — every management action goes through it."], ["What does the Azure Free Account include?", "$200 credit for 30 days plus 12 months of select free services and some always-free services."], ["What is an SLA (Service Level Agreement)?", "A commitment from Microsoft defining uptime/performance targets and any service credits if not met."], ["What's the core difference between Azure Policy and RBAC?", "RBAC controls WHO can do WHAT; Azure Policy controls WHAT properties/configurations resources are allowed to have."], ["What is a Resource Lock?", "A setting that prevents accidental deletion (CanNotDelete) or modification (ReadOnly) of a resource."], ["What is the purpose of Tags in Azure?", "Metadata (key-value pairs) attached to resources for organization, cost tracking, and automation."], ["What is Azure Monitor?", "The platform service for collecting, analyzing, and acting on telemetry from Azure and on-prem resources."], ["What is Azure Advisor?", "A free tool that gives personalized recommendations for cost, security, reliability, and performance."], ["Difference between Azure Service Health and Azure Status?", "Service Health = personalized view of issues affecting YOUR resources; Azure Status = global public health of all Azure services."], ["What is Microsoft Entra ID?", "Microsoft's cloud-based identity and access management service (formerly Azure Active Directory)."], ["What is MFA (Multi-Factor Authentication)?", "Requiring two or more verification methods to sign in, reducing risk from stolen passwords."], ["What is SSO (Single Sign-On)?", "Signing in once to access multiple applications without re-entering credentials."], ["What is Conditional Access (basic)?", "Policies that grant or block access based on conditions like location, device, or risk level."], ["What is Microsoft Defender for Cloud?", "A tool for cloud security posture management and threat protection across Azure resources."], ["What is Azure Key Vault used for?", "Securely storing secrets, keys, and certificates."], ["What is the Shared Responsibility Model?", "The division of security duties between Microsoft (cloud infrastructure) and the customer (data, identity, access) — the split shifts by service type (IaaS/PaaS/SaaS)."], ["Difference between High Availability, Fault Tolerance, and Disaster Recovery?", "HA = minimizing downtime during normal operation; Fault Tolerance = continuing to operate through a failure; DR = recovering after a major outage/disaster."], ["What pricing model does Azure primarily use?", "Consumption-based (pay-as-you-go) — you pay for what you use."], ["What is the TCO (Total Cost of Ownership) Calculator for?", "Comparing the cost of running workloads on-premises vs. in Azure."], ["What is the Pricing Calculator for?", "Estimating the monthly cost of Azure services before deploying them."], ["What is Azure Cost Management + Billing used for?", "Monitoring, allocating, and optimizing cloud spend, including budgets and alerts."]],
@@ -1185,8 +1489,10 @@
     85:null, 86:null, 87:null, 88:null, 89:null, 90:null, 91:null
   };
 
-  var TOTAL_DAYS = 91;
+  var TOTAL_DAYS = 145;
   var progress = {};
+  var timeSpent = {};   // { dayNum: totalSeconds }
+  var dayNotes = {};    // { dayNum: text }
   var startDate = null;
 
   function pad(n){ return n<10 ? "0"+n : ""+n; }
@@ -1207,6 +1513,24 @@
       var sVal = await store.get("roadmap-start-date");
       if(sVal){ startDate = sVal; document.getElementById("start-date").value = sVal; }
     }catch(e){ startDate = null; }
+    try{
+      var tVal = await store.get("time-spent");
+      if(tVal){ timeSpent = JSON.parse(tVal); }
+    }catch(e){ timeSpent = {}; }
+    try{
+      var nVal = await store.get("day-notes");
+      if(nVal){ dayNotes = JSON.parse(nVal); }
+    }catch(e){ dayNotes = {}; }
+  }
+
+  async function saveTimeSpent(){
+    try{ await store.set("time-spent", JSON.stringify(timeSpent)); }
+    catch(e){ console.error("Storage error", e); }
+  }
+
+  async function saveDayNotes(){
+    try{ await store.set("day-notes", JSON.stringify(dayNotes)); }
+    catch(e){ console.error("Storage error", e); }
   }
 
   async function saveProgress(){
@@ -1290,9 +1614,9 @@
             saveProgress();
             render();
           }
-          check.addEventListener("click", toggle);
+          check.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
           check.addEventListener("keydown", function(e){
-            if(e.key==="Enter" || e.key===" "){ e.preventDefault(); toggle(); }
+            if(e.key==="Enter" || e.key===" "){ e.preventDefault(); e.stopPropagation(); toggle(); }
           });
 
           var main = document.createElement("div");
@@ -1304,23 +1628,28 @@
           var dayCard = DAY_CARD[num];
           var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : "az305");
           var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
+          var secs = timeSpent[num] || 0;
+          var timeLabel = secs > 0 ? "⏱ " + Math.round(secs/60) + "m" : "";
           main.innerHTML =
-            '<span class="day-num font-mono">DAY '+num+(todayDay===num ? " · TODAY" : "")+'</span>'+
+            '<span class="day-num font-mono">DAY '+num+(todayDay===num ? " · TODAY" : "")+
+              (timeLabel ? '<span class="day-time-badge"> · '+timeLabel+'</span>' : '')+'</span>'+
             '<div class="day-topic">'+topic+'</div>'+
             metaHtml+
             '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">'+
-              '<a class="day-link" href="'+link+'" target="_blank" rel="noopener">Docs ↗</a>'+
-              '<a class="day-link" href="'+video+'" target="_blank" rel="noopener">Video ↗</a>'+
+              '<button type="button" class="day-link open-lesson-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">Open lesson →</button>'+
+              '<button type="button" class="day-link open-video-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">▶ Video</button>'+
+              '<button type="button" class="day-link open-docs-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">📄 Docs</button>'+
               '<button type="button" class="day-link fc-jump-btn" style="background:none;border:none;padding:0;font-size:10px;letter-spacing:0.02em;cursor:pointer;">'+fcLabel+'</button>'+
             '</div>';
-          main.addEventListener("click", function(e){
-            if(e.target.tagName !== "A" && !e.target.classList.contains("fc-jump-btn")){ toggle(); }
-          });
+          main.querySelector(".open-lesson-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-overview"); });
+          main.querySelector(".open-video-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-video"); });
+          main.querySelector(".open-docs-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-docs"); });
           main.querySelector(".fc-jump-btn").addEventListener("click", function(e){
             e.stopPropagation();
             if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
             else { showDayFlashcard(fallbackDeck, 0); }
           });
+          main.addEventListener("click", function(){ openDayModal(num, "dm-overview"); });
 
           cell.appendChild(check);
           cell.appendChild(main);
@@ -1338,12 +1667,14 @@
 
     var doneTotal = Object.keys(progress).filter(function(k){ return progress[k]; }).length;
     var pct = Math.round((doneTotal / TOTAL_DAYS) * 100);
-    document.getElementById("overall-stat").textContent = doneTotal + " / " + TOTAL_DAYS + " days · " + pct + "%";
+    var totalSecs = Object.values(timeSpent).reduce(function(a,b){ return a+b; }, 0);
+    var totalHrs = (totalSecs/3600).toFixed(1);
+    document.getElementById("overall-stat").textContent = doneTotal + " / " + TOTAL_DAYS + " days · " + pct + "% · " + totalHrs + "h logged";
     document.getElementById("ruler-fill").style.width = pct + "%";
 
     var ticksEl = document.getElementById("ruler-ticks");
     if(!ticksEl.childElementCount){
-      for(var i=0;i<91;i++){
+      for(var i=0;i<TOTAL_DAYS;i++){
         var t = document.createElement("div");
         t.className = "ruler-tick" + (i%7===0 ? " major" : "");
         ticksEl.appendChild(t);
@@ -1461,7 +1792,10 @@
     if(e.target.id === "fc-modal-overlay"){ closeFlashcardModal(); }
   });
   document.addEventListener("keydown", function(e){
-    if(e.key === "Escape"){ closeFlashcardModal(); }
+    if(e.key === "Escape"){
+      closeFlashcardModal();
+      if(dmCurrentDay !== null){ closeDayModal(); }
+    }
   });
   document.getElementById("fc-open-az900").addEventListener("click", function(){ showDayFlashcard("az900", 0); });
   document.getElementById("fc-open-az104").addEventListener("click", function(){ showDayFlashcard("az104", 0); });
@@ -1477,6 +1811,122 @@
     fcRender();
     openFlashcardModal();
   }
+
+  // ===== Day detail (training) modal =====
+  var dmCurrentDay = null;
+  var dmSessionStart = null;
+  var dmTimerInterval = null;
+
+  function youtubeEmbedUrl(url){
+    var id = null, start = 0;
+    var m1 = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    var m2 = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+    var mt = url.match(/[?&]t=(\d+)/);
+    if(m1) id = m1[1];
+    else if(m2) id = m2[1];
+    if(mt) start = mt[1];
+    if(!id) return null;
+    return "https://www.youtube.com/embed/" + id + (start ? ("?start=" + start) : "");
+  }
+
+  function dmFormatDuration(secs){
+    var m = Math.floor(secs/60), s = Math.floor(secs%60);
+    return m + "m " + s + "s";
+  }
+
+  function dmUpdateTimerDisplay(){
+    if(!dmSessionStart || dmCurrentDay === null) return;
+    var elapsed = (Date.now() - dmSessionStart) / 1000;
+    document.getElementById("dm-timer-text").textContent = dmFormatDuration(elapsed) + " this session";
+    var stored = timeSpent[dmCurrentDay] || 0;
+    document.getElementById("dm-total-time").textContent = "total: " + dmFormatDuration(stored + elapsed);
+  }
+
+  function openDayModal(num, initialPanel){
+    var info = DAY_INFO[num];
+    if(!info) return;
+    dmCurrentDay = num;
+    dmSessionStart = Date.now();
+
+    document.getElementById("dm-phase").textContent = info.phaseTitle + " · Day " + num;
+    document.getElementById("dm-title").textContent = info.topic;
+    document.getElementById("dm-lab").textContent = info.lab;
+    if(info.usecase && info.usecase !== "—"){
+      document.getElementById("dm-usecase-wrap").style.display = "block";
+      document.getElementById("dm-usecase").textContent = info.usecase;
+    } else {
+      document.getElementById("dm-usecase-wrap").style.display = "none";
+    }
+
+    var embed = youtubeEmbedUrl(info.video);
+    document.getElementById("dm-video-iframe").src = embed || "";
+    document.getElementById("dm-docs-iframe").src = info.link;
+    document.getElementById("dm-docs-link").href = info.link;
+
+    document.getElementById("dm-notes-text").value = dayNotes[num] || "";
+    document.getElementById("dm-notes-saved").textContent = "";
+
+    document.getElementById("dm-complete-check").checked = !!progress[num];
+
+    dmSwitchTab(initialPanel || "dm-overview");
+    document.getElementById("dm-overlay").classList.add("open");
+    dmUpdateTimerDisplay();
+    dmTimerInterval = setInterval(dmUpdateTimerDisplay, 1000);
+  }
+
+  function dmSwitchTab(panelId){
+    document.querySelectorAll(".dm-tab").forEach(function(t){
+      t.classList.toggle("active", t.dataset.panel === panelId);
+    });
+    document.querySelectorAll(".dm-panel").forEach(function(p){
+      p.classList.toggle("active", p.id === panelId);
+    });
+  }
+
+  document.querySelectorAll(".dm-tab").forEach(function(tab){
+    tab.addEventListener("click", function(){ dmSwitchTab(tab.dataset.panel); });
+  });
+
+  function closeDayModal(){
+    if(dmTimerInterval){ clearInterval(dmTimerInterval); dmTimerInterval = null; }
+    if(dmCurrentDay !== null && dmSessionStart){
+      var elapsed = (Date.now() - dmSessionStart) / 1000;
+      if(elapsed > 1){
+        timeSpent[dmCurrentDay] = (timeSpent[dmCurrentDay] || 0) + elapsed;
+        saveTimeSpent();
+      }
+    }
+    var notesVal = document.getElementById("dm-notes-text").value;
+    if(dmCurrentDay !== null && notesVal !== (dayNotes[dmCurrentDay] || "")){
+      dayNotes[dmCurrentDay] = notesVal;
+      saveDayNotes();
+    }
+    document.getElementById("dm-video-iframe").src = "";
+    document.getElementById("dm-docs-iframe").src = "";
+    document.getElementById("dm-overlay").classList.remove("open");
+    var closedDay = dmCurrentDay;
+    dmCurrentDay = null;
+    dmSessionStart = null;
+    render();
+  }
+
+  document.getElementById("dm-close").addEventListener("click", closeDayModal);
+  document.getElementById("dm-overlay").addEventListener("click", function(e){
+    if(e.target.id === "dm-overlay"){ closeDayModal(); }
+  });
+  document.getElementById("dm-complete-check").addEventListener("change", function(e){
+    if(dmCurrentDay !== null){
+      progress[dmCurrentDay] = e.target.checked;
+      saveProgress();
+    }
+  });
+  document.getElementById("dm-flashcard-btn").addEventListener("click", function(){
+    if(dmCurrentDay === null) return;
+    var dayCard = DAY_CARD[dmCurrentDay];
+    var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : "az305");
+    if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
+    else { showDayFlashcard(fallbackDeck, 0); }
+  });
 
   document.querySelectorAll(".fc-tab").forEach(function(tab){
     tab.addEventListener("click", function(){
