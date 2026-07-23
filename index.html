@@ -6,6 +6,8 @@
 <title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
+  // See setup instructions — Project Settings → API in your Supabase dashboard.
   window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
   window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
 </script>
@@ -462,6 +464,40 @@
     margin-bottom:14px;
     padding-right:36px;
   }
+
+  /* ===== Quiz ===== */
+  .quiz-modal{
+    background:var(--panel);border:1px solid var(--border);
+    max-width:680px;width:100%;max-height:88vh;overflow-y:auto;
+    padding:24px;position:relative;
+  }
+  .quiz-question{margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border-soft);}
+  .quiz-question:last-of-type{border-bottom:none;}
+  .quiz-q-text{font-size:14px;font-weight:600;margin-bottom:12px;line-height:1.5;}
+  .quiz-option{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:8px 10px;margin-bottom:6px;
+    border:1px solid var(--border-soft);cursor:pointer;
+    font-size:13px;line-height:1.5;
+  }
+  .quiz-option:hover{border-color:var(--border);}
+  .quiz-option input{margin-top:2px;}
+  .quiz-option.correct{border-color:var(--teal);background:rgba(111,214,196,0.08);}
+  .quiz-option.incorrect{border-color:var(--amber);background:rgba(242,193,78,0.08);}
+  .quiz-explain{
+    font-size:12px;color:var(--ink-muted);margin-top:8px;padding:10px;
+    background:var(--panel-2);border-left:2px solid var(--teal);display:none;
+  }
+  .quiz-explain.show{display:block;}
+  .quiz-score-banner{
+    text-align:center;padding:20px;margin-bottom:20px;
+    border:1px solid var(--teal);background:rgba(111,214,196,0.06);
+    font-size:16px;font-weight:700;color:var(--teal);
+  }
+  .quiz-badge{
+    font-size:11px;color:var(--ink-dim);font-family:ui-monospace,monospace;
+  }
+  .quiz-badge.pass{color:var(--teal);}
 
   /* ===== Login screen ===== */
   .auth-screen{
@@ -1169,6 +1205,14 @@
   </div>
 </div>
 
+<div class="fc-modal-overlay" id="quiz-overlay">
+  <div class="quiz-modal">
+    <button class="fc-modal-close" id="quiz-close" aria-label="Close">✕</button>
+    <div class="fc-modal-title font-tech" id="quiz-title">Quiz</div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
 <div class="fc-modal-overlay" id="fc-modal-overlay">
   <div class="fc-modal">
     <button class="fc-modal-close" id="fc-modal-close" aria-label="Close">✕</button>
@@ -1768,6 +1812,47 @@
   });
 
 
+  var QUIZZES = {
+    az900: [
+      { q:"Which pricing model does Azure primarily use?", options:["Fixed annual license","Consumption-based (pay-as-you-go)","One-time perpetual license","Free for all services"], correct:1, explain:"Azure is consumption-based by default — you pay for what you use, though Reservations/Savings Plans discount predictable workloads." },
+      { q:"What best describes an Availability Zone?", options:["A separate Azure subscription","A physically separate datacenter within a region","A backup copy in another country","A type of virtual network"], correct:1, explain:"Availability Zones are physically separate datacenters within the same region, each with independent power, cooling, and networking." },
+      { q:"Which service model gives you the LEAST management responsibility?", options:["IaaS","PaaS","SaaS","On-premises"], correct:2, explain:"SaaS hands the entire application to the provider to manage — you just use it." },
+      { q:"What is the purpose of a Resource Group?", options:["A billing-only construct with no functional purpose","A logical container for related Azure resources","A type of virtual machine","A security boundary equivalent to a subscription"], correct:1, explain:"Resource Groups organize related resources for a solution — they're the basic unit of lifecycle management in Azure." },
+      { q:"Which tool would you use to estimate the monthly cost of a planned Azure deployment?", options:["Azure Advisor","Azure Monitor","Pricing Calculator","Azure Policy"], correct:2, explain:"The Pricing Calculator estimates costs before you deploy anything; Advisor gives recommendations on resources you already have." },
+      { q:"What does RBAC control?", options:["Resource configuration compliance","Who can perform which actions on a resource","Network routing","Storage redundancy"], correct:1, explain:"RBAC governs WHO can do WHAT — Azure Policy, by contrast, governs what configurations resources are allowed to have." },
+      { q:"A company wants to prevent a critical resource group from being accidentally deleted. What should they use?", options:["A ReadOnly lock","A CanNotDelete lock","Azure Policy audit mode","A resource tag"], correct:1, explain:"A CanNotDelete lock blocks deletion while still allowing modification — ReadOnly blocks both." },
+      { q:"What is the Shared Responsibility Model primarily about?", options:["Splitting Azure costs between departments","Dividing security duties between Microsoft and the customer","Sharing compute resources between VMs","Assigning RBAC roles across teams"], correct:1, explain:"It defines which security responsibilities Microsoft owns vs. the customer, and the split shifts depending on IaaS/PaaS/SaaS." }
+    ],
+    az104: [
+      { q:"Which storage redundancy option protects against a full regional outage AND allows read access to the secondary region?", options:["LRS","ZRS","GRS","RA-GRS"], correct:3, explain:"RA-GRS adds read access to GRS's geo-replicated secondary copy — GRS alone doesn't allow reading the secondary." },
+      { q:"What's the main difference between a Load Balancer and an Application Gateway?", options:["Load Balancer is free, Application Gateway is not","Load Balancer operates at Layer 4, Application Gateway at Layer 7","Application Gateway only works with VMs","Load Balancer supports path-based routing, Application Gateway doesn't"], correct:1, explain:"Load Balancer works at the transport layer (TCP/UDP); Application Gateway understands HTTP/HTTPS and can route by path." },
+      { q:"What does a Private Endpoint give a PaaS resource that a Service Endpoint doesn't?", options:["Higher throughput","A private IP address inside your VNet","Free egress","Automatic backup"], correct:1, explain:"Private Endpoints assign a private IP inside your VNet, fully removing the resource's public exposure — Service Endpoints keep a public IP." },
+      { q:"Which Azure service lets you activate a privileged role only when needed, with approval and a time limit?", options:["Conditional Access","Azure Policy","Privileged Identity Management (PIM)","Resource Locks"], correct:2, explain:"PIM provides just-in-time, approval-gated, time-bound privileged role activation." },
+      { q:"A VM needs to be reachable via RDP without exposing a public IP. What should you use?", options:["Azure Bastion","Network Watcher","Traffic Manager","Azure Firewall"], correct:0, explain:"Azure Bastion provides RDP/SSH access through the portal without ever needing a public IP on the VM." },
+      { q:"What three things define a custom RBAC role?", options:["Region, SKU, Tags","Actions, NotActions, AssignableScopes","Policies, Initiatives, Exemptions","Subscriptions, Resource Groups, Locks"], correct:1, explain:"A custom role is defined by allowed Actions, excluded NotActions, and the AssignableScopes it can be applied to." },
+      { q:"Which is a KEY difference between Azure Backup and Azure Site Recovery?", options:["Backup replicates entire VMs for failover; Site Recovery restores individual files","They are the same service with different names","Backup protects against data loss/corruption; Site Recovery replicates workloads for disaster recovery failover","Site Recovery only works for storage accounts"], correct:2, explain:"Backup is about point-in-time recovery from loss/corruption; Site Recovery is about replicating whole workloads for regional failover." },
+      { q:"What does Bicep compile down to?", options:["PowerShell scripts","ARM JSON templates","Terraform HCL","Python"], correct:1, explain:"Bicep is a more readable authoring language that compiles into standard ARM JSON templates." }
+    ],
+    az305: [
+      { q:"What does RPO measure?", options:["How long a system can be down","How much data loss (in time) is acceptable","How many regions a workload spans","The cost of a DR plan"], correct:1, explain:"RPO (Recovery Point Objective) measures acceptable data loss in time — RTO measures acceptable downtime." },
+      { q:"An architecture needs near-zero failover time and can absorb running in two regions simultaneously. Which pattern fits?", options:["Active-passive","Active-active","Backup-only","Single-region with zone redundancy"], correct:1, explain:"Active-active runs workloads in multiple regions at once for near-instant failover, at higher cost than active-passive." },
+      { q:"When would Virtual WAN generally be preferred over a classic hub-spoke topology?", options:["A single-region company with 2 VNets","Large scale, many regions and branch offices","A company with no on-prem connectivity at all","Never — hub-spoke is always simpler"], correct:1, explain:"Virtual WAN simplifies hub management at large scale across many regions/branches — hub-spoke suits smaller topologies fine." },
+      { q:"What's the primary design driver for choosing a Cosmos DB partition key?", options:["Minimizing storage cost","Evenly distributing read/write traffic aligned to common query patterns","Matching the primary key of the source SQL table","Alphabetical ordering of documents"], correct:1, explain:"A good partition key avoids hot partitions by spreading traffic evenly and matching how the data is actually queried." },
+      { q:"A regulated client requires control over encryption key rotation and revocation. What should you design for?", options:["Platform-managed keys","Customer-managed keys (CMK) in Key Vault","No encryption, compliance handles it separately","Shared access signatures"], correct:1, explain:"CMK gives the customer direct control over key lifecycle, often a compliance requirement." },
+      { q:"What differentiates a platform landing zone from an application landing zone in CAF?", options:["They are the same thing","Platform landing zone hosts shared foundational services; application landing zone is where a workload is deployed","Application landing zones are always in a separate Azure tenant","Platform landing zones don't use management groups"], correct:1, explain:"Platform landing zones provide shared services (connectivity, identity, management); application landing zones sit on top for individual workloads." },
+      { q:"Which service is the best fit for high-throughput streaming telemetry ingestion from thousands of devices?", options:["Service Bus","Event Grid","Event Hub","API Management"], correct:2, explain:"Event Hub is purpose-built for high-throughput streaming ingestion — Service Bus is for reliable ordered messaging, Event Grid for discrete reactive events." },
+      { q:"What's the main architectural trade-off of microservices vs. a monolith?", options:["Microservices are always cheaper to run","Independent scaling/deployment vs. added networking/observability complexity","Monoliths cannot be containerized","There is no trade-off, microservices are strictly better"], correct:1, explain:"Microservices gain independent scaling and deployment at the cost of added operational complexity — it's a genuine trade-off, not a free upgrade." }
+    ],
+    phase4: [
+      { q:"What's a key practical reason to use Terraform's remote state instead of local state?", options:["It's faster to run","It enables team collaboration and avoids state conflicts","It's required by Azure","Local state doesn't support VNets"], correct:1, explain:"Remote state lets a team share and lock state safely — local state breaks down the moment more than one person touches the infrastructure." },
+      { q:"In a CI/CD pipeline, why add a manual approval gate before a destroy stage?", options:["To slow down pipelines intentionally","To prevent accidental irreversible deletion of infrastructure","Azure requires it by default","It has no real purpose beyond compliance theater"], correct:1, explain:"Manual approval on destructive actions is a genuine safety pattern, not bureaucracy — it catches mistakes before they're irreversible." },
+      { q:"What's the benefit of using a Service Principal or managed identity in a pipeline instead of a personal login?", options:["It's the only way to authenticate at all","It avoids hardcoding personal credentials and follows least-privilege access","It makes pipelines run faster","It bypasses RBAC entirely"], correct:1, explain:"Service principals/managed identities avoid hardcoded personal secrets in pipeline code and can be scoped to least privilege." },
+      { q:"Why bundle multiple Azure Policies into an initiative rather than assigning them individually?", options:["Policies can't be assigned individually","It simplifies applying and managing a related governance bundle at scale","Initiatives are free while individual policies cost money","Only initiatives support custom policies"], correct:1, explain:"Initiatives group related policies so you can assign and track them together instead of managing dozens of individual assignments." },
+      { q:"What's the main value of Azure Advisor's cost recommendations in a FinOps practice?", options:["It automatically deletes unused resources","It surfaces concrete right-sizing/cost-saving opportunities for review","It sets your budget automatically","It replaces the need for tagging"], correct:1, explain:"Advisor surfaces actionable recommendations — a human still reviews and acts on them; it doesn't auto-delete or auto-budget." },
+      { q:"Why document architecture decisions, not just implement them?", options:["Documentation is only for legal compliance","It has no real value beyond box-checking","Being able to justify decisions is part of what distinguishes architect-level work from admin-level execution","Only auditors read documentation"], correct:2, explain:"Explaining WHY, not just WHAT, is core to the architect role — it's what you'll be asked to do in reviews and interviews alike." }
+    ]
+  };
+
   var FLASHCARDS = {
   az900: [["What is IaaS (Infrastructure as a Service)?", "A cloud model where you rent virtualized compute, storage, and networking, and manage the OS and everything above it yourself."], ["What is PaaS (Platform as a Service)?", "A cloud model where the provider manages the runtime/OS, and you only manage your application and data."], ["What is SaaS (Software as a Service)?", "A cloud model where the provider manages the entire application; you just use it (e.g. Outlook, Teams)."], ["CapEx vs OpEx — which does cloud computing use?", "OpEx (Operational Expenditure) — pay-as-you-go, no large upfront hardware investment (CapEx)."], ["What is an Azure Region?", "A geographic area containing one or more datacenters, connected by a low-latency network."], ["What is a Region Pair?", "Two regions in the same geography, at least 300 miles apart, used together for disaster recovery."], ["What is an Availability Zone?", "A physically separate datacenter within an Azure region, each with independent power, cooling, and networking."], ["What is a Resource Group?", "A logical container that holds related Azure resources for a solution."], ["What is a Management Group?", "A container that organizes multiple subscriptions to apply governance (policy, RBAC) at scale."], ["What is Azure Resource Manager (ARM)?", "The deployment and management service for Azure — every management action goes through it."], ["What does the Azure Free Account include?", "$200 credit for 30 days plus 12 months of select free services and some always-free services."], ["What is an SLA (Service Level Agreement)?", "A commitment from Microsoft defining uptime/performance targets and any service credits if not met."], ["What's the core difference between Azure Policy and RBAC?", "RBAC controls WHO can do WHAT; Azure Policy controls WHAT properties/configurations resources are allowed to have."], ["What is a Resource Lock?", "A setting that prevents accidental deletion (CanNotDelete) or modification (ReadOnly) of a resource."], ["What is the purpose of Tags in Azure?", "Metadata (key-value pairs) attached to resources for organization, cost tracking, and automation."], ["What is Azure Monitor?", "The platform service for collecting, analyzing, and acting on telemetry from Azure and on-prem resources."], ["What is Azure Advisor?", "A free tool that gives personalized recommendations for cost, security, reliability, and performance."], ["Difference between Azure Service Health and Azure Status?", "Service Health = personalized view of issues affecting YOUR resources; Azure Status = global public health of all Azure services."], ["What is Microsoft Entra ID?", "Microsoft's cloud-based identity and access management service (formerly Azure Active Directory)."], ["What is MFA (Multi-Factor Authentication)?", "Requiring two or more verification methods to sign in, reducing risk from stolen passwords."], ["What is SSO (Single Sign-On)?", "Signing in once to access multiple applications without re-entering credentials."], ["What is Conditional Access (basic)?", "Policies that grant or block access based on conditions like location, device, or risk level."], ["What is Microsoft Defender for Cloud?", "A tool for cloud security posture management and threat protection across Azure resources."], ["What is Azure Key Vault used for?", "Securely storing secrets, keys, and certificates."], ["What is the Shared Responsibility Model?", "The division of security duties between Microsoft (cloud infrastructure) and the customer (data, identity, access) — the split shifts by service type (IaaS/PaaS/SaaS)."], ["Difference between High Availability, Fault Tolerance, and Disaster Recovery?", "HA = minimizing downtime during normal operation; Fault Tolerance = continuing to operate through a failure; DR = recovering after a major outage/disaster."], ["What pricing model does Azure primarily use?", "Consumption-based (pay-as-you-go) — you pay for what you use."], ["What is the TCO (Total Cost of Ownership) Calculator for?", "Comparing the cost of running workloads on-premises vs. in Azure."], ["What is the Pricing Calculator for?", "Estimating the monthly cost of Azure services before deploying them."], ["What is Azure Cost Management + Billing used for?", "Monitoring, allocating, and optimizing cloud spend, including budgets and alerts."]],
   az104: [["LRS vs ZRS vs GRS vs GZRS — what's the key difference?", "LRS = 3 copies in one datacenter; ZRS = 3 copies across zones in one region; GRS = LRS + async copy to a paired region; GZRS = ZRS + async copy to a paired region."], ["What is a SAS (Shared Access Signature) token?", "A time-limited, permission-scoped URL that grants access to storage resources without sharing the account key."], ["What are Blob storage access tiers?", "Hot (frequent access), Cool (infrequent, 30+ days), and Archive (rare access, offline, hours to rehydrate)."], ["Availability Set vs Availability Zone?", "Availability Set = fault/update domains within ONE datacenter; Availability Zone = separate physical datacenters within a region."], ["What is a VM Scale Set?", "A group of identical, load-balanced VMs that can automatically scale in/out based on demand."], ["What are App Service deployment slots?", "Separate live environments (e.g. staging) you can deploy to and then swap into production with no downtime."], ["NSG vs ASG — what's the difference?", "NSG (Network Security Group) filters traffic by IP/port rules; ASG (Application Security Group) groups VMs so NSG rules can target them by application role instead of IP."], ["VNet Peering vs VPN Gateway — when to use which?", "Peering connects VNets directly over the Azure backbone (fast, no encryption overhead); VPN Gateway connects over an encrypted tunnel, often used for on-prem connectivity."], ["Service Endpoint vs Private Endpoint?", "Service Endpoint keeps traffic on the Azure backbone but the resource still has a public IP; Private Endpoint gives the resource a private IP inside your VNet, fully removing public exposure."], ["Load Balancer vs Application Gateway — what layer do they operate at?", "Load Balancer = Layer 4 (TCP/UDP); Application Gateway = Layer 7 (HTTP/HTTPS, supports path-based routing, WAF)."], ["What does Azure Firewall provide?", "A managed, stateful, cloud-native network firewall for filtering traffic at the network/application layer."], ["What does Azure Bastion provide?", "Secure RDP/SSH access to VMs via the Azure portal, without exposing a public IP on the VM."], ["ExpressRoute vs Site-to-Site VPN?", "ExpressRoute = private, dedicated connection (not over public internet), higher reliability/bandwidth; S2S VPN = encrypted tunnel over the public internet, cheaper but less consistent latency."], ["What does Azure Policy enforce that RBAC doesn't?", "Configuration/compliance rules on resources (e.g. allowed regions, required tags) — RBAC only controls permissions, not resource properties."], ["What is PIM (Privileged Identity Management)?", "A service for just-in-time, time-bound, approval-based activation of privileged roles instead of standing access."], ["What does a Conditional Access policy typically evaluate?", "Signals like user/group, location, device state, and application, to grant, block, or require MFA for access."], ["What are the two main Resource Lock types?", "CanNotDelete (blocks deletion) and ReadOnly (blocks deletion AND modification)."], ["ARM template vs Bicep — what's the relationship?", "Bicep is a simpler, more readable language that compiles down to ARM JSON templates."], ["Azure Backup vs Azure Site Recovery — what's the difference?", "Backup = point-in-time data recovery from corruption/deletion; Site Recovery = replicates entire VMs/workloads for disaster recovery failover."], ["What is a Log Analytics workspace?", "The central store where Azure Monitor logs are collected and queried using KQL."], ["What is KQL used for?", "Kusto Query Language — querying log and telemetry data in Log Analytics/Sentinel."], ["What does Application Insights monitor?", "Application performance — request rates, response times, failure rates, and dependency calls."], ["What's the purpose of a Management Group hierarchy?", "Applying policy and RBAC consistently across multiple subscriptions from a single point."], ["What three things define a custom RBAC role?", "Actions (allowed operations), NotActions (excluded operations), and AssignableScopes (where it can be assigned)."], ["What do Cost Management budgets/alerts do?", "Notify you (or trigger actions) when spending approaches or exceeds a defined threshold."], ["What routing methods does Traffic Manager support?", "Priority, Weighted, Performance, Geographic, and others — all DNS-based, not proxying traffic itself."], ["Public vs Private Azure DNS zones?", "Public zones resolve names on the internet; Private zones resolve names only within linked VNets."], ["What does Network Watcher provide?", "Diagnostic and monitoring tools for Azure networks (e.g. IP flow verify, connection troubleshoot, packet capture)."], ["What are the main Azure Monitor alert types?", "Metric alerts, log alerts (query-based), and activity log alerts."], ["What is RA-GRS?", "Read-Access Geo-Redundant Storage — like GRS, but also allows read access to the secondary region's copy."]],
@@ -1831,6 +1916,7 @@
   var progress = {};
   var timeSpent = {};   // { dayNum: totalSeconds }
   var dayNotes = {};    // { dayNum: text }
+  var quizScores = {};  // { quizKey: {correct, total} } — best score
   var startDate = null;
 
   function pad(n){ return n<10 ? "0"+n : ""+n; }
@@ -1859,6 +1945,10 @@
       var nVal = await store.get("day-notes");
       if(nVal){ dayNotes = JSON.parse(nVal); }
     }catch(e){ dayNotes = {}; }
+    try{
+      var qVal = await store.get("quiz-scores");
+      if(qVal){ quizScores = JSON.parse(qVal); }
+    }catch(e){ quizScores = {}; }
   }
 
   async function saveTimeSpent(){
@@ -1868,6 +1958,11 @@
 
   async function saveDayNotes(){
     try{ await store.set("day-notes", JSON.stringify(dayNotes)); }
+    catch(e){ console.error("Storage error", e); }
+  }
+
+  async function saveQuizScores(){
+    try{ await store.set("quiz-scores", JSON.stringify(quizScores)); }
     catch(e){ console.error("Storage error", e); }
   }
 
@@ -1904,6 +1999,11 @@
       var phaseEl = document.createElement("div");
       phaseEl.className = "phase";
 
+      var quizKeys = ["az900","az104","az305","phase4"];
+      var quizKey = quizKeys[pIdx];
+      var bestScore = quizScores[quizKey];
+      var scoreText = bestScore ? ("Best: " + bestScore.correct + "/" + bestScore.total) : "Not taken";
+
       var header = document.createElement("div");
       header.className = "phase-header";
       header.innerHTML =
@@ -1914,10 +2014,16 @@
             '<div class="phase-sub">'+phase.sub+'</div>'+
           '</div>'+
         '</div>'+
-        '<div style="display:flex;align-items:center;gap:14px;">'+
+        '<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">'+
+          '<div class="quiz-badge'+(bestScore && bestScore.correct===bestScore.total ? ' pass' : '')+'">'+scoreText+'</div>'+
+          '<button type="button" class="btn quiz-open-btn" data-quiz="'+quizKey+'">Take Quiz</button>'+
           '<div class="phase-progress-text">'+doneCount+' / '+allDays.length+'</div>'+
           '<div class="chevron"></div>'+
         '</div>';
+      header.querySelector(".quiz-open-btn").addEventListener("click", function(e){
+        e.stopPropagation();
+        openQuiz(quizKey);
+      });
       header.addEventListener("click", function(){
         phaseEl.classList.toggle("collapsed");
       });
@@ -2136,11 +2242,93 @@
     if(e.key === "Escape"){
       closeFlashcardModal();
       if(dmCurrentDay !== null){ closeDayModal(); }
+      document.getElementById("quiz-overlay").classList.remove("open");
     }
   });
   document.getElementById("fc-open-az900").addEventListener("click", function(){ showDayFlashcard("az900", 0); });
   document.getElementById("fc-open-az104").addEventListener("click", function(){ showDayFlashcard("az104", 0); });
   document.getElementById("fc-open-az305").addEventListener("click", function(){ showDayFlashcard("az305", 0); });
+
+  // ===== Quiz =====
+  var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
+
+  function openQuiz(quizKey){
+    if(guestBlock()) return;
+    var questions = QUIZZES[quizKey];
+    document.getElementById("quiz-title").textContent = QUIZ_NAMES[quizKey] + " — Quiz (" + questions.length + " questions)";
+    var body = document.getElementById("quiz-body");
+    var html = "";
+    questions.forEach(function(q, qi){
+      html += '<div class="quiz-question" data-qi="'+qi+'">';
+      html += '<div class="quiz-q-text">'+(qi+1)+'. '+q.q+'</div>';
+      q.options.forEach(function(opt, oi){
+        html += '<label class="quiz-option" data-oi="'+oi+'">'+
+          '<input type="radio" name="quiz-q-'+qi+'" value="'+oi+'"> <span>'+opt+'</span>'+
+        '</label>';
+      });
+      html += '<div class="quiz-explain" id="quiz-explain-'+qi+'"></div>';
+      html += '</div>';
+    });
+    html += '<button class="btn" id="quiz-submit-btn" style="width:100%;padding:12px;">Submit Quiz</button>';
+    html += '<div id="quiz-result" style="display:none;"></div>';
+    body.innerHTML = html;
+
+    document.getElementById("quiz-submit-btn").addEventListener("click", function(){
+      quizSubmit(quizKey, questions);
+    });
+
+    document.getElementById("quiz-overlay").classList.add("open");
+  }
+
+  function quizSubmit(quizKey, questions){
+    var correct = 0;
+    var allAnswered = true;
+    questions.forEach(function(q, qi){
+      var selected = document.querySelector('input[name="quiz-q-'+qi+'"]:checked');
+      var qDiv = document.querySelector('.quiz-question[data-qi="'+qi+'"]');
+      if(!selected){ allAnswered = false; return; }
+      var selVal = parseInt(selected.value, 10);
+      qDiv.querySelectorAll(".quiz-option").forEach(function(opt){
+        var oi = parseInt(opt.dataset.oi, 10);
+        if(oi === q.correct){ opt.classList.add("correct"); }
+        else if(oi === selVal){ opt.classList.add("incorrect"); }
+        opt.querySelector("input").disabled = true;
+      });
+      if(selVal === q.correct){ correct++; }
+      var explain = document.getElementById("quiz-explain-"+qi);
+      explain.textContent = q.explain;
+      explain.classList.add("show");
+    });
+
+    if(!allAnswered){
+      alert("Please answer every question before submitting.");
+      // revert any partial disabling from questions that were answered
+      document.querySelectorAll(".quiz-option input").forEach(function(inp){ inp.disabled = false; });
+      document.querySelectorAll(".quiz-option").forEach(function(opt){ opt.classList.remove("correct","incorrect"); });
+      document.querySelectorAll(".quiz-explain").forEach(function(el){ el.classList.remove("show"); });
+      return;
+    }
+
+    document.getElementById("quiz-submit-btn").style.display = "none";
+    var pct = Math.round((correct/questions.length)*100);
+    var resultDiv = document.getElementById("quiz-result");
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = '<div class="quiz-score-banner">Score: '+correct+' / '+questions.length+' ('+pct+'%)</div>';
+
+    var prevBest = quizScores[quizKey];
+    if(!prevBest || correct > prevBest.correct){
+      quizScores[quizKey] = { correct: correct, total: questions.length };
+      saveQuizScores();
+      render();
+    }
+  }
+
+  document.getElementById("quiz-close").addEventListener("click", function(){
+    document.getElementById("quiz-overlay").classList.remove("open");
+  });
+  document.getElementById("quiz-overlay").addEventListener("click", function(e){
+    if(e.target.id === "quiz-overlay"){ document.getElementById("quiz-overlay").classList.remove("open"); }
+  });
 
   function showDayFlashcard(deck, idx){
     if(guestBlock()) return;
