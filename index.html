@@ -866,6 +866,14 @@
   }
   .sp-notes-status{font-size:10px;color:var(--ink-dim);margin-top:4px;}
   .sp-fullbtn{width:100%;text-align:center;}
+  .sp-news-item{
+    display:block;padding:8px 0;border-bottom:1px solid var(--border-soft);
+    font-size:11.5px;line-height:1.4;color:var(--ink);text-decoration:none;
+  }
+  .sp-news-item:last-child{border-bottom:none;}
+  .sp-news-item:hover{color:#3B82F6;}
+  .sp-news-date{font-size:9px;color:var(--ink-dim);display:block;margin-top:2px;}
+  .sp-news-fallback{font-size:11px;color:var(--ink-muted);line-height:1.6;}
   .sp-week-row{margin-bottom:8px;}
   .sp-week-label{font-size:10px;color:var(--ink-muted);margin-bottom:3px;display:flex;justify-content:space-between;}
   .sp-week-bar-track{height:6px;background:var(--panel-2);border:1px solid var(--border-soft);}
@@ -1223,6 +1231,11 @@
   </div>
 
   <div class="sp-section">
+    <div class="sp-label">Latest Azure Updates</div>
+    <div id="sp-azure-news">Loading…</div>
+  </div>
+
+  <div class="sp-section">
     <div class="sp-label">Quick Review</div>
     <button class="sp-btn sp-fullbtn" id="sp-random-card">🎲 Random flashcard</button>
   </div>
@@ -1388,6 +1401,7 @@
       <button class="btn" id="fc-open-az900">Browse AZ-900 deck</button>
       <button class="btn" id="fc-open-az104">Browse AZ-104 deck</button>
       <button class="btn" id="fc-open-az305">Browse AZ-305 deck</button>
+      <button class="btn" id="fc-open-phase4">Browse Phase 4 deck</button>
     </div>
   </div>
 
@@ -1492,6 +1506,7 @@
       <button class="fc-tab active" data-deck="az900">AZ-900</button>
       <button class="fc-tab" data-deck="az104">AZ-104</button>
       <button class="fc-tab" data-deck="az305">AZ-305</button>
+      <button class="fc-tab" data-deck="phase4">Phase 4</button>
     </div>
     <div class="fc-stage">
       <div class="fc-progress" id="fc-progress">Card 1 of 30</div>
@@ -2152,6 +2167,25 @@
     ["What should a centralized monitoring architecture funnel logs into across many subscriptions?", "A shared/centralized Log Analytics workspace (often feeding Microsoft Sentinel), typically enforced via Azure Policy-driven diagnostic settings."]
   );
 
+  FLASHCARDS.phase4 = [
+    ["A startup wants infrastructure changes reviewed like code before they go live. What practice enables this?", "Infrastructure as Code (Bicep/Terraform) with pull-request review — changes are proposed, reviewed, and merged just like application code."],
+    ["A team keeps accidentally deploying untested changes straight to production. What pipeline pattern fixes this?", "Environment-staged pipelines (dev → test → prod) with approval gates between stages, so nothing reaches prod without passing earlier stages first."],
+    ["A retailer's Black Friday traffic is 20x normal. What real-world pattern handles this without over-provisioning year-round?", "Autoscaling (VM Scale Sets or App Service scale-out rules) — capacity grows automatically with demand and shrinks back down afterward."],
+    ["A finance company must prove exactly who approved a production infrastructure change. What pattern provides this?", "PR-based IaC workflows: every change is a reviewed, approved, and logged pull request — an audit trail comes for free."],
+    ["A company's Terraform state file was accidentally deleted, breaking their ability to manage infrastructure. What would have prevented this?", "Remote state storage (e.g. in an Azure Storage account) with versioning enabled, instead of keeping state only on one engineer's laptop."],
+    ["An enterprise wants every new subscription to automatically get the same baseline security policies. What pattern achieves this?", "A landing zone with policies assigned at the management group level — new subscriptions inherit governance automatically, no manual setup."],
+    ["A dev team wants to test infrastructure changes without risking the shared production environment. What's the practical fix?", "A separate lower environment (dev/test) with its own resource group or subscription, deployed via the same IaC code with different parameters."],
+    ["A security team just failed an audit because nobody could explain why a firewall rule exists. What practice prevents this?", "Documenting architecture decisions (an ADR — architecture decision record) alongside the code, not just the code itself."],
+    ["A company's cloud bill tripled and nobody can tell which team caused it. What should have been in place from day one?", "A consistent tagging strategy (cost center, environment, owner) enforced via policy, feeding into Cost Management reports."],
+    ["An engineer wants to safely test destroying and recreating infrastructure without fear of an accidental prod outage. What pattern helps?", "A manual approval gate on any destructive pipeline stage, plus testing destroy/recreate cycles in a non-production environment first."],
+    ["A consultancy needs to deploy the same 'landing zone' for every new client quickly. What approach scales this?", "A reusable, parameterized Bicep/Terraform module for the landing zone, deployed fresh per client instead of manual setup each time."],
+    ["A company wants developers to deploy their own resources without accidentally exceeding their budget. What's a practical guardrail?", "Azure Policy limiting SKUs/regions/resource types per subscription, combined with a budget alert — freedom within guardrails."],
+    ["An incident review reveals nobody noticed a security alert for 3 days. What's missing from the architecture?", "A properly tuned alerting pipeline (Azure Monitor / Sentinel) that actually routes to an on-call channel, not just a dashboard nobody checks."],
+    ["A team wants to demonstrate their skills to a hiring manager beyond just listing certifications. What's the practical move?", "A public GitHub portfolio with working IaC repos and architecture diagrams — provable work, not just claimed knowledge."],
+    ["A company migrating to Azure isn't sure which of 200 on-prem servers to move first. What tool-driven approach helps prioritize?", "Azure Migrate's assessment — it scores server readiness and groups servers into migration waves based on dependencies and risk."],
+    ["A platform team keeps getting paged for the same recurring issue. What should happen after the third occurrence?", "Root-cause it and automate the fix or the detection — recurring manual firefighting is a sign the architecture, not the on-call rotation, needs to change."]
+  ];
+
   // Map each roadmap day to its best-matching flashcard (deck, index). null = no dedicated card (lab/review/exam day).
   var DAY_CARD = {
     1:{deck:"az900",idx:0}, 2:{deck:"az900",idx:4}, 3:{deck:"az900",idx:9},
@@ -2180,7 +2214,17 @@
     75:null, 76:null, 77:null,
     78:{deck:"az305",idx:21}, 79:{deck:"az305",idx:16}, 80:{deck:"az305",idx:3}, 81:{deck:"az305",idx:14},
     82:{deck:"az305",idx:19}, 83:{deck:"az305",idx:11}, 84:null,
-    85:null, 86:null, 87:null, 88:null, 89:null, 90:null, 91:null
+    85:null, 86:null, 87:null, 88:null, 89:null, 90:null, 91:null,
+
+    92:null, 93:null, 94:null, 95:null, 96:null, 97:null,
+    98:{deck:"phase4",idx:0}, 99:null, 100:{deck:"phase4",idx:10}, 101:null, 102:null, 103:{deck:"phase4",idx:0},
+    104:{deck:"phase4",idx:0}, 105:null, 106:{deck:"phase4",idx:4}, 107:{deck:"phase4",idx:10}, 108:null, 109:{deck:"phase4",idx:13},
+    110:{deck:"phase4",idx:1}, 111:null, 112:{deck:"phase4",idx:1}, 113:null, 114:{deck:"phase4",idx:3}, 115:{deck:"phase4",idx:9},
+    116:null, 117:null, 118:{deck:"phase4",idx:5}, 119:{deck:"phase4",idx:5}, 120:{deck:"phase4",idx:11}, 121:null,
+    122:{deck:"phase4",idx:10}, 123:null, 124:null, 125:{deck:"phase4",idx:12}, 126:{deck:"phase4",idx:12}, 127:{deck:"phase4",idx:12},
+    128:{deck:"phase4",idx:8}, 129:null, 130:{deck:"phase4",idx:12}, 131:{deck:"phase4",idx:7}, 132:null, 133:{deck:"phase4",idx:15},
+    134:{deck:"phase4",idx:13}, 135:null, 136:{deck:"phase4",idx:13}, 137:{deck:"phase4",idx:13}, 138:{deck:"phase4",idx:13}, 139:{deck:"phase4",idx:13},
+    140:null, 141:{deck:"phase4",idx:14}, 142:{deck:"phase4",idx:7}, 143:null, 144:null, 145:{deck:"phase4",idx:13}
   };
 
   var TOTAL_DAYS = 145;
@@ -2360,7 +2404,7 @@
             metaHtml += '<div class="day-meta"><b>Use case</b>'+usecase+'</div>';
           }
           var dayCard = DAY_CARD[num];
-          var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : "az305");
+          var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : (num <= 91 ? "az305" : "phase4"));
           var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
           var secs = timeSpent[num] || 0;
           var timeLabel = secs > 0 ? "⏱ " + Math.round(secs/60) + "m" : "";
@@ -2507,7 +2551,7 @@
     fcState.idx = 0;
   }
 
-  var DECK_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect" };
+  var DECK_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
 
   function fcRender(){
     var card = FLASHCARDS[fcState.deck][fcState.order[fcState.idx]];
@@ -2538,6 +2582,7 @@
   document.getElementById("fc-open-az900").addEventListener("click", function(){ showDayFlashcard("az900", 0); });
   document.getElementById("fc-open-az104").addEventListener("click", function(){ showDayFlashcard("az104", 0); });
   document.getElementById("fc-open-az305").addEventListener("click", function(){ showDayFlashcard("az305", 0); });
+  document.getElementById("fc-open-phase4").addEventListener("click", function(){ showDayFlashcard("phase4", 0); });
 
   // ===== Quiz =====
   var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
@@ -2786,7 +2831,7 @@
   document.getElementById("dm-flashcard-btn").addEventListener("click", function(){
     if(dmCurrentDay === null) return;
     var dayCard = DAY_CARD[dmCurrentDay];
-    var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : "az305");
+    var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : (dmCurrentDay <= 91 ? "az305" : "phase4"));
     if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
     else { showDayFlashcard(fallbackDeck, 0); }
   });
@@ -3173,16 +3218,68 @@
   }
 
   // -- Random flashcard --
+  // -- Random flashcard: shuffled queue across all decks, no repeats until the pool is exhausted --
+  var randomCardQueue = [];
+  var lastRandomCard = null;
+
+  function buildRandomCardQueue(){
+    var all = [];
+    Object.keys(FLASHCARDS).forEach(function(deck){
+      FLASHCARDS[deck].forEach(function(_, idx){ all.push({ deck: deck, idx: idx }); });
+    });
+    for(var i = all.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = all[i]; all[i] = all[j]; all[j] = tmp;
+    }
+    return all;
+  }
+
   document.getElementById("sp-random-card").addEventListener("click", function(){
-    var decks = ["az900","az104","az305"];
-    var deck = decks[Math.floor(Math.random()*decks.length)];
-    var idx = Math.floor(Math.random()*FLASHCARDS[deck].length);
+    if(randomCardQueue.length === 0){
+      randomCardQueue = buildRandomCardQueue();
+      // avoid showing the same card twice in a row right at the reshuffle boundary
+      if(lastRandomCard && randomCardQueue.length > 1 &&
+         randomCardQueue[0].deck === lastRandomCard.deck && randomCardQueue[0].idx === lastRandomCard.idx){
+        var t = randomCardQueue[0]; randomCardQueue[0] = randomCardQueue[1]; randomCardQueue[1] = t;
+      }
+    }
+    var next = randomCardQueue.shift();
+    lastRandomCard = next;
     spClosePanel();
-    showDayFlashcard(deck, idx);
+    showDayFlashcard(next.deck, next.idx);
   });
 
   // -- Quick notes (global scratchpad) --
   var spQuickNotesDirty = false;
+  // -- Latest Azure Updates (live feed, with graceful fallback if CORS blocks it) --
+  var AZURE_UPDATES_FEED = "https://www.microsoft.com/releasecommunications/api/v2/azure/rss";
+  async function spLoadAzureNews(){
+    var container = document.getElementById("sp-azure-news");
+    try{
+      var res = await fetch(AZURE_UPDATES_FEED);
+      if(!res.ok) throw new Error("Feed returned " + res.status);
+      var text = await res.text();
+      var xml = new DOMParser().parseFromString(text, "text/xml");
+      var items = Array.from(xml.querySelectorAll("item")).slice(0, 5);
+      if(items.length === 0) throw new Error("No items in feed");
+      container.innerHTML = items.map(function(item){
+        var title = item.querySelector("title") ? item.querySelector("title").textContent : "Untitled update";
+        var link = item.querySelector("link") ? item.querySelector("link").textContent : "https://azure.microsoft.com/en-us/updates/";
+        var pubDate = item.querySelector("pubDate") ? item.querySelector("pubDate").textContent : "";
+        var dateLabel = "";
+        try{ dateLabel = new Date(pubDate).toLocaleDateString(undefined, { month:"short", day:"numeric" }); }catch(e){}
+        return '<a class="sp-news-item" href="' + link + '" target="_blank" rel="noopener">' +
+          title.replace(/</g,"&lt;") +
+          (dateLabel ? '<span class="sp-news-date">' + dateLabel + '</span>' : '') +
+          '</a>';
+      }).join("");
+    }catch(e){
+      console.warn("Azure Updates feed unavailable (likely blocked by CORS in this browser):", e);
+      container.innerHTML = '<div class="sp-news-fallback">Live feed isn\'t reachable from this browser right now. ' +
+        '<a href="https://azure.microsoft.com/en-us/updates/" target="_blank" rel="noopener" style="color:var(--teal);">Browse the latest updates on Azure\'s site ↗</a></div>';
+    }
+  }
+
   async function spLoadQuickNotes(){
     try{
       var v = await store.get("quick-notes-global");
@@ -3239,6 +3336,7 @@
 
   fcResetOrder();
   fcRender();
+  spLoadAzureNews();
 
   // ===== Auth =====
   function initApp(){
