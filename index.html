@@ -13,40 +13,55 @@
 </script>
 <style>
   :root{
-    --bg:#0D1117;
-    --panel:#161B26;
-    --panel-2:#1C2330;
+    --bg:#111826;
+    --panel:#182234;
+    --panel-2:#1F2C40;
     --grid-minor:rgba(255,255,255,0.05);
-    --grid-major:rgba(111,214,196,0.10);
-    --ink:#E6EDF3;
-    --ink-muted:#9BA7B4;
-    --ink-dim:#6B7684;
-    --teal:#5EEAD4;
-    --amber:#FBBF24;
-    --border:#2A313D;
-    --border-soft:#1F2530;
+    --grid-major:rgba(91,141,239,0.12);
+    --ink:#EAF1F8;
+    --ink-muted:#9FB0C8;
+    --ink-dim:#6E8098;
+    --teal:#5B8DEF;
+    --amber:#F5A623;
+    --border:#2C3B52;
+    --border-soft:#28374C;
     --radius:12px;
     --radius-sm:8px;
     --shadow:0 8px 30px rgba(0,0,0,0.35);
     --shadow-sm:0 2px 10px rgba(0,0,0,0.25);
   }
   html[data-theme="light"]{
-    --bg:#F5F8FA;
+    --bg:#F5F7FB;
     --panel:#FFFFFF;
-    --panel-2:#EFF4F7;
+    --panel-2:#EEF2F9;
     --grid-minor:rgba(20,50,80,0.035);
-    --grid-major:rgba(11,130,113,0.07);
-    --ink:#1C2B3A;
-    --ink-muted:#52697D;
-    --ink-dim:#8398AB;
-    --teal:#0B8271;
-    --amber:#9A6B0C;
-    --border:#D6E1E8;
-    --border-soft:#E6EDF2;
+    --grid-major:rgba(47,111,228,0.08);
+    --ink:#1B2436;
+    --ink-muted:#54637D;
+    --ink-dim:#8492A8;
+    --teal:#2857C9;
+    --amber:#B5700A;
+    --border:#D9E0EC;
+    --border-soft:#E8ECF4;
     --radius:12px;
     --radius-sm:8px;
     --shadow:0 8px 30px rgba(20,40,60,0.10);
     --shadow-sm:0 2px 10px rgba(20,40,60,0.07);
+  }
+  /* Login screen always uses the light palette, regardless of the saved app theme preference */
+  #auth-screen{
+    --bg:#F5F7FB;
+    --panel:#FFFFFF;
+    --panel-2:#EEF2F9;
+    --grid-minor:rgba(20,50,80,0.035);
+    --grid-major:rgba(47,111,228,0.08);
+    --ink:#1B2436;
+    --ink-muted:#54637D;
+    --ink-dim:#8492A8;
+    --teal:#2857C9;
+    --amber:#B5700A;
+    --border:#D9E0EC;
+    --border-soft:#E8ECF4;
   }
   html[data-theme="light"] .titleblock,
   html[data-theme="light"] .ruler-wrap,
@@ -72,7 +87,7 @@
   body{
     margin:0;
     background:
-      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(111,214,196,0.05), transparent),
+      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(91,141,239,0.05), transparent),
       var(--bg);
     color:var(--ink);
     font-family: -apple-system, "Inter", "Segoe UI", Roboto, sans-serif;
@@ -161,7 +176,7 @@
   }
   .ruler-fill{
     position:absolute;top:0;left:0;bottom:0;
-    background:linear-gradient(90deg, rgba(111,214,196,0.55), rgba(111,214,196,0.85));
+    background:linear-gradient(90deg, rgba(91,141,239,0.55), rgba(91,141,239,0.85));
     transition:width .4s ease;
   }
   .ruler-ticks{
@@ -303,8 +318,8 @@
     transition:background .15s ease, border-color .15s ease;
     position:relative;
   }
-  .day-cell:hover{background:rgba(111,214,196,0.06);border-color:var(--border);}
-  .day-cell.done{background:rgba(111,214,196,0.09);}
+  .day-cell:hover{background:rgba(91,141,239,0.06);border-color:var(--border);}
+  .day-cell.done{background:rgba(91,141,239,0.09);}
   .day-cell.today{outline:1px solid var(--amber);outline-offset:-1px;}
   .day-check{
     width:16px;height:16px;
@@ -316,7 +331,7 @@
     color:var(--teal);
     cursor:pointer;
   }
-  .day-cell.done .day-check{border-color:var(--teal);background:rgba(111,214,196,0.15);}
+  .day-cell.done .day-check{border-color:var(--teal);background:rgba(91,141,239,0.15);}
   .day-main{flex:1; cursor:pointer;}
   .day-num{
     font-family: ui-monospace, monospace;
@@ -356,7 +371,7 @@
     text-decoration:none;
     margin-top:4px;
     letter-spacing:0.02em;
-    border-bottom:1px dotted rgba(111,214,196,0.4);
+    border-bottom:1px dotted rgba(91,141,239,0.4);
   }
   .day-link:hover{border-bottom-color:var(--teal);}
 
@@ -399,7 +414,7 @@
     cursor:pointer;
     font-family:inherit;
   }
-  .fc-tab.active{border-color:var(--teal);color:var(--teal);background:rgba(111,214,196,0.08);}
+  .fc-tab.active{border-color:var(--teal);color:var(--teal);background:rgba(91,141,239,0.08);}
   .fc-stage{
     display:flex;
     flex-direction:column;
@@ -440,7 +455,7 @@
   .fc-face.back{
     transform:rotateY(180deg);
     color:var(--teal);
-    background:rgba(111,214,196,0.06);
+    background:rgba(91,141,239,0.06);
   }
   .fc-hint{font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.06em;position:absolute;top:10px;left:14px;}
   .fc-controls{display:flex;gap:10px;align-items:center;}
@@ -506,7 +521,7 @@
   }
   .quiz-option:hover{border-color:var(--border);}
   .quiz-option input{margin-top:2px;}
-  .quiz-option.correct{border-color:var(--teal);background:rgba(111,214,196,0.08);}
+  .quiz-option.correct{border-color:var(--teal);background:rgba(91,141,239,0.08);}
   .quiz-option.incorrect{border-color:var(--amber);background:rgba(242,193,78,0.08);}
   .quiz-explain{
     font-size:12px;color:var(--ink-muted);margin-top:8px;padding:10px;
@@ -515,7 +530,7 @@
   .quiz-explain.show{display:block;}
   .quiz-score-banner{
     text-align:center;padding:20px;margin-bottom:20px;
-    border:1px solid var(--teal);background:rgba(111,214,196,0.06);
+    border:1px solid var(--teal);background:rgba(91,141,239,0.06);
     font-size:16px;font-weight:700;color:var(--teal);
   }
   .quiz-badge{
@@ -535,18 +550,19 @@
     display:flex;
     max-width:920px;
     width:100%;
+    max-height:94vh;
     border:1px solid var(--border);
     background:var(--panel);
-    overflow:hidden;
+    overflow-y:auto;
   }
   .auth-brand{
     flex:1;
     min-width:0;
     background:
-      linear-gradient(rgba(111,214,196,0.06) 1px, transparent 1px) 0 0/40px 40px,
-      linear-gradient(90deg, rgba(111,214,196,0.06) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(rgba(91,141,239,0.06) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, rgba(91,141,239,0.06) 1px, transparent 1px) 0 0/40px 40px,
       var(--panel-2);
-    padding:36px 32px;
+    padding:28px 32px;
     border-right:1px solid var(--border-soft);
     display:flex;
     flex-direction:column;
@@ -561,11 +577,11 @@
   .auth-brand-title{
     font-size:26px;font-weight:700;line-height:1.25;color:var(--ink);margin-bottom:14px;
   }
-  .auth-brand-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:26px;}
+  .auth-brand-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:16px;}
   .auth-features{list-style:none;margin:0;padding:0;}
   .auth-features li{
     display:flex;align-items:flex-start;gap:10px;
-    font-size:12.5px;color:var(--ink-muted);line-height:1.5;margin-bottom:12px;
+    font-size:12.5px;color:var(--ink-muted);line-height:1.4;margin-bottom:7px;
   }
   .auth-feature-icon{flex-shrink:0;font-size:14px;}
   .auth-box{
@@ -574,7 +590,15 @@
     max-width:380px;
     padding:36px 32px;
   }
-  .auth-title{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .auth-title{font-size:18px;font-weight:700;margin-bottom:4px;color:var(--ink-muted);}
+  .auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .auth-logo-mark{
+    width:36px;height:36px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg,#3B82F6,#10B981);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:13px;font-family:ui-monospace,monospace;
+  }
+  .auth-logo-text{font-size:12.5px;color:var(--ink-muted);letter-spacing:0.04em;font-weight:600;}
   .auth-sub{font-size:12px;color:var(--ink-muted);margin-bottom:20px;}
   .auth-field{margin-bottom:14px;}
   .auth-guest-btn{
@@ -588,6 +612,7 @@
     font-family:inherit;
   }
   .auth-guest-btn:hover{border-color:var(--ink-muted);color:var(--ink);}
+  .auth-divider{color:var(--ink-dim);font-size:11px;}
   .auth-guest-note{font-size:10px;color:var(--ink-dim);margin-top:8px;line-height:1.5;}
   @media (max-width:760px){
     .auth-brand{display:none;}
@@ -614,7 +639,7 @@
   .guest-banner.pulse{animation:guestpulse 0.6s ease;}
   @keyframes guestpulse{
     0%,100%{border-color:var(--amber);}
-    50%{border-color:var(--teal);background:rgba(111,214,196,0.12);}
+    50%{border-color:var(--teal);background:rgba(91,141,239,0.12);}
   }
   .auth-field label{
     display:block;
@@ -636,7 +661,7 @@
   .auth-field input:focus{outline:1px solid var(--teal);border-color:var(--teal);}
   .auth-btn{
     width:100%;
-    background:rgba(111,214,196,0.12);
+    background:rgba(91,141,239,0.12);
     border:1px solid var(--teal);
     color:var(--teal);
     padding:10px;
@@ -647,7 +672,7 @@
     font-family:inherit;
     margin-top:4px;
   }
-  .auth-btn:hover{background:rgba(111,214,196,0.2);}
+  .auth-btn:hover{background:rgba(91,141,239,0.2);}
   .auth-btn:disabled{opacity:0.5;cursor:not-allowed;}
   .auth-toggle{
     text-align:center;
@@ -667,7 +692,7 @@
     display:none;
   }
   .auth-msg.error{display:block;background:rgba(242,193,78,0.1);border:1px solid var(--amber);color:var(--amber);}
-  .auth-msg.success{display:block;background:rgba(111,214,196,0.1);border:1px solid var(--teal);color:var(--teal);}
+  .auth-msg.success{display:block;background:rgba(91,141,239,0.1);border:1px solid var(--teal);color:var(--teal);}
   .auth-config-warning{
     font-size:11px;color:var(--amber);
     background:rgba(242,193,78,0.08);
@@ -777,7 +802,7 @@
     display:flex;align-items:center;justify-content:center;
     font-size:14px;cursor:pointer;font-family:inherit;
   }
-  .wb-btn.active{border-color:var(--teal);color:var(--teal);background:rgba(111,214,196,0.1);}
+  .wb-btn.active{border-color:var(--teal);color:var(--teal);background:rgba(91,141,239,0.1);}
   .wb-btn:hover{border-color:var(--teal);}
   .wb-swatch{
     width:22px;height:22px;border-radius:50%;cursor:pointer;
@@ -803,24 +828,24 @@
 
   /* ===== Side panel (tools) ===== */
   .sp-toggle{
-    position:fixed;top:50%;left:0;transform:translateY(-50%);
-    background:var(--panel);border:1px solid var(--border);border-left:none;
+    position:fixed;top:50%;right:0;transform:translateY(-50%);
+    background:var(--panel);border:1px solid var(--border);border-right:none;
     color:var(--teal);padding:14px 8px;
     font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
-    writing-mode:vertical-rl;transform-origin:left center;cursor:pointer;font-family:inherit;
+    writing-mode:vertical-rl;transform-origin:right center;cursor:pointer;font-family:inherit;
     z-index:900;
   }
-  .sp-toggle:hover{background:rgba(111,214,196,0.08);}
+  .sp-toggle:hover{background:rgba(91,141,239,0.08);}
   .side-panel{
-    position:fixed;top:0;left:0;bottom:0;width:300px;max-width:88vw;
-    background:var(--panel);border-right:1px solid var(--border);
-    transform:translateX(-100%);transition:transform .25s ease;
+    position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;
+    background:var(--panel);border-left:1px solid var(--border);
+    transform:translateX(100%);transition:transform .25s ease;
     z-index:950;overflow-y:auto;padding:18px 16px 40px;
   }
   .side-panel.open{transform:translateX(0);}
-  #app-root{transition:margin-left .25s ease;}
-  @media (min-width:900px){
-    body.sp-open #app-root{margin-left:300px;}
+  #app-root{padding-left:0;}
+  @media (min-width:901px){
+    #app-root{padding-left:222px;}
   }
   .sp-header{
     display:flex;justify-content:space-between;align-items:center;
@@ -889,7 +914,7 @@
     cursor:pointer;z-index:920;
     box-shadow:0 4px 16px rgba(0,0,0,0.25);
   }
-  .floating-timer:hover{background:rgba(111,214,196,0.08);}
+  .floating-timer:hover{background:rgba(91,141,239,0.08);}
   .floating-timer-dot{
     width:8px;height:8px;border-radius:50%;background:var(--teal);
     animation:dmpulse 1.5s infinite;
@@ -973,7 +998,7 @@
   input:focus, textarea:focus, select:focus{
     outline:none !important;
     border-color:var(--teal) !important;
-    box-shadow:0 0 0 3px rgba(94,234,212,0.15);
+    box-shadow:0 0 0 3px rgba(91,141,239,0.15);
   }
 
   /* Tabs — pill-style instead of hairline underline blocks */
@@ -984,7 +1009,7 @@
     background:var(--panel-2);
   }
   .dm-tab.active, .fc-tab.active{
-    background:rgba(94,234,212,0.12) !important;
+    background:rgba(91,141,239,0.12) !important;
     border-color:var(--teal) !important;
   }
   .wb-tab, .wb-btn{border-radius:8px !important;}
@@ -1010,8 +1035,17 @@
   /* Week bar chart rounded */
   .sp-week-bar-track, .sp-week-bar-fill{border-radius:4px;}
 
-  /* Auth illustration container gets a touch more breathing room */
-  .auth-brand{background:var(--panel-2) !important;}
+  /* Auth panel gets a vivid azure-toned wash instead of flat gray */
+  .auth-brand{
+    background:
+      radial-gradient(circle at 15% 15%, rgba(91,141,239,0.18), transparent 55%),
+      radial-gradient(circle at 85% 85%, rgba(16,185,129,0.14), transparent 55%),
+      var(--panel-2) !important;
+  }
+  .auth-stats{display:flex;gap:22px;margin-bottom:24px;}
+  .auth-stat{display:flex;flex-direction:column;gap:2px;}
+  .auth-stat b{font-size:22px;color:var(--teal);font-family:ui-monospace,monospace;}
+  .auth-stat span{font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.05em;}
 
   /* Smoother scrollbars where supported */
   ::-webkit-scrollbar{width:10px;height:10px;}
@@ -1109,15 +1143,53 @@
   .auth-illustration circle[stroke="var(--teal)"]{stroke:#3B82F6;}
   .auth-illustration circle[stroke="var(--amber)"]{stroke:#F97316;}
 
+  /* ========================================================= */
+  /* COURSE NAVIGATION — persistent left rail replacing the      */
+  /* single long scrolling page.                                 */
+  /* ========================================================= */
+  .course-nav{
+    position:fixed;top:0;left:0;bottom:0;width:222px;
+    background:var(--panel);border-right:1px solid var(--border-soft);
+    padding:20px 12px;display:flex;flex-direction:column;gap:6px;
+    overflow-y:auto;z-index:400;
+  }
+  .course-nav-brand{font-size:11px;color:var(--ink-dim);margin:0 6px 10px;letter-spacing:0.06em;text-transform:uppercase;}
+  .course-nav-btn{
+    display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+    text-align:left;background:transparent;border:1px solid transparent;border-radius:var(--radius-sm);
+    padding:10px 12px;cursor:pointer;font-family:inherit;width:100%;
+  }
+  .course-nav-btn:hover{background:var(--panel-2);}
+  .course-nav-btn.active{background:color-mix(in srgb, var(--nav-accent) 14%, var(--panel-2));border-color:var(--nav-accent);}
+  .course-nav-code{font-size:12px;font-weight:700;color:var(--nav-accent);font-family:ui-monospace,monospace;}
+  .course-nav-title{font-size:11px;color:var(--ink-muted);}
+  .course-nav-bar{width:100%;height:4px;background:var(--border-soft);border-radius:4px;overflow:hidden;margin-top:2px;}
+  .course-nav-bar-fill{display:block;height:100%;background:var(--nav-accent);width:0%;transition:width .3s ease;}
+  @media (max-width:900px){
+    .course-nav{position:static;width:auto;flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border-soft);padding:10px;}
+    .course-nav-brand{display:none;}
+    .course-nav-btn{flex:0 0 auto;min-width:150px;}
+  }
+
+  /* Phase header gets a subtle wash of its course accent color */
+  .phase-header{
+    background:linear-gradient(120deg, color-mix(in srgb, var(--phase-accent, var(--teal)) 8%, transparent), transparent 70%);
+  }
+
+  /* Quiz progress bar */
+  .quiz-progress-wrap{margin:-4px 0 16px;}
+  .quiz-progress-track{height:6px;background:var(--panel-2);border:1px solid var(--border-soft);border-radius:6px;overflow:hidden;}
+  .quiz-progress-fill{display:block;height:100%;width:0%;background:linear-gradient(90deg,#3B82F6,#10B981);transition:width .25s ease;}
+  .quiz-progress-text{font-size:10px;color:var(--ink-dim);margin-top:6px;font-family:ui-monospace,monospace;}
 </style>
 </head>
 <body>
 
-<div class="auth-screen" id="auth-screen">
+<div class="auth-screen" id="auth-screen" style="position:relative;">
   <div class="auth-shell">
     <div class="auth-brand">
-      <div class="auth-brand-badge font-tech">Azure Certification Roadmap</div>
-      <svg class="auth-illustration" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <div class="auth-brand-badge font-tech">AZURE CERTIFICATION ROADMAP<br/></div>
+      <svg class="auth-illustration" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:380px;height:121px;">
         <line x1="160" y1="70" x2="60" y2="24" stroke="var(--border)" stroke-width="1.5"/>
         <line x1="160" y1="70" x2="260" y2="24" stroke="var(--border)" stroke-width="1.5"/>
         <line x1="160" y1="70" x2="60" y2="116" stroke="var(--border)" stroke-width="1.5"/>
@@ -1131,8 +1203,13 @@
         <circle cx="260" cy="116" r="9" fill="none" stroke="var(--amber)" stroke-width="2"/>
         <circle cx="160" cy="18" r="7" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
       </svg>
-      <div class="auth-brand-title">Foundations to<br>Solutions Architect</div>
+      <div class="auth-brand-title" style="text-align:left;">Foundations to<br>Solutions Architect</div>
       <div class="auth-brand-sub">A 145-day guided path through AZ-900, AZ-104, AZ-305, and real-world architecture practice.</div>
+      <div class="auth-stats" style="justify-content:flex-start;align-items:center;display:flex;">
+        <div class="auth-stat"><b>145</b><span>Days</span></div>
+        <div class="auth-stat"><b style="text-align:center;">3</b><span>Certifications</span></div>
+        <div class="auth-stat"><b style="text-align:center;">85+</b><span>Flashcards</span></div>
+      </div>
       <ul class="auth-features">
         <li><span class="auth-feature-icon">📅</span>145-day structured roadmap across 4 phases</li>
         <li><span class="auth-feature-icon">▶</span>Embedded video lessons, no leaving the site</li>
@@ -1140,9 +1217,14 @@
         <li><span class="auth-feature-icon">✏️</span>Whiteboard for architecture diagrams</li>
         <li><span class="auth-feature-icon">⏱</span>Time tracking &amp; progress synced to your account</li>
       </ul>
+      <p style="margin:0;font-size:12px;font-style:italic;text-align:right;font-weight:100;">Study with BALAJI RAMAMOORTHY</p>
     </div>
 
     <div class="auth-box">
+      <div class="auth-logo">
+        <div class="auth-logo-mark">AZ</div>
+        <div class="auth-logo-text">Certification Roadmap</div>
+      </div>
       <div class="auth-title font-tech" id="auth-title-text">Sign In</div>
       <div class="auth-sub">Your progress syncs to your account, accessible from any device.</div>
       <div id="auth-config-warning" class="auth-config-warning" style="display:none;">
@@ -1163,7 +1245,7 @@
       </div>
       <div class="auth-msg" id="auth-msg"></div>
 
-      <div class="auth-divider">or</div>
+      <div class="auth-divider" style="text-align:center;">or</div>
       <button class="auth-guest-btn" id="auth-guest-btn">👀 Continue as Guest (preview only)</button>
       <div class="auth-guest-note">Guests can browse the day list and topics, but videos, docs, flashcards, whiteboard, and progress tracking require a free account.</div>
     </div>
@@ -1171,6 +1253,34 @@
 </div>
 
 <div id="app-root" style="display:none;">
+
+<nav class="course-nav" id="course-nav">
+  <div class="course-nav-brand">Roadmap</div>
+  <button type="button" class="course-nav-btn" data-course="0" style="--nav-accent:#3B82F6;">
+    <span class="course-nav-code">AZ-900</span>
+    <span class="course-nav-title">Fundamentals</span>
+    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-0"></span></span>
+  </button>
+  <button type="button" class="course-nav-btn" data-course="1" style="--nav-accent:#8B5CF6;">
+    <span class="course-nav-code">AZ-104</span>
+    <span class="course-nav-title">Administrator</span>
+    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-1"></span></span>
+  </button>
+  <button type="button" class="course-nav-btn" data-course="2" style="--nav-accent:#10B981;">
+    <span class="course-nav-code">AZ-305</span>
+    <span class="course-nav-title">Solutions Architect</span>
+    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-2"></span></span>
+  </button>
+  <button type="button" class="course-nav-btn" data-course="3" style="--nav-accent:#F97316;">
+    <span class="course-nav-code">Phase 4</span>
+    <span class="course-nav-title">Real-World Practice</span>
+    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-3"></span></span>
+  </button>
+  <button type="button" class="course-nav-btn" data-course="resources" style="--nav-accent:#5B8DEF;">
+    <span class="course-nav-code">Resources</span>
+    <span class="course-nav-title">Notes · Links · Cards</span>
+  </button>
+</nav>
 
 <div class="guest-banner" id="guest-banner" style="display:none;">
   <span>👀 You're browsing as a <b>guest</b> — videos, docs, flashcards, whiteboard, and progress tracking are locked.</span>
@@ -1291,9 +1401,9 @@
       <div class="ruler-today" id="ruler-today" style="display:none;"></div>
     </div>
     <div class="phase-legend font-tech">
-      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-900 · days 1–14</div>
-      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-104 · days 15–56</div>
-      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-305 · days 57–91</div>
+      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-900 · days 1–14</div>
+      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-104 · days 15–56</div>
+      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-305 · days 57–91</div>
       <div class="item"><span class="swatch" style="background:rgba(242,193,78,0.4)"></span>Phase 4 (real-world) · days 92–145</div>
     </div>
     <div class="controls">
@@ -1301,7 +1411,6 @@
         <input type="date" id="start-date">
       </label>
       <button class="btn" id="reset-btn">Reset progress</button>
-      <button class="btn" id="expand-all-btn">Expand all</button>
     </div>
   </div>
 
@@ -1326,6 +1435,7 @@
 
   <div id="phases"></div>
 
+  <div id="resources-view" style="display:none;">
   <div class="notes">
     <div class="tb-label font-tech">Notes on this sheet</div>
     <ul>
@@ -1403,6 +1513,7 @@
       <button class="btn" id="fc-open-az305">Browse AZ-305 deck</button>
       <button class="btn" id="fc-open-phase4">Browse Phase 4 deck</button>
     </div>
+  </div>
   </div>
 
 </div>
@@ -1494,6 +1605,10 @@
   <div class="quiz-modal">
     <button class="fc-modal-close" id="quiz-close" aria-label="Close">✕</button>
     <div class="fc-modal-title font-tech" id="quiz-title">Quiz</div>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+      <div class="quiz-progress-text" id="quiz-progress-text">0 answered</div>
+    </div>
     <div id="quiz-body"></div>
   </div>
 </div>
@@ -1900,7 +2015,7 @@
       code:"PHASE 4", title:"Real-World Practice",
       sub:"Infrastructure as Code · Azure DevOps CI/CD · Landing Zones & CAF · Security &amp; FinOps · Portfolio",
       weeks:[
-        { label:"Week 1 · Well-Architected &amp; networking hands-on · Days 92–97", days:[
+        { label:"Week 1 · Well-Architected &amp; networking hands-on (→ AZ-104/AZ-305 networking) · Days 92–97", days:[
           [92,"Well-Architected Framework — Reliability &amp; Security pillars, applied", "https://learn.microsoft.com/en-us/training/paths/azure-well-architected-framework/",
             "Pick a real (or past-job) architecture and score it against the Reliability and Security pillars.",
             "A team retrofits WAF pillar reviews into their existing architecture instead of just designing new systems with them.", "https://youtu.be/vq9LuCM4YP4"],
@@ -1980,7 +2095,7 @@
             "Add a 'terraform destroy' stage to your pipeline that requires manual sign-off before running.",
             "Manual approval gates on destructive actions are a non-negotiable safety pattern in real pipelines.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/process/approvals"]
         ]},
-        { label:"Week 5 · Landing Zones &amp; Cloud Adoption Framework · Days 116–121", days:[
+        { label:"Week 5 · Landing Zones &amp; Cloud Adoption Framework (→ AZ-305 governance) · Days 116–121", days:[
           [116,"Service Principals and managed identities for pipeline auth", "https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints",
             "Replace any hardcoded credentials in your pipeline with a service connection using a managed identity.",
             "Hardcoded secrets in pipelines are one of the most common real-world security incidents.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints"],
@@ -2000,7 +2115,7 @@
             "Sketch a management group + RBAC design for a company with 3 business units and 2 environments each.",
             "This is the exact whiteboard exercise many architect interviews actually ask for.", "https://learn.microsoft.com/en-us/azure/governance/management-groups/overview"]
         ]},
-        { label:"Week 6 · Landing Zone project &amp; security · Days 122–127", days:[
+        { label:"Week 6 · Landing Zone project &amp; security (→ AZ-104/AZ-900 security) · Days 122–127", days:[
           [122,"Project — design a landing zone HLD for a fictional company", "https://app.diagrams.net",
             "Produce a high-level design (HLD) diagram for a landing zone serving a fictional financial services company.",
             "Portfolio piece #4 — landing zone design is one of the highest-value skills for a Solutions Architect role.", "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/"],
@@ -2020,7 +2135,7 @@
             "Set up a real alert on your lab environment that would actually page someone.",
             "Alert fatigue from badly-tuned rules is a real operational problem — designing good alerts is a skill.", "https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-overview"]
         ]},
-        { label:"Week 7 · FinOps, Arc &amp; security project · Days 128–133", days:[
+        { label:"Week 7 · FinOps, Arc &amp; security project (→ AZ-305 cost &amp; ops) · Days 128–133", days:[
           [128,"Cost Management and tagging strategy for FinOps", "https://learn.microsoft.com/en-us/azure/cost-management-billing/",
             "Design a tagging taxonomy (cost center, environment, owner) and apply it across your lab resources.",
             "Untagged resources are the #1 reason FinOps teams can't answer 'who owns this cost.'", "https://learn.microsoft.com/en-us/azure/cost-management-billing/"],
@@ -2233,6 +2348,7 @@
   var dayNotes = {};    // { dayNum: text }
   var quizScores = {};  // { quizKey: {correct, total} } — best score
   var startDate = null;
+  var activeCourse = 0; // 0-3 = phase index, "resources" = resources tab
 
   function pad(n){ return n<10 ? "0"+n : ""+n; }
 
@@ -2301,147 +2417,143 @@
     return diffDays;
   }
 
-  var phaseCollapsed = {}; // pIdx -> boolean, persists across renders so manual toggles survive
+  var PHASE_COLORS = ["#3B82F6","#8B5CF6","#10B981","#F97316"];
+  var QUIZ_KEYS = ["az900","az104","az305","phase4"];
 
-  function render(){
+  function renderCoursePhase(pIdx){
     var container = document.getElementById("phases");
     container.innerHTML = "";
     var todayDay = computeTodayDay();
+    var phase = DATA[pIdx];
+    var allDays = [];
+    phase.weeks.forEach(function(w){ w.days.forEach(function(d){ allDays.push(d[0]); }); });
+    var doneCount = allDays.filter(function(n){ return progress[n]; }).length;
 
-    // Determine the "active" phase (first one not fully complete) once, for smart defaults
-    var activePhaseIdx = 0;
-    for(var pi=0; pi<DATA.length; pi++){
-      var pDays = [];
-      DATA[pi].weeks.forEach(function(w){ w.days.forEach(function(d){ pDays.push(d[0]); }); });
-      var pDone = pDays.filter(function(n){ return progress[n]; }).length;
-      if(pDone < pDays.length){ activePhaseIdx = pi; break; }
-      activePhaseIdx = pi;
-    }
+    var phaseEl = document.createElement("div");
+    phaseEl.className = "phase";
+    phaseEl.style.setProperty("--phase-accent", PHASE_COLORS[pIdx]);
 
+    var quizKey = QUIZ_KEYS[pIdx];
+    var bestScore = quizScores[quizKey];
+    var scoreText = bestScore ? ("Best: " + bestScore.correct + "/" + bestScore.total) : "Not taken";
+
+    var header = document.createElement("div");
+    header.className = "phase-header";
+    header.innerHTML =
+      '<div class="phase-header-left">'+
+        '<div class="phase-num font-mono">0'+(pIdx+1)+'</div>'+
+        '<div>'+
+          '<div class="phase-title font-tech">'+phase.code+' — '+phase.title+'</div>'+
+          '<div class="phase-sub">'+phase.sub+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">'+
+        '<div class="quiz-badge'+(bestScore && bestScore.correct===bestScore.total ? ' pass' : '')+'">'+scoreText+'</div>'+
+        '<button type="button" class="btn quiz-open-btn" data-quiz="'+quizKey+'">Take Quiz</button>'+
+        '<div class="phase-progress-text">'+doneCount+' / '+allDays.length+'</div>'+
+      '</div>';
+    header.querySelector(".quiz-open-btn").addEventListener("click", function(e){
+      e.stopPropagation();
+      openQuiz(quizKey);
+    });
+
+    var body = document.createElement("div");
+    body.className = "phase-body";
+
+    phase.weeks.forEach(function(week){
+      var wb = document.createElement("div");
+      wb.className = "week-block";
+      var wl = document.createElement("div");
+      wl.className = "week-label font-tech";
+      wl.textContent = week.label;
+      wb.appendChild(wl);
+
+      var grid = document.createElement("div");
+      grid.className = "day-grid";
+
+      week.days.forEach(function(row){
+        var num=row[0], topic=row[1], link=row[2], lab=row[3], usecase=row[4], video=row[5];
+        var cell = document.createElement("div");
+        cell.className = "day-cell" + (progress[num] ? " done" : "") + (todayDay===num ? " today" : "");
+
+        var check = document.createElement("div");
+        check.className = "day-check";
+        check.tabIndex = 0;
+        check.setAttribute("role","checkbox");
+        check.setAttribute("aria-checked", progress[num] ? "true" : "false");
+        check.textContent = progress[num] ? "✓" : "";
+        function toggle(){
+          progress[num] = !progress[num];
+          saveProgress();
+          render();
+        }
+        check.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
+        check.addEventListener("keydown", function(e){
+          if(e.key==="Enter" || e.key===" "){ e.preventDefault(); e.stopPropagation(); toggle(); }
+        });
+
+        var main = document.createElement("div");
+        main.className = "day-main";
+        var metaHtml = '<div class="day-meta"><b>Lab</b>'+lab+'</div>';
+        if(usecase && usecase !== "—"){
+          metaHtml += '<div class="day-meta"><b>Use case</b>'+usecase+'</div>';
+        }
+        var dayCard = DAY_CARD[num];
+        var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : (num <= 91 ? "az305" : "phase4"));
+        var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
+        var secs = timeSpent[num] || 0;
+        var timeLabel = secs > 0 ? "⏱ " + Math.round(secs/60) + "m" : "";
+        main.innerHTML =
+          '<span class="day-num font-mono">DAY '+num+(todayDay===num ? " · TODAY" : "")+
+            (timeLabel ? '<span class="day-time-badge"> · '+timeLabel+'</span>' : '')+'</span>'+
+          '<div class="day-topic">'+topic+'</div>'+
+          metaHtml+
+          '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">'+
+            '<button type="button" class="day-link open-lesson-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">Open lesson →</button>'+
+            '<button type="button" class="day-link open-video-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">▶ Video</button>'+
+            '<button type="button" class="day-link open-docs-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">📄 Docs</button>'+
+            '<button type="button" class="day-link fc-jump-btn" style="background:none;border:none;padding:0;font-size:10px;letter-spacing:0.02em;cursor:pointer;">'+fcLabel+'</button>'+
+          '</div>';
+        main.querySelector(".open-lesson-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-overview"); });
+        main.querySelector(".open-video-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-video"); });
+        main.querySelector(".open-docs-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-docs"); });
+        main.querySelector(".fc-jump-btn").addEventListener("click", function(e){
+          e.stopPropagation();
+          if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
+          else { showDayFlashcard(fallbackDeck, 0); }
+        });
+        main.addEventListener("click", function(){ openDayModal(num, "dm-overview"); });
+
+        cell.appendChild(check);
+        cell.appendChild(main);
+        grid.appendChild(cell);
+      });
+
+      wb.appendChild(grid);
+      body.appendChild(wb);
+    });
+
+    phaseEl.appendChild(header);
+    phaseEl.appendChild(body);
+    container.appendChild(phaseEl);
+  }
+
+  function updateNavProgress(){
     DATA.forEach(function(phase, pIdx){
       var allDays = [];
       phase.weeks.forEach(function(w){ w.days.forEach(function(d){ allDays.push(d[0]); }); });
       var doneCount = allDays.filter(function(n){ return progress[n]; }).length;
-
-      if(phaseCollapsed[pIdx] === undefined){
-        phaseCollapsed[pIdx] = (pIdx !== activePhaseIdx);
-      }
-
-      var phaseEl = document.createElement("div");
-      phaseEl.className = "phase" + (phaseCollapsed[pIdx] ? " collapsed" : "");
-      var PHASE_COLORS = ["#3B82F6","#8B5CF6","#10B981","#F97316"];
-      phaseEl.style.setProperty("--phase-accent", PHASE_COLORS[pIdx]);
-
-      var quizKeys = ["az900","az104","az305","phase4"];
-      var quizKey = quizKeys[pIdx];
-      var bestScore = quizScores[quizKey];
-      var scoreText = bestScore ? ("Best: " + bestScore.correct + "/" + bestScore.total) : "Not taken";
-
-      var header = document.createElement("div");
-      header.className = "phase-header";
-      header.innerHTML =
-        '<div class="phase-header-left">'+
-          '<div class="phase-num font-mono">0'+(pIdx+1)+'</div>'+
-          '<div>'+
-            '<div class="phase-title font-tech">'+phase.code+' — '+phase.title+'</div>'+
-            '<div class="phase-sub">'+phase.sub+'</div>'+
-          '</div>'+
-        '</div>'+
-        '<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">'+
-          '<div class="quiz-badge'+(bestScore && bestScore.correct===bestScore.total ? ' pass' : '')+'">'+scoreText+'</div>'+
-          '<button type="button" class="btn quiz-open-btn" data-quiz="'+quizKey+'">Take Quiz</button>'+
-          '<div class="phase-progress-text">'+doneCount+' / '+allDays.length+'</div>'+
-          '<div class="chevron"></div>'+
-        '</div>';
-      header.querySelector(".quiz-open-btn").addEventListener("click", function(e){
-        e.stopPropagation();
-        openQuiz(quizKey);
-      });
-      header.addEventListener("click", function(){
-        phaseCollapsed[pIdx] = !phaseCollapsed[pIdx];
-        phaseEl.classList.toggle("collapsed");
-      });
-
-      var body = document.createElement("div");
-      body.className = "phase-body";
-
-      phase.weeks.forEach(function(week){
-        var wb = document.createElement("div");
-        wb.className = "week-block";
-        var wl = document.createElement("div");
-        wl.className = "week-label font-tech";
-        wl.textContent = week.label;
-        wb.appendChild(wl);
-
-        var grid = document.createElement("div");
-        grid.className = "day-grid";
-
-        week.days.forEach(function(row){
-          var num=row[0], topic=row[1], link=row[2], lab=row[3], usecase=row[4], video=row[5];
-          var cell = document.createElement("div");
-          cell.className = "day-cell" + (progress[num] ? " done" : "") + (todayDay===num ? " today" : "");
-
-          var check = document.createElement("div");
-          check.className = "day-check";
-          check.tabIndex = 0;
-          check.setAttribute("role","checkbox");
-          check.setAttribute("aria-checked", progress[num] ? "true" : "false");
-          check.textContent = progress[num] ? "✓" : "";
-          function toggle(){
-            progress[num] = !progress[num];
-            saveProgress();
-            render();
-          }
-          check.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
-          check.addEventListener("keydown", function(e){
-            if(e.key==="Enter" || e.key===" "){ e.preventDefault(); e.stopPropagation(); toggle(); }
-          });
-
-          var main = document.createElement("div");
-          main.className = "day-main";
-          var metaHtml = '<div class="day-meta"><b>Lab</b>'+lab+'</div>';
-          if(usecase && usecase !== "—"){
-            metaHtml += '<div class="day-meta"><b>Use case</b>'+usecase+'</div>';
-          }
-          var dayCard = DAY_CARD[num];
-          var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : (num <= 91 ? "az305" : "phase4"));
-          var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
-          var secs = timeSpent[num] || 0;
-          var timeLabel = secs > 0 ? "⏱ " + Math.round(secs/60) + "m" : "";
-          main.innerHTML =
-            '<span class="day-num font-mono">DAY '+num+(todayDay===num ? " · TODAY" : "")+
-              (timeLabel ? '<span class="day-time-badge"> · '+timeLabel+'</span>' : '')+'</span>'+
-            '<div class="day-topic">'+topic+'</div>'+
-            metaHtml+
-            '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">'+
-              '<button type="button" class="day-link open-lesson-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">Open lesson →</button>'+
-              '<button type="button" class="day-link open-video-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">▶ Video</button>'+
-              '<button type="button" class="day-link open-docs-btn" style="background:none;border:none;padding:0;font-size:10px;cursor:pointer;">📄 Docs</button>'+
-              '<button type="button" class="day-link fc-jump-btn" style="background:none;border:none;padding:0;font-size:10px;letter-spacing:0.02em;cursor:pointer;">'+fcLabel+'</button>'+
-            '</div>';
-          main.querySelector(".open-lesson-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-overview"); });
-          main.querySelector(".open-video-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-video"); });
-          main.querySelector(".open-docs-btn").addEventListener("click", function(e){ e.stopPropagation(); openDayModal(num, "dm-docs"); });
-          main.querySelector(".fc-jump-btn").addEventListener("click", function(e){
-            e.stopPropagation();
-            if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
-            else { showDayFlashcard(fallbackDeck, 0); }
-          });
-          main.addEventListener("click", function(){ openDayModal(num, "dm-overview"); });
-
-          cell.appendChild(check);
-          cell.appendChild(main);
-          grid.appendChild(cell);
-        });
-
-        wb.appendChild(grid);
-        body.appendChild(wb);
-      });
-
-      phaseEl.appendChild(header);
-      phaseEl.appendChild(body);
-      container.appendChild(phaseEl);
+      var pct = Math.round((doneCount/allDays.length)*100);
+      var fill = document.getElementById("nav-bar-"+pIdx);
+      if(fill){ fill.style.width = pct + "%"; }
     });
+  }
+
+  function render(){
+    if(activeCourse !== "resources"){
+      renderCoursePhase(activeCourse);
+    }
+    updateNavProgress();
 
     var doneTotal = Object.keys(progress).filter(function(k){ return progress[k]; }).length;
     var pct = Math.round((doneTotal / TOTAL_DAYS) * 100);
@@ -2463,6 +2575,7 @@
     }
 
     var todayMarker = document.getElementById("ruler-today");
+    var todayDay = computeTodayDay();
     if(todayDay){
       todayMarker.style.display = "block";
       todayMarker.style.left = ((todayDay-1)/TOTAL_DAYS*100) + "%";
@@ -2470,6 +2583,33 @@
       todayMarker.style.display = "none";
     }
   }
+
+  function computeDefaultActiveCourse(){
+    for(var pi=0; pi<DATA.length; pi++){
+      var pDays = [];
+      DATA[pi].weeks.forEach(function(w){ w.days.forEach(function(d){ pDays.push(d[0]); }); });
+      var pDone = pDays.filter(function(n){ return progress[n]; }).length;
+      if(pDone < pDays.length){ return pi; }
+    }
+    return DATA.length - 1;
+  }
+
+  function switchCourse(course){
+    activeCourse = course;
+    document.querySelectorAll(".course-nav-btn").forEach(function(b){
+      b.classList.toggle("active", b.dataset.course === String(course));
+    });
+    document.getElementById("phases").style.display = (course === "resources") ? "none" : "block";
+    document.getElementById("resources-view").style.display = (course === "resources") ? "block" : "none";
+    render();
+  }
+
+  document.querySelectorAll(".course-nav-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var c = btn.dataset.course;
+      switchCourse(c === "resources" ? "resources" : parseInt(c, 10));
+    });
+  });
 
   var renewalDates = { az104:null, az305:null };
 
@@ -2530,15 +2670,6 @@
       saveProgress();
       render();
     }
-  });
-
-  document.getElementById("expand-all-btn").addEventListener("click", function(e){
-    var collapsedAny = document.querySelectorAll(".phase.collapsed").length > 0;
-    document.querySelectorAll(".phase").forEach(function(p, idx){
-      if(collapsedAny){ p.classList.remove("collapsed"); phaseCollapsed[idx] = false; }
-      else { p.classList.add("collapsed"); phaseCollapsed[idx] = true; }
-    });
-    e.target.textContent = collapsedAny ? "Collapse all" : "Expand all";
   });
 
   // ===== Flashcards =====
@@ -2607,6 +2738,19 @@
     html += '<button class="btn" id="quiz-submit-btn" style="width:100%;padding:12px;">Submit Quiz</button>';
     html += '<div id="quiz-result" style="display:none;"></div>';
     body.innerHTML = html;
+
+    function updateQuizProgress(){
+      var answered = 0;
+      questions.forEach(function(q, qi){
+        if(document.querySelector('input[name="quiz-q-'+qi+'"]:checked')) answered++;
+      });
+      document.getElementById("quiz-progress-fill").style.width = Math.round((answered/questions.length)*100) + "%";
+      document.getElementById("quiz-progress-text").textContent = answered + " / " + questions.length + " answered";
+    }
+    updateQuizProgress();
+    body.querySelectorAll('input[type="radio"]').forEach(function(inp){
+      inp.addEventListener("change", updateQuizProgress);
+    });
 
     document.getElementById("quiz-submit-btn").addEventListener("click", function(){
       quizSubmit(quizKey, questions);
@@ -3343,7 +3487,10 @@
     document.getElementById("auth-screen").style.display = "none";
     document.getElementById("app-root").style.display = "block";
     document.getElementById("account-email").textContent = currentUser.email;
-    loadState().then(render);
+    loadState().then(function(){
+      activeCourse = computeDefaultActiveCourse();
+      switchCourse(activeCourse);
+    });
     loadRenewalDates();
     spLoadQuickNotes();
   }
@@ -3471,7 +3618,8 @@
     document.getElementById("guest-banner").style.display = "flex";
     document.getElementById("sp-quicknotes").setAttribute("readonly", "readonly");
     document.getElementById("sp-quicknotes").placeholder = "Sign up to use Quick Notes.";
-    render();
+    activeCourse = 0;
+    switchCourse(0);
   });
 
   document.getElementById("guest-register-btn").addEventListener("click", goToSignup);
