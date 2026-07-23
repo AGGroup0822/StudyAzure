@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
+  // See setup instructions — Project Settings → API in your Supabase dashboard.
+  window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
+  window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
+</script>
+<style>
+  :root{
+    --bg:#0E2A47;
+    --panel:#123A5E;
+    --panel-2:#0F3252;
+    --grid-minor:rgba(255,255,255,0.05);
+    --grid-major:rgba(111,214,196,0.10);
+    --ink:#EAF3FA;
+    --ink-muted:#87ADC9;
+    --ink-dim:#5C82A0;
+    --teal:#6FD6C4;
+    --amber:#F2C14E;
+    --border:#28527A;
+    --border-soft:#1D4468;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0/88px 88px,
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0/88px 88px,
+      linear-gradient(var(--grid-minor) 1px, transparent 1px) 0 0/22px 22px,
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px) 0 0/22px 22px,
+      var(--bg);
+    color:var(--ink);
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .font-tech{
+    font-family: "Bahnschrift", "DIN Alternate", "Arial Narrow", "Segoe UI", system-ui, sans-serif;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .font-mono{
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", monospace;
+  }
+  a{color:var(--teal);}
+
+  .sheet{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 20px 90px;
+  }
+  .titleblock{
+    border:1px solid var(--border);
+    background:var(--panel);
+    display:grid;
+    grid-template-columns: 1.4fr 1px repeat(5, 1fr);
+    align-items:stretch;
+    margin-bottom:22px;
+  }
+  .titleblock .cell{
+    padding:12px 16px;
+    border-right:1px solid var(--border-soft);
+  }
+  .titleblock .cell:last-child{border-right:none;}
+  .titleblock .divider{background:var(--border);}
+  .tb-title{
+    font-size:20px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .tb-title small{
+    display:block;
+    font-size:11px;
+    color:var(--ink-muted);
+    font-weight:500;
+    margin-top:4px;
+    text-transform:none;
+    letter-spacing:0.02em;
+  }
+  .tb-label{
+    font-size:10px;
+    color:var(--ink-dim);
+    margin-bottom:6px;
+  }
+  .tb-value{
+    font-size:15px;
+    color:var(--teal);
+  }
+
+  .ruler-wrap{
+    border:1px solid var(--border);
+    background:var(--panel);
+    padding:16px 18px 12px;
+    margin-bottom:22px;
+  }
+  .ruler-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .ruler-head .label{font-size:12px;color:var(--ink-muted);}
+  .ruler-head .stat{font-size:13px;color:var(--teal);}
+  .ruler{
+    position:relative;
+    height:34px;
+    border:1px solid var(--border);
+    background:var(--panel-2);
+    overflow:hidden;
+  }
+  .ruler-fill{
+    position:absolute;top:0;left:0;bottom:0;
+    background:linear-gradient(90deg, rgba(111,214,196,0.55), rgba(111,214,196,0.85));
+    transition:width .4s ease;
+  }
+  .ruler-ticks{
+    position:absolute;inset:0;
+    display:flex;
+  }
+  .ruler-tick{
+    flex:1;
+    border-right:1px solid rgba(14,42,71,0.55);
+  }
+  .ruler-tick.major{border-right:1px solid rgba(14,42,71,0.85);}
+  .ruler-today{
+    position:absolute;top:-6px;bottom:-6px;
+    width:2px;background:var(--amber);
+  }
+  .ruler-today::after{
+    content:"TODAY";
+    position:absolute;top:-18px;left:50%;
+    transform:translateX(-50%);
+    font-size:9px;letter-spacing:0.08em;
+    color:var(--amber);
+    white-space:nowrap;
+    font-family: "Bahnschrift","DIN Alternate",sans-serif;
+  }
+  .phase-legend{
+    display:flex;gap:18px;margin-top:12px;flex-wrap:wrap;
+  }
+  .phase-legend .item{
+    display:flex;align-items:center;gap:7px;
+    font-size:11px;color:var(--ink-muted);
+  }
+  .phase-legend .swatch{
+    width:10px;height:10px;border:1px solid var(--border);
+  }
+
+  .controls{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px solid var(--border-soft);
+  }
+  .controls label{
+    font-size:11px;color:var(--ink-dim);
+    display:flex;align-items:center;gap:8px;
+  }
+  .controls input[type="date"]{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    color:var(--ink);
+    padding:6px 8px;
+    font-family: ui-monospace, monospace;
+    font-size:12px;
+  }
+  .btn{
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--ink-muted);
+    padding:6px 12px;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .btn:hover{border-color:var(--teal);color:var(--teal);}
+
+  .phase{
+    border:1px solid var(--border);
+    margin-bottom:22px;
+    background:rgba(18,58,94,0.35);
+  }
+  .phase-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    cursor:pointer;
+    border-bottom:1px solid var(--border-soft);
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .phase-header:hover{background:rgba(255,255,255,0.02);}
+  .phase-header-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .phase-num{
+    font-family: ui-monospace, monospace;
+    font-size:22px;
+    color:var(--ink-dim);
+    min-width:34px;
+  }
+  .phase-title{font-size:15px;font-weight:700;}
+  .phase-sub{font-size:11px;color:var(--ink-muted);margin-top:2px;font-weight:400;text-transform:none;letter-spacing:0;}
+  .phase-progress-text{font-size:12px;color:var(--teal);font-family:ui-monospace,monospace;}
+  .chevron{
+    width:9px;height:9px;
+    border-right:1.5px solid var(--ink-muted);
+    border-bottom:1.5px solid var(--ink-muted);
+    transform:rotate(45deg);
+    transition:transform .2s ease;
+    flex-shrink:0;
+  }
+  .phase.collapsed .chevron{transform:rotate(-45deg);}
+  .phase-body{
+    padding:18px;
+  }
+  .phase.collapsed .phase-body{display:none;}
+
+  .week-block{margin-bottom:20px;}
+  .week-block:last-child{margin-bottom:0;}
+  .week-label{
+    font-size:11px;
+    color:var(--ink-dim);
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .week-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--border-soft);
+  }
+
+  .day-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:2px;
+  }
+  .day-cell{
+    background:var(--panel-2);
+    border:1px solid var(--border-soft);
+    padding:11px 13px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    transition:background .15s ease, border-color .15s ease;
+    position:relative;
+  }
+  .day-cell:hover{background:rgba(111,214,196,0.06);border-color:var(--border);}
+  .day-cell.done{background:rgba(111,214,196,0.09);}
+  .day-cell.today{outline:1px solid var(--amber);outline-offset:-1px;}
+  .day-check{
+    width:16px;height:16px;
+    border:1px solid var(--ink-dim);
+    flex-shrink:0;
+    margin-top:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;
+    color:var(--teal);
+    cursor:pointer;
+  }
+  .day-cell.done .day-check{border-color:var(--teal);background:rgba(111,214,196,0.15);}
+  .day-main{flex:1; cursor:pointer;}
+  .day-num{
+    font-family: ui-monospace, monospace;
+    font-size:10px;
+    color:var(--ink-dim);
+    display:block;
+    margin-bottom:2px;
+  }
+  .day-cell.today .day-num{color:var(--amber);}
+  .day-topic{
+    font-size:12.5px;
+    line-height:1.4;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .day-cell.done .day-topic{color:var(--ink-muted); text-decoration:line-through; text-decoration-color:var(--ink-dim);}
+  .day-meta{
+    font-size:11px;
+    line-height:1.5;
+    color:var(--ink-muted);
+    margin-bottom:4px;
+  }
+  .day-meta b{
+    color:var(--ink-dim);
+    font-weight:600;
+    text-transform:uppercase;
+    font-size:9px;
+    letter-spacing:0.05em;
+    margin-right:5px;
+  }
+  .day-link{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-size:10px;
+    color:var(--teal);
+    text-decoration:none;
+    margin-top:4px;
+    letter-spacing:0.02em;
+    border-bottom:1px dotted rgba(111,214,196,0.4);
+  }
+  .day-link:hover{border-bottom-color:var(--teal);}
+
+  .notes{
+    border:1px solid var(--border);
+    background:var(--panel);
+    padding:16px 18px;
+    margin-top:22px;
+    font-size:12px;
+    color:var(--ink-muted);
+    line-height:1.7;
+  }
+  .notes .tb-label{margin-bottom:8px;}
+  .notes ul{margin:0;padding-left:18px;}
+
+  .resource-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+    gap:2px;
+    margin-top:22px;
+  }
+  .resource-card{
+    background:var(--panel-2);
+    border:1px solid var(--border-soft);
+    padding:12px 14px;
+  }
+  .resource-card .rk{font-size:10px;color:var(--ink-dim);margin-bottom:4px;}
+  .resource-card a{font-size:12.5px;text-decoration:none;}
+  .resource-card a:hover{text-decoration:underline;}
+  .resource-card p{font-size:11px;color:var(--ink-muted);margin:6px 0 0;line-height:1.5;}
+
+  /* ===== Flashcards ===== */
+  .fc-tabs{display:flex;gap:2px;margin-bottom:14px;flex-wrap:wrap;}
+  .fc-tab{
+    background:var(--panel-2);
+    border:1px solid var(--border-soft);
+    color:var(--ink-muted);
+    padding:8px 16px;
+    font-size:11px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .fc-tab.active{border-color:var(--teal);color:var(--teal);background:rgba(111,214,196,0.08);}
+  .fc-stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+  .fc-progress{font-size:11px;color:var(--ink-dim);}
+  .fc-card{
+    width:100%;
+    max-width:560px;
+    min-height:180px;
+    perspective:1200px;
+    cursor:pointer;
+  }
+  .fc-card-inner{
+    position:relative;
+    width:100%;
+    min-height:180px;
+    transition:transform .5s;
+    transform-style:preserve-3d;
+  }
+  .fc-card.flipped .fc-card-inner{transform:rotateY(180deg);}
+  .fc-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border:1px solid var(--border);
+    background:var(--panel-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:26px;
+    text-align:center;
+    font-size:15px;
+    line-height:1.5;
+  }
+  .fc-face.front{color:var(--ink);}
+  .fc-face.back{
+    transform:rotateY(180deg);
+    color:var(--teal);
+    background:rgba(111,214,196,0.06);
+  }
+  .fc-hint{font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.06em;position:absolute;top:10px;left:14px;}
+  .fc-controls{display:flex;gap:10px;align-items:center;}
+  @media (prefers-reduced-motion: reduce){
+    .fc-card-inner{transition:none;}
+  }
+
+  /* ===== Flashcard modal ===== */
+  .fc-modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(6,20,35,0.82);
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .fc-modal-overlay.open{display:flex;}
+  .fc-modal{
+    background:var(--panel);
+    border:1px solid var(--border);
+    max-width:620px;
+    width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    padding:20px;
+    position:relative;
+  }
+  .fc-modal-close{
+    position:absolute;
+    top:14px;right:14px;
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--ink-muted);
+    width:28px;height:28px;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .fc-modal-close:hover{border-color:var(--amber);color:var(--amber);}
+  .fc-modal-title{
+    font-size:12px;
+    color:var(--ink-dim);
+    margin-bottom:14px;
+    padding-right:36px;
+  }
+
+  /* ===== Login screen ===== */
+  .auth-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .auth-box{
+    width:100%;
+    max-width:380px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    padding:26px 24px;
+  }
+  .auth-title{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .auth-sub{font-size:12px;color:var(--ink-muted);margin-bottom:20px;}
+  .auth-field{margin-bottom:14px;}
+  .auth-field label{
+    display:block;
+    font-size:10px;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-bottom:6px;
+  }
+  .auth-field input{
+    width:100%;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    color:var(--ink);
+    padding:9px 10px;
+    font-size:13px;
+    font-family:inherit;
+  }
+  .auth-field input:focus{outline:1px solid var(--teal);border-color:var(--teal);}
+  .auth-btn{
+    width:100%;
+    background:rgba(111,214,196,0.12);
+    border:1px solid var(--teal);
+    color:var(--teal);
+    padding:10px;
+    font-size:12px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    font-family:inherit;
+    margin-top:4px;
+  }
+  .auth-btn:hover{background:rgba(111,214,196,0.2);}
+  .auth-btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .auth-toggle{
+    text-align:center;
+    margin-top:16px;
+    font-size:12px;
+    color:var(--ink-muted);
+  }
+  .auth-toggle button{
+    background:none;border:none;color:var(--teal);
+    cursor:pointer;font-size:12px;text-decoration:underline;
+    font-family:inherit;padding:0;
+  }
+  .auth-msg{
+    font-size:12px;
+    margin-top:12px;
+    padding:8px 10px;
+    display:none;
+  }
+  .auth-msg.error{display:block;background:rgba(242,193,78,0.1);border:1px solid var(--amber);color:var(--amber);}
+  .auth-msg.success{display:block;background:rgba(111,214,196,0.1);border:1px solid var(--teal);color:var(--teal);}
+  .auth-config-warning{
+    font-size:11px;color:var(--amber);
+    background:rgba(242,193,78,0.08);
+    border:1px solid var(--amber);
+    padding:10px 12px;
+    margin-bottom:16px;
+    line-height:1.5;
+  }
+  .signout-btn{
+    background:transparent;border:1px solid var(--border);color:var(--ink-muted);
+    padding:5px 10px;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;
+    cursor:pointer;font-family:inherit;
+  }
+  .signout-btn:hover{border-color:var(--amber);color:var(--amber);}
+
+  @media (max-width:640px){
+    .titleblock{grid-template-columns:1fr;}
+    .titleblock .divider{display:none;}
+    .titleblock .cell{border-right:none;border-bottom:1px solid var(--border-soft);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<div class="auth-screen" id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-title font-tech">Azure Roadmap — Sign In</div>
+    <div class="auth-sub">Your progress syncs to your account, accessible from any device.</div>
+    <div id="auth-config-warning" class="auth-config-warning" style="display:none;">
+      This page hasn't been connected to a database yet — the site owner needs to add their Supabase project URL and key. See the setup instructions.
+    </div>
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="auth-email" autocomplete="email">
+    </div>
+    <div class="auth-field">
+      <label>Password</label>
+      <input type="password" id="auth-password" autocomplete="current-password">
+    </div>
+    <button class="auth-btn" id="auth-submit">Sign In</button>
+    <div class="auth-toggle">
+      <span id="auth-toggle-text">Don't have an account?</span>
+      <button id="auth-toggle-btn">Create one</button>
+    </div>
+    <div class="auth-msg" id="auth-msg"></div>
+  </div>
+</div>
+
+<div id="app-root" style="display:none;">
+<div class="sheet">
+
+  <div class="titleblock font-tech">
+    <div class="cell tb-title">
+      Azure Certification Roadmap
+      <small>AZ-900 → AZ-104 → AZ-305 · Foundations to Architecture</small>
+    </div>
+    <div class="divider"></div>
+    <div class="cell">
+      <div class="tb-label">Scale</div>
+      <div class="tb-value">1 unit = 1 day</div>
+    </div>
+    <div class="cell">
+      <div class="tb-label">Span</div>
+      <div class="tb-value">91 days</div>
+    </div>
+    <div class="cell">
+      <div class="tb-label">Sheet</div>
+      <div class="tb-value">1 of 1</div>
+    </div>
+    <div class="cell">
+      <div class="tb-label">Rev</div>
+      <div class="tb-value" id="rev-date">—</div>
+    </div>
+    <div class="cell">
+      <div class="tb-label">Account</div>
+      <div class="tb-value" id="account-email" style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div>
+      <button class="signout-btn" id="signout-btn" style="margin-top:6px;">Sign out</button>
+    </div>
+  </div>
+
+  <div class="ruler-wrap">
+    <div class="ruler-head">
+      <div class="label font-tech">Overall progress</div>
+      <div class="stat font-mono" id="overall-stat">0 / 91 days · 0%</div>
+    </div>
+    <div class="ruler" id="ruler">
+      <div class="ruler-fill" id="ruler-fill" style="width:0%"></div>
+      <div class="ruler-ticks" id="ruler-ticks"></div>
+      <div class="ruler-today" id="ruler-today" style="display:none;"></div>
+    </div>
+    <div class="phase-legend font-tech">
+      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-900 · days 1–14</div>
+      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-104 · days 15–56</div>
+      <div class="item"><span class="swatch" style="background:rgba(111,214,196,0.4)"></span>AZ-305 · days 57–91</div>
+    </div>
+    <div class="controls">
+      <label class="font-tech">Start date
+        <input type="date" id="start-date">
+      </label>
+      <button class="btn" id="reset-btn">Reset progress</button>
+      <button class="btn" id="expand-all-btn">Expand all</button>
+    </div>
+  </div>
+
+  <div class="ruler-wrap">
+    <div class="ruler-head">
+      <div class="label font-tech">Certification renewal tracker</div>
+      <div class="stat font-mono" style="color:var(--ink-muted);font-size:11px;">AZ-900 doesn't expire · AZ-104 &amp; AZ-305 renew every 12 months</div>
+    </div>
+    <div class="controls" style="border-top:none;margin-top:2px;padding-top:4px;">
+      <label class="font-tech">AZ-104 pass date
+        <input type="date" id="az104-date">
+      </label>
+      <span class="font-mono" id="az104-status" style="font-size:12px;color:var(--ink-muted);"></span>
+    </div>
+    <div class="controls">
+      <label class="font-tech">AZ-305 pass date
+        <input type="date" id="az305-date">
+      </label>
+      <span class="font-mono" id="az305-status" style="font-size:12px;color:var(--ink-muted);"></span>
+    </div>
+  </div>
+
+  <div id="phases"></div>
+
+  <div class="notes">
+    <div class="tb-label font-tech">Notes on this sheet</div>
+    <ul>
+      <li>Each day card shows a topic, a hands-on lab you can do in the free Azure sandbox or free account, a real-world use case for context, and a link to the official Microsoft Learn content.</li>
+      <li>AZ-305 labs are design exercises (diagrams, decision tables) rather than portal clicks — that's intentional, since AZ-305 tests architecture decisions, not implementation steps.</li>
+      <li>AZ-305 doesn't have per-domain Learn paths like AZ-104 does, so those days link to the official AZ-305T00 course outline or the Azure Architecture Center.</li>
+      <li>Progress is saved automatically in this browser — click the checkbox to mark a day complete.</li>
+      <li>Set a start date above to see a "TODAY" marker showing which day you should be on if you're on pace.</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <div class="tb-label font-tech">General resources</div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="rk font-tech">Sandbox labs</div>
+        <a href="https://learn.microsoft.com/en-us/training/" target="_blank" rel="noopener">Microsoft Learn (free sandbox)</a>
+        <p>Every training module includes a free, time-limited Azure sandbox for hands-on exercises — no credit card needed.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Free subscription</div>
+        <a href="https://azure.microsoft.com/en-us/free/" target="_blank" rel="noopener">Azure Free Account</a>
+        <p>$200 credit plus 12 months of select free services — needed once sandbox limits aren't enough for a lab.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Video deep dives</div>
+        <a href="https://www.youtube.com/@NTFAQGuy" target="_blank" rel="noopener">John Savill's Technical Training</a>
+        <p>Free YouTube channel widely regarded as the best deep-dive explainer for AZ-104/AZ-305 concepts.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Architecture reference</div>
+        <a href="https://learn.microsoft.com/en-us/azure/architecture/" target="_blank" rel="noopener">Azure Architecture Center</a>
+        <p>Reference architectures that AZ-305 case-study questions are built around — essential for the final phase.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Design framework</div>
+        <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener">Azure Well-Architected Framework</a>
+        <p>The five pillars (reliability, security, cost, operations, performance) that underpin most AZ-305 case studies.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Enterprise adoption</div>
+        <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/" target="_blank" rel="noopener">Cloud Adoption Framework</a>
+        <p>Microsoft's methodology for landing zones and governance at scale — relevant to AZ-305's governance domain.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Sample templates</div>
+        <a href="https://github.com/Azure/azure-quickstart-templates" target="_blank" rel="noopener">Azure Quickstart Templates (GitHub)</a>
+        <p>Hundreds of ready-made ARM/Bicep templates — useful for compute, networking, and Bicep-focused lab days.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Community Q&A</div>
+        <a href="https://learn.microsoft.com/en-us/answers/tags/9/azure" target="_blank" rel="noopener">Microsoft Q&A — Azure tag</a>
+        <p>Official forum for asking questions when a lab doesn't behave as expected.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Stay current</div>
+        <a href="https://azure.microsoft.com/en-us/updates/" target="_blank" rel="noopener">Azure Updates</a>
+        <p>Official feed of new features and GA announcements — useful in the final AZ-305 review weeks.</p>
+      </div>
+      <div class="resource-card">
+        <div class="rk font-tech">Practice exams</div>
+        <a href="https://learn.microsoft.com/en-us/credentials/certifications/practice-assessments-for-microsoft-certifications" target="_blank" rel="noopener">Microsoft Official Practice Assessments</a>
+        <p>Free practice tests co-developed with MeasureUp, matched to the real exam's style and difficulty.</p>
+      </div>
+    </div>
+  </div>
+  <div class="notes" id="flashcards-section">
+    <div class="tb-label font-tech">Flashcards</div>
+    <div style="font-size:12px;color:var(--ink-muted);margin-bottom:10px;">
+      Every day card above has a Flashcard button that pops the matching card up right where you are — no scrolling needed. You can also browse a full deck here.
+    </div>
+    <div class="fc-tabs">
+      <button class="btn" id="fc-open-az900">Browse AZ-900 deck</button>
+      <button class="btn" id="fc-open-az104">Browse AZ-104 deck</button>
+      <button class="btn" id="fc-open-az305">Browse AZ-305 deck</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="fc-modal-overlay" id="fc-modal-overlay">
+  <div class="fc-modal">
+    <button class="fc-modal-close" id="fc-modal-close" aria-label="Close">✕</button>
+    <div class="fc-modal-title font-tech" id="fc-modal-title">Flashcards</div>
+    <div class="fc-tabs">
+      <button class="fc-tab active" data-deck="az900">AZ-900</button>
+      <button class="fc-tab" data-deck="az104">AZ-104</button>
+      <button class="fc-tab" data-deck="az305">AZ-305</button>
+    </div>
+    <div class="fc-stage">
+      <div class="fc-progress" id="fc-progress">Card 1 of 30</div>
+      <div class="fc-card" id="fc-card">
+        <div class="fc-card-inner" id="fc-card-inner">
+          <div class="fc-face front"><span class="fc-hint">Question</span><span id="fc-front"></span></div>
+          <div class="fc-face back"><span class="fc-hint">Answer</span><span id="fc-back"></span></div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="btn" id="fc-prev">← Prev</button>
+        <button class="btn" id="fc-flip">Flip card</button>
+        <button class="btn" id="fc-shuffle">Shuffle</button>
+        <button class="btn" id="fc-next">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+
+  // Storage backend: reads/writes a Postgres table in your Supabase project,
+  // scoped to the signed-in user via the "user_id" column + Row Level Security.
+  var currentUser = null;
+  var supabaseClient = null;
+
+  var store = {
+    get: async function(key){
+      if(!supabaseClient || !currentUser) return null;
+      try{
+        var res = await supabaseClient.from("user_data").select("value")
+          .eq("user_id", currentUser.id).eq("key", key).maybeSingle();
+        if(res.error){ console.error("Supabase get error:", res.error); return null; }
+        return res.data ? res.data.value : null;
+      }catch(e){ console.error("Supabase get exception:", e); return null; }
+    },
+    set: async function(key, value){
+      if(!supabaseClient || !currentUser) return null;
+      try{
+        var res = await supabaseClient.from("user_data").upsert({
+          user_id: currentUser.id, key: key, value: value, updated_at: new Date().toISOString()
+        }, { onConflict: "user_id,key" });
+        if(res.error){ console.error("Supabase set error:", res.error); }
+      }catch(e){ console.error("Supabase set exception:", e); }
+    }
+  };
+
+  var P900_CONCEPTS = "https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/";
+  var P900_ARCH = "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/";
+  var P900_GOV = "https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/";
+  var P900_GUIDE = "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900";
+
+  var P104_PREREQ = "https://learn.microsoft.com/en-us/training/paths/az-104-administrator-prerequisites/";
+  var P104_IDGOV = "https://learn.microsoft.com/en-us/training/paths/az-104-manage-identities-governance/";
+  var P104_STORAGE = "https://learn.microsoft.com/en-us/training/paths/az-104-manage-storage/";
+  var P104_COMPUTE = "https://learn.microsoft.com/en-us/training/paths/az-104-manage-compute-resources/";
+  var P104_NET = "https://learn.microsoft.com/en-us/training/paths/az-104-manage-virtual-networks/";
+  var P104_MON = "https://learn.microsoft.com/en-us/training/paths/az-104-monitor-backup-resources/";
+  var P104_GUIDE = "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104";
+
+  var P305_COURSE = "https://learn.microsoft.com/en-us/training/courses/az-305t00";
+  var P305_ARCH = "https://learn.microsoft.com/en-us/azure/architecture/";
+  var P305_GUIDE = "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-305";
+  var P305_READY = "https://learn.microsoft.com/en-us/shows/exam-readiness-zone/preparing-for-az-305-01-fy25";
+
+  var V900 = "https://youtu.be/8n-kWJetQRk";
+  var V900_FCC = "https://www.youtube.com/watch?v=IUCEFBmYIog";
+  var V104 = "https://youtu.be/0Knf9nub4-k";
+  var V104_PL = "https://youtube.com/playlist?list=PLlVtbbG169nGlGPWs9xaLKT1KfwqREHbs";
+  var V305 = "https://youtu.be/vq9LuCM4YP4";
+  var V305_PL = "https://youtube.com/playlist?list=PLlVtbbG169nHSnaP4ae33yQUI3zcmP5nP";
+
+  // [day, topic, link, lab, usecase]
+  var DATA = [
+    {
+      code:"AZ-900", title:"Azure Fundamentals",
+      sub:"Cloud concepts · Architecture & services · Management & governance",
+      weeks:[
+        { label:"Days 1–14", days:[
+          [1,"Cloud computing basics — IaaS/PaaS/SaaS, public/private/hybrid", P900_CONCEPTS,
+            "Sign up for the Azure Free Account and explore the portal home page and resource groups blade.",
+            "A startup decides whether to rent servers (IaaS) or use a managed database (PaaS) for its new app.", V900],
+          [2,"Azure global infrastructure — regions, region pairs, availability zones", P900_ARCH,
+            "Browse the Region list in the portal and note which regions pair with the one nearest you.",
+            "A bank picks paired EU regions to meet data-residency and disaster-recovery requirements.", V900],
+          [3,"Account structure — tenant, management groups, subscriptions, resource groups, ARM", P900_ARCH,
+            "Create a resource group and a management group in the sandbox; move the RG under it.",
+            "An enterprise organizes hundreds of subscriptions under management groups for policy enforcement.", V900],
+          [4,"Core compute — VMs, VM Scale Sets, App Service, Functions, containers/AKS overview", P900_ARCH,
+            "Deploy a small Linux VM and a Web App via App Service; compare setup effort.",
+            "A dev team lifts-and-shifts a legacy app to a VM, then migrates the front end to App Service.", V900],
+          [5,"Core storage — Blob, Azure Files, Disk Storage, redundancy overview", P900_ARCH,
+            "Create a storage account, upload a blob, and create a file share; compare access methods.",
+            "A media company stores video assets in Blob Storage and shares project files via Azure Files.", V900],
+          [6,"Core networking — VNet, subnets, Load Balancer, VPN Gateway, ExpressRoute, DNS", P900_ARCH,
+            "Create a VNet with two subnets and deploy a VM into one of them.",
+            "A retailer segments web and database subnets within one VNet to isolate traffic.", V900],
+          [7,"Databases overview — Azure SQL, Cosmos DB", P900_ARCH,
+            "Deploy a Basic-tier Azure SQL Database in the sandbox and run a sample query.",
+            "An e-commerce site uses Azure SQL for orders and Cosmos DB for a globally distributed product catalog.", V900],
+          [8,"Identity — Microsoft Entra ID, users, groups, RBAC basics, MFA", P900_GOV,
+            "Create a user and a group in Microsoft Entra ID; enable MFA on your own test account.",
+            "A company enforces MFA for all admins after a phishing incident.", V900],
+          [9,"Security services — Defender for Cloud, Key Vault, Microsoft Sentinel overview", P900_GOV,
+            "Enable Microsoft Defender for Cloud's free tier and review your subscription's secure score.",
+            "A security team catches an unencrypted storage account before an audit, via Defender for Cloud.", V900],
+          [10,"Governance — Azure Policy, Blueprints, resource locks, tags, Cost Management", P900_GOV,
+            "Create an Azure Policy that denies creating resources outside your home region.",
+            "A regulated company blocks VM deployment outside approved regions using policy.", V900],
+          [11,"Monitoring — Azure Monitor, Service Health, Azure Advisor", P900_GOV,
+            "Open Azure Monitor, view a VM's metrics, and create a simple CPU alert rule.",
+            "An ops team gets paged automatically when a VM's CPU stays above 90% for 5 minutes.", V900],
+          [12,"Pricing & SLA — Pricing Calculator, TCO Calculator, support plans, SLA concepts", P900_GOV,
+            "Use the Pricing Calculator to estimate the monthly cost of a small VM plus a storage account.",
+            "A startup compares reserved-instance pricing against pay-as-you-go before committing budget.", V900],
+          [13,"Full practice test + review weak areas", P900_GUIDE,
+            "Take a free AZ-900 practice assessment on Microsoft Learn and log your weakest domain.",
+            "Simulates exam-day pacing and question style before the real thing.", V900],
+          [14,"Final review — AZ-900 exam day", P900_GUIDE,
+            "Do a final walkthrough of your notes/flashcards; arrive early for the proctored exam.",
+            "—", V900]
+        ]}
+      ]
+    },
+    {
+      code:"AZ-104", title:"Azure Administrator",
+      sub:"Identity & Governance · Storage · Compute · Networking · Monitoring",
+      weeks:[
+        { label:"Week 3 · Identity & Governance · Days 15–21", days:[
+          [15,"Entra ID — users, groups, licenses, bulk operations", P104_IDGOV,
+            "Create 3 test users and 1 group in Entra ID; try a bulk CSV import.",
+            "HR onboarding automatically creates Entra ID accounts for new hires via bulk import.", V104+"?t=668"],
+          [16,"Custom RBAC roles, hybrid identity / Entra Connect", P104_IDGOV,
+            "Create a custom RBAC role that can restart VMs but not delete them; assign it to a test user.",
+            "A support team gets a custom role to restart VMs without full Contributor rights.", V104+"?t=3549"],
+          [17,"Management groups, subscriptions, Azure Policy (deep dive)", P104_IDGOV,
+            "Build a 2-level management group hierarchy and assign a policy at the top level.",
+            "A holding company applies one tagging policy across all subsidiary subscriptions at once.", V104+"?t=2088"],
+          [18,"Resource locks, tags, Cost Management + budgets", P104_IDGOV,
+            "Apply a CanNotDelete lock on a production resource group; set a monthly cost budget alert.",
+            "Finance gets alerted before a dev subscription exceeds its monthly budget.", V104+"?t=2354"],
+          [19,"Conditional Access, Privileged Identity Management (PIM)", P104_IDGOV,
+            "Create a Conditional Access policy requiring MFA from outside a trusted IP range; enable PIM on one role.",
+            "A global company only requires MFA when employees sign in from outside trusted office IPs.", V104+"?t=1500"],
+          [20,"Hands-on lab: govern a subscription end to end", P104_IDGOV,
+            "Combine days 15–19: set up RBAC, policy, locks, and budgets on one subscription.",
+            "A new Azure Administrator sets up governance guardrails on day one for a client's first subscription.", V104],
+          [21,"Review + practice questions", P104_GUIDE,
+            "Take an identity & governance practice quiz and redo any missed labs.",
+            "—", V104]
+        ]},
+        { label:"Week 4 · Storage · Days 22–28", days:[
+          [22,"Storage account types, redundancy (LRS/ZRS/GRS/GZRS)", P104_STORAGE,
+            "Create storage accounts with LRS, ZRS, and GZRS; compare pricing in the portal.",
+            "A SaaS company chooses GZRS for customer data so it survives a full regional outage.", V104],
+          [23,"Blob storage — access tiers, lifecycle management, immutability", P104_STORAGE,
+            "Upload a blob, move it Hot → Cool → Archive, then set up a lifecycle management rule.",
+            "A media archive auto-tiers old footage to Archive storage after 90 days to cut costs.", V104],
+          [24,"Azure Files & Azure File Sync (deep dive)", P104_STORAGE,
+            "Create a file share and mount it on a VM; review how Azure File Sync agents connect to it.",
+            "A branch office keeps a local cache of shared files while Azure Files holds the source of truth.", V104],
+          [25,"Storage security — SAS tokens, access keys, private endpoints, encryption", P104_STORAGE,
+            "Generate a SAS token with a 1-hour expiry and use it to upload a file without the account key.",
+            "A partner vendor gets a time-limited SAS link to upload files without full storage account access.", V104],
+          [26,"Azure Backup & Azure Site Recovery basics", P104_MON,
+            "Enable Azure Backup on a test VM and trigger an on-demand backup.",
+            "IT recovers a corrupted VM from yesterday's automated backup after a bad patch.", V104],
+          [27,"Hands-on lab: storage account with redundancy + backup policy", P104_STORAGE,
+            "Configure a storage account with GZRS replication plus a scheduled backup policy end to end.",
+            "—", V104],
+          [28,"Review + practice questions", P104_GUIDE,
+            "Take a storage domain practice quiz.",
+            "—", V104]
+        ]},
+        { label:"Week 5–6 · Compute · Days 29–42", days:[
+          [29,"VM sizing, availability sets vs. availability zones", P104_COMPUTE,
+            "Deploy 2 VMs into an availability set, then redeploy them into 2 different availability zones.",
+            "A trading platform spreads VMs across zones so one datacenter failure doesn't cause downtime.", V104],
+          [30,"VM Scale Sets and autoscaling", P104_COMPUTE,
+            "Create a VM Scale Set with a CPU-based autoscale rule and load-test it.",
+            "An e-commerce site auto-scales web servers during a flash sale, then scales back down overnight.", V104],
+          [31,"App Service — deployment slots, scaling rules", P104_COMPUTE,
+            "Deploy a web app, create a staging slot, and swap it to production.",
+            "A dev team tests a release in staging, then does a zero-downtime swap to production.", V104],
+          [32,"Azure Functions, Container Instances", P104_COMPUTE,
+            "Deploy a simple HTTP-triggered Function and a standalone container instance.",
+            "A company resizes uploaded images with a Function triggered by Blob Storage events.", V104],
+          [33,"AKS fundamentals", P104_COMPUTE,
+            "Deploy a basic AKS cluster and run a sample pod on it.",
+            "A microservices team runs 15 containerized services on one AKS cluster instead of 15 separate VMs.", V104],
+          [34,"VM extensions, custom script extension, disk management", P104_COMPUTE,
+            "Attach a data disk to a VM and install a custom script extension.",
+            "IT automates software installation on every new VM using a custom script extension.", V104],
+          [35,"Hands-on lab: deploy a scalable web app (App Service + VMSS)", P104_COMPUTE,
+            "Deploy App Service and a VM Scale Set together behind a Load Balancer.",
+            "—", V104],
+          [36,"ARM templates and Bicep basics", P104_PREREQ,
+            "Decompile a manually-created resource group into a Bicep file with 'az bicep decompile'.",
+            "A platform team version-controls infrastructure as Bicep files in Git instead of portal clicks.", V104],
+          [37,"Bicep deep dive — modules, parameters, what-if", P104_PREREQ,
+            "Write a reusable Bicep module for a storage account and deploy it to 3 parameterized environments.",
+            "A company deploys identical dev/test/prod environments from one parameterized Bicep template.", V104],
+          [38,"Azure CLI / PowerShell scripting for automation", P104_PREREQ,
+            "Write a script that creates 5 resource groups in a loop using Azure CLI.",
+            "Ops automates weekly cleanup of unused resource groups with a scheduled CLI script.", V104],
+          [39,"VM backup and disaster recovery", P104_MON,
+            "Configure Azure Site Recovery replication for a test VM to a secondary region.",
+            "A company fails over its order-processing VM to a secondary region during a DR drill.", V104],
+          [40,"High availability patterns — Load Balancer vs. Application Gateway", P104_NET,
+            "Deploy an Application Gateway in front of 2 VMs and test path-based routing.",
+            "A retailer routes /api and /static traffic to different backend pools via one Application Gateway.", V104],
+          [41,"Hands-on lab: automate a deployment with Bicep", P104_PREREQ,
+            "Automate the full day-35 environment using a single Bicep deployment.",
+            "—", V104],
+          [42,"Review + practice questions", P104_GUIDE,
+            "Take a compute domain practice quiz.",
+            "—", V104]
+        ]},
+        { label:"Week 7 · Networking · Days 43–49", days:[
+          [43,"VNets, subnets, network security groups", P104_NET,
+            "Create a VNet with two subnets and an NSG that blocks inbound RDP except from your own IP.",
+            "A company locks management ports so VMs are reachable only from the corporate VPN range.", V104+"?t=4215"],
+          [44,"VNet peering, service endpoints, private endpoints", P104_NET,
+            "Peer two VNets and test connectivity; add a private endpoint to a storage account.",
+            "Two business units in separate VNets share a central database over VNet peering.", V104+"?t=4800"],
+          [45,"Load Balancer vs. Application Gateway vs. Front Door", P104_NET,
+            "Deploy Front Door in front of two regional web apps and test failover between them.",
+            "A global SaaS app uses Front Door to route users to the nearest healthy regional deployment.", V104+"?t=8293"],
+          [46,"VPN Gateway, ExpressRoute", P104_NET,
+            "Deploy a point-to-site VPN gateway and connect to it from your own laptop.",
+            "Remote employees reach internal Azure resources via VPN instead of exposing them publicly.", V104+"?t=6472"],
+          [47,"Azure DNS, Traffic Manager", P104_NET,
+            "Create a private DNS zone and a Traffic Manager profile with two endpoints.",
+            "A company routes users to the closest of 3 regional app deployments using Traffic Manager.", V104+"?t=5921"],
+          [48,"Network Watcher, Azure Firewall, Azure Bastion", P104_NET,
+            "Deploy Azure Bastion and connect to a VM with no public IP; run a Network Watcher check.",
+            "Admins access production VMs securely via Bastion without ever exposing an RDP/SSH public IP.", V104+"?t=5787"],
+          [49,"Hands-on lab: hub-spoke network with NSGs and firewall", P104_NET,
+            "Build a hub VNet with Azure Firewall and two spoke VNets peered to it.",
+            "—", V104]
+        ]},
+        { label:"Week 8 · Monitoring + Exam · Days 50–56", days:[
+          [50,"Azure Monitor — metrics, logs, alerts", P104_MON,
+            "Create a metric alert that emails you when a VM's free disk space drops below 10%.",
+            "Ops gets notified before a disk fills up and crashes a production database.", V104],
+          [51,"Log Analytics workspace, KQL basics", P104_MON,
+            "Write a KQL query that finds all failed sign-ins in the last 24 hours.",
+            "A security analyst investigates a brute-force login attempt using Log Analytics queries.", V104],
+          [52,"Application Insights", P104_MON,
+            "Enable Application Insights on a web app and watch live request/response times.",
+            "A dev team spots a slow API endpoint causing checkout timeouts, via Application Insights.", V104],
+          [53,"Service Health, Azure Advisor recommendations", P104_MON,
+            "Review your subscription's Advisor recommendations and act on one cost-saving tip.",
+            "Finance saves money each month by resizing VMs that Advisor flags as underutilized.", V104],
+          [54,"Full practice exam #1 + review", P104_GUIDE,
+            "Sit a full AZ-104 practice exam under timed conditions.",
+            "—", V104],
+          [55,"Full practice exam #2 + review weak domains", P104_GUIDE,
+            "Sit a second practice exam, focused on your weakest domain from exam 1.",
+            "—", V104],
+          [56,"Final review — AZ-104 exam day", P104_GUIDE,
+            "Final review of flashcards; arrive early for the exam.",
+            "—", V104]
+        ]}
+      ]
+    },
+    {
+      code:"AZ-305", title:"Azure Solutions Architect Expert",
+      sub:"Identity/governance/monitoring design · Data storage design · Business continuity · Infrastructure design",
+      weeks:[
+        { label:"Week 9 · Identity, governance & monitoring design · Days 57–63", days:[
+          [57,"Design authentication — Entra ID, B2B/B2C, hybrid identity", P305_COURSE,
+            "Diagram a hybrid identity architecture for a company with an on-prem AD plus 2 acquired companies.",
+            "A merger forces two separate Active Directory forests to federate into one Entra ID tenant.", V305],
+          [58,"Design authorization — RBAC design, PIM at scale", P305_COURSE,
+            "Design a PIM approval workflow requiring manager sign-off for Owner-role activation.",
+            "A bank requires just-in-time, approved elevation to Owner instead of standing admin access.", V305],
+          [59,"Design governance — management group hierarchy, policy design, landing zones", P305_COURSE,
+            "Design a management group hierarchy and policy set for 5 business units across 3 environments.",
+            "An enterprise landing zone enforces different region/SKU rules for prod vs. dev subscriptions.", V305],
+          [60,"Design logging/monitoring architecture — Log Analytics, Sentinel", P305_COURSE,
+            "Design a centralized Log Analytics workspace architecture spanning 10 subscriptions.",
+            "A SOC team centralizes security logs from every business unit into one Sentinel workspace.", V305],
+          [61,"Multi-tenant and hybrid identity design scenarios", P305_READY,
+            "Design a multi-tenant sign-in architecture for a SaaS vendor whose customers each want their own Entra ID tenant.",
+            "A B2B SaaS product lets each customer sign in with their own company's Entra ID tenant.", V305],
+          [62,"Case-study practice — identity & governance domain", P305_ARCH,
+            "Work through an official AZ-305 identity/governance case study end to end.",
+            "—", V305],
+          [63,"Review", P305_GUIDE,
+            "Redo flashcards for any weak areas in domain 1.",
+            "—", V305]
+        ]},
+        { label:"Week 10 · Data storage design · Days 64–70", days:[
+          [64,"Design non-relational solutions — Cosmos DB, Blob, Data Lake", P305_COURSE,
+            "Design a Cosmos DB partition key strategy for a multi-tenant SaaS app's order data.",
+            "A global retailer geo-replicates Cosmos DB so shoppers in each region get low-latency reads.", V305],
+          [65,"Design relational solutions — Azure SQL, Managed Instance, PostgreSQL/MySQL", P305_COURSE,
+            "Compare Azure SQL DB vs. Managed Instance vs. SQL VM for a given scenario and justify your pick.",
+            "A company migrating a legacy SQL Server with cross-database queries chooses Managed Instance.", V305],
+          [66,"Storage redundancy/replication at the architecture level", P305_COURSE,
+            "Design a multi-region storage strategy that meets a 15-minute RPO requirement.",
+            "A healthcare provider designs GZRS plus geo-restore to meet strict data-loss requirements.", V305],
+          [67,"Data integration — Data Factory, Synapse, Event Hub, Service Bus", P305_COURSE,
+            "Design a pipeline that moves on-prem SQL data into Synapse nightly via Data Factory.",
+            "A retailer pipes daily point-of-sale data into Synapse Analytics for next-morning reporting.", V305],
+          [68,"Design for data security — encryption strategy, Key Vault, private endpoints", P305_COURSE,
+            "Design an encryption-at-rest and Key Vault access strategy for a regulated dataset.",
+            "A fintech uses customer-managed keys in Key Vault to meet key-ownership compliance requirements.", V305],
+          [69,"Case-study practice — data storage domain", P305_ARCH,
+            "Work through an official AZ-305 data storage case study.",
+            "—", V305],
+          [70,"Review", P305_GUIDE,
+            "Redo flashcards for any weak areas in domain 2.",
+            "—", V305]
+        ]},
+        { label:"Week 11 · Business continuity design · Days 71–77", days:[
+          [71,"Design backup strategy — Azure Backup patterns", P305_COURSE,
+            "Design a backup policy that meets a 4-hour RPO for a critical SQL workload.",
+            "A hospital designs backup retention to meet a 7-year regulatory record-retention requirement.", V305],
+          [72,"Design disaster recovery — Azure Site Recovery, multi-region DR", P305_COURSE,
+            "Design an active-passive multi-region DR architecture using Azure Site Recovery.",
+            "An insurer designs and twice-yearly tests a failover plan for its claims-processing system.", V305],
+          [73,"High availability design — zones, region pairs", P305_COURSE,
+            "Design a 99.99%-SLA architecture using availability zones for a 3-tier app.",
+            "A payments processor uses zone-redundant deployment to hit contractual uptime SLAs.", V305],
+          [74,"RTO/RPO planning and business continuity design", P305_COURSE,
+            "Given a business scenario, calculate the required RTO/RPO and pick matching Azure services.",
+            "A manufacturer defines a 1-hour RTO for its ERP system and designs Azure services to meet it.", V305],
+          [75,"Case-study practice — business continuity domain", P305_ARCH,
+            "Work through an official AZ-305 business continuity case study.",
+            "—", V305],
+          [76,"Review", P305_GUIDE,
+            "Redo flashcards for any weak areas in domain 3.",
+            "—", V305],
+          [77,"Buffer / catch-up day", P305_GUIDE,
+            "Catch up on any missed labs from weeks 9–11.",
+            "—", V305]
+        ]},
+        { label:"Week 12–13 · Infrastructure design + final review · Days 78–91", days:[
+          [78,"Design compute solutions — VM vs. containers vs. serverless decision framework", P305_COURSE,
+            "Given 3 workload scenarios, decide VM vs. container vs. serverless and justify each choice.",
+            "A company runs its steady-state API on AKS but bursts image processing to Azure Functions.", V305],
+          [79,"Design application architecture — microservices, API Management, event-driven patterns", P305_COURSE,
+            "Design an event-driven order system using Event Grid and Service Bus.",
+            "An e-commerce platform decouples order placement from inventory and shipping via events.", V305],
+          [80,"Design network solutions — hub-spoke, Virtual WAN, hybrid connectivity", P305_COURSE,
+            "Design a Virtual WAN topology connecting 5 regional offices and 3 Azure regions.",
+            "A global company replaces regional MPLS links with Azure Virtual WAN for branch connectivity.", V305],
+          [81,"Design migration strategy — Azure Migrate, assessment tooling", P305_COURSE,
+            "Use Azure Migrate to assess a sample on-prem VM inventory and produce a migration wave plan.",
+            "An enterprise migrates 200 on-prem VMs to Azure in waves prioritized by Migrate's readiness score.", V305],
+          [82,"Design for scalability & performance — caching, CDN, autoscale strategy", P305_COURSE,
+            "Design a caching layer (Azure Cache for Redis) plus CDN for a high-traffic web app.",
+            "A news site handles breaking-news traffic spikes with CDN and Redis cache instead of scaling its DB.", V305],
+          [83,"Cost optimization design across all domains", P305_COURSE,
+            "Take a sample architecture and identify 3 cost optimizations (reservations, right-sizing, tiering).",
+            "A company cuts 30% of its Azure bill by right-sizing VMs and archiving cold data.", V305],
+          [84,"Case-study practice — infrastructure domain", P305_ARCH,
+            "Work through an official AZ-305 infrastructure case study.",
+            "—", V305],
+          [85,"Full practice exam #1 + review", P305_GUIDE,
+            "Sit a full AZ-305 practice exam under timed conditions.",
+            "—", V305],
+          [86,"Full practice exam #2 + review weak domains", P305_GUIDE,
+            "Sit a second practice exam, focused on your weakest domain.",
+            "—", V305],
+          [87,"Study Microsoft Architecture Center reference architectures", P305_ARCH,
+            "Read 3 reference architectures relevant to your weakest domain.",
+            "—", V305],
+          [88,"Review identity/governance/monitoring gaps", P305_GUIDE,
+            "Redo domain 1 case studies and flashcards.",
+            "—", V305],
+          [89,"Review data storage + business continuity gaps", P305_GUIDE,
+            "Redo domain 2 and domain 3 case studies and flashcards.",
+            "—", V305],
+          [90,"Final full-length mock exam + review", P305_GUIDE,
+            "Sit one last full-length timed mock exam.",
+            "—", V305],
+          [91,"Final review — AZ-305 exam day", P305_GUIDE,
+            "Light review only; arrive early for the exam.",
+            "—", V305]
+        ]}
+      ]
+    }
+  ];
+
+  var FLASHCARDS = {
+  az900: [["What is IaaS (Infrastructure as a Service)?", "A cloud model where you rent virtualized compute, storage, and networking, and manage the OS and everything above it yourself."], ["What is PaaS (Platform as a Service)?", "A cloud model where the provider manages the runtime/OS, and you only manage your application and data."], ["What is SaaS (Software as a Service)?", "A cloud model where the provider manages the entire application; you just use it (e.g. Outlook, Teams)."], ["CapEx vs OpEx — which does cloud computing use?", "OpEx (Operational Expenditure) — pay-as-you-go, no large upfront hardware investment (CapEx)."], ["What is an Azure Region?", "A geographic area containing one or more datacenters, connected by a low-latency network."], ["What is a Region Pair?", "Two regions in the same geography, at least 300 miles apart, used together for disaster recovery."], ["What is an Availability Zone?", "A physically separate datacenter within an Azure region, each with independent power, cooling, and networking."], ["What is a Resource Group?", "A logical container that holds related Azure resources for a solution."], ["What is a Management Group?", "A container that organizes multiple subscriptions to apply governance (policy, RBAC) at scale."], ["What is Azure Resource Manager (ARM)?", "The deployment and management service for Azure — every management action goes through it."], ["What does the Azure Free Account include?", "$200 credit for 30 days plus 12 months of select free services and some always-free services."], ["What is an SLA (Service Level Agreement)?", "A commitment from Microsoft defining uptime/performance targets and any service credits if not met."], ["What's the core difference between Azure Policy and RBAC?", "RBAC controls WHO can do WHAT; Azure Policy controls WHAT properties/configurations resources are allowed to have."], ["What is a Resource Lock?", "A setting that prevents accidental deletion (CanNotDelete) or modification (ReadOnly) of a resource."], ["What is the purpose of Tags in Azure?", "Metadata (key-value pairs) attached to resources for organization, cost tracking, and automation."], ["What is Azure Monitor?", "The platform service for collecting, analyzing, and acting on telemetry from Azure and on-prem resources."], ["What is Azure Advisor?", "A free tool that gives personalized recommendations for cost, security, reliability, and performance."], ["Difference between Azure Service Health and Azure Status?", "Service Health = personalized view of issues affecting YOUR resources; Azure Status = global public health of all Azure services."], ["What is Microsoft Entra ID?", "Microsoft's cloud-based identity and access management service (formerly Azure Active Directory)."], ["What is MFA (Multi-Factor Authentication)?", "Requiring two or more verification methods to sign in, reducing risk from stolen passwords."], ["What is SSO (Single Sign-On)?", "Signing in once to access multiple applications without re-entering credentials."], ["What is Conditional Access (basic)?", "Policies that grant or block access based on conditions like location, device, or risk level."], ["What is Microsoft Defender for Cloud?", "A tool for cloud security posture management and threat protection across Azure resources."], ["What is Azure Key Vault used for?", "Securely storing secrets, keys, and certificates."], ["What is the Shared Responsibility Model?", "The division of security duties between Microsoft (cloud infrastructure) and the customer (data, identity, access) — the split shifts by service type (IaaS/PaaS/SaaS)."], ["Difference between High Availability, Fault Tolerance, and Disaster Recovery?", "HA = minimizing downtime during normal operation; Fault Tolerance = continuing to operate through a failure; DR = recovering after a major outage/disaster."], ["What pricing model does Azure primarily use?", "Consumption-based (pay-as-you-go) — you pay for what you use."], ["What is the TCO (Total Cost of Ownership) Calculator for?", "Comparing the cost of running workloads on-premises vs. in Azure."], ["What is the Pricing Calculator for?", "Estimating the monthly cost of Azure services before deploying them."], ["What is Azure Cost Management + Billing used for?", "Monitoring, allocating, and optimizing cloud spend, including budgets and alerts."]],
+  az104: [["LRS vs ZRS vs GRS vs GZRS — what's the key difference?", "LRS = 3 copies in one datacenter; ZRS = 3 copies across zones in one region; GRS = LRS + async copy to a paired region; GZRS = ZRS + async copy to a paired region."], ["What is a SAS (Shared Access Signature) token?", "A time-limited, permission-scoped URL that grants access to storage resources without sharing the account key."], ["What are Blob storage access tiers?", "Hot (frequent access), Cool (infrequent, 30+ days), and Archive (rare access, offline, hours to rehydrate)."], ["Availability Set vs Availability Zone?", "Availability Set = fault/update domains within ONE datacenter; Availability Zone = separate physical datacenters within a region."], ["What is a VM Scale Set?", "A group of identical, load-balanced VMs that can automatically scale in/out based on demand."], ["What are App Service deployment slots?", "Separate live environments (e.g. staging) you can deploy to and then swap into production with no downtime."], ["NSG vs ASG — what's the difference?", "NSG (Network Security Group) filters traffic by IP/port rules; ASG (Application Security Group) groups VMs so NSG rules can target them by application role instead of IP."], ["VNet Peering vs VPN Gateway — when to use which?", "Peering connects VNets directly over the Azure backbone (fast, no encryption overhead); VPN Gateway connects over an encrypted tunnel, often used for on-prem connectivity."], ["Service Endpoint vs Private Endpoint?", "Service Endpoint keeps traffic on the Azure backbone but the resource still has a public IP; Private Endpoint gives the resource a private IP inside your VNet, fully removing public exposure."], ["Load Balancer vs Application Gateway — what layer do they operate at?", "Load Balancer = Layer 4 (TCP/UDP); Application Gateway = Layer 7 (HTTP/HTTPS, supports path-based routing, WAF)."], ["What does Azure Firewall provide?", "A managed, stateful, cloud-native network firewall for filtering traffic at the network/application layer."], ["What does Azure Bastion provide?", "Secure RDP/SSH access to VMs via the Azure portal, without exposing a public IP on the VM."], ["ExpressRoute vs Site-to-Site VPN?", "ExpressRoute = private, dedicated connection (not over public internet), higher reliability/bandwidth; S2S VPN = encrypted tunnel over the public internet, cheaper but less consistent latency."], ["What does Azure Policy enforce that RBAC doesn't?", "Configuration/compliance rules on resources (e.g. allowed regions, required tags) — RBAC only controls permissions, not resource properties."], ["What is PIM (Privileged Identity Management)?", "A service for just-in-time, time-bound, approval-based activation of privileged roles instead of standing access."], ["What does a Conditional Access policy typically evaluate?", "Signals like user/group, location, device state, and application, to grant, block, or require MFA for access."], ["What are the two main Resource Lock types?", "CanNotDelete (blocks deletion) and ReadOnly (blocks deletion AND modification)."], ["ARM template vs Bicep — what's the relationship?", "Bicep is a simpler, more readable language that compiles down to ARM JSON templates."], ["Azure Backup vs Azure Site Recovery — what's the difference?", "Backup = point-in-time data recovery from corruption/deletion; Site Recovery = replicates entire VMs/workloads for disaster recovery failover."], ["What is a Log Analytics workspace?", "The central store where Azure Monitor logs are collected and queried using KQL."], ["What is KQL used for?", "Kusto Query Language — querying log and telemetry data in Log Analytics/Sentinel."], ["What does Application Insights monitor?", "Application performance — request rates, response times, failure rates, and dependency calls."], ["What's the purpose of a Management Group hierarchy?", "Applying policy and RBAC consistently across multiple subscriptions from a single point."], ["What three things define a custom RBAC role?", "Actions (allowed operations), NotActions (excluded operations), and AssignableScopes (where it can be assigned)."], ["What do Cost Management budgets/alerts do?", "Notify you (or trigger actions) when spending approaches or exceeds a defined threshold."], ["What routing methods does Traffic Manager support?", "Priority, Weighted, Performance, Geographic, and others — all DNS-based, not proxying traffic itself."], ["Public vs Private Azure DNS zones?", "Public zones resolve names on the internet; Private zones resolve names only within linked VNets."], ["What does Network Watcher provide?", "Diagnostic and monitoring tools for Azure networks (e.g. IP flow verify, connection troubleshoot, packet capture)."], ["What are the main Azure Monitor alert types?", "Metric alerts, log alerts (query-based), and activity log alerts."], ["What is RA-GRS?", "Read-Access Geo-Redundant Storage — like GRS, but also allows read access to the secondary region's copy."]],
+  az305: [["What are the 5 pillars of the Azure Well-Architected Framework?", "Reliability, Security, Cost Optimization, Operational Excellence, and Performance Efficiency."], ["RTO vs RPO — what's the difference?", "RTO (Recovery Time Objective) = how long you can be down; RPO (Recovery Point Objective) = how much data loss (in time) is acceptable."], ["Active-active vs active-passive DR design?", "Active-active runs workloads in multiple regions simultaneously (higher cost, near-zero failover time); active-passive keeps a standby region that activates on failover (cheaper, slower failover)."], ["Hub-spoke vs Virtual WAN — when do you choose Virtual WAN?", "Virtual WAN is preferred at large scale (many regions/branches) since it simplifies hub management; hub-spoke is simpler and sufficient for smaller topologies."], ["What is a landing zone in Azure architecture?", "A pre-configured environment (networking, identity, governance, security) that new workloads are deployed into, following Cloud Adoption Framework guidance."], ["When would you design a multi-tenant vs single-tenant Entra ID app?", "Multi-tenant when external customers/organizations need to sign in with their OWN Entra ID tenant (B2B SaaS); single-tenant when only your own org's users need access."], ["Azure SQL DB vs Managed Instance vs SQL on a VM — what drives the choice?", "SQL DB = PaaS, least management, some feature limits; Managed Instance = near-full SQL Server compatibility as PaaS; SQL on VM = full control/compatibility but you manage the OS and patching."], ["What's the key design consideration for a Cosmos DB partition key?", "It should evenly distribute read/write traffic and align with the most common query pattern to avoid hot partitions."], ["Event Grid vs Service Bus vs Event Hub — what's each one for?", "Event Grid = reactive, discrete events (e.g. blob created); Service Bus = reliable ordered messaging/queues between apps; Event Hub = high-throughput streaming/telemetry ingestion."], ["Zone-redundant vs region-redundant design — what risk does each protect against?", "Zone-redundant protects against a single datacenter/zone failure; region-redundant (geo-replication) protects against a full regional outage."], ["How do management groups, policy, and RBAC work together in governance design?", "Management groups define the scope hierarchy; Policy enforces configuration compliance within that scope; RBAC controls who can act within that scope — together they form layered governance."], ["Name 3 cost optimization levers architects commonly design for.", "Reserved Instances/Savings Plans for predictable workloads, right-sizing compute to actual usage, and storage lifecycle tiering (Hot/Cool/Archive)."], ["Data Factory vs Synapse Pipelines — what's the distinction in a design?", "Data Factory is a standalone ETL/ELT orchestration service; Synapse Pipelines is the same engine embedded inside Synapse Analytics for integrated analytics workloads."], ["Platform-managed keys vs customer-managed keys (CMK) — why choose CMK?", "CMK gives the customer control over key rotation/revocation in Key Vault, often required for regulatory/compliance reasons."], ["What are the phases of an Azure Migrate-based migration design?", "Discover (inventory), Assess (readiness/sizing/cost), and Migrate (execute the move, often in prioritized waves)."], ["What role does API Management play in an architecture?", "Acts as a gateway that exposes, secures, throttles, and versions APIs in front of backend services."], ["Microservices vs monolith — what design trade-off should you weigh?", "Microservices offer independent scaling/deployment but add complexity (networking, observability); monoliths are simpler to build/deploy but scale and deploy as one unit."], ["Platform landing zone vs application landing zone (CAF)?", "Platform landing zone = shared foundational services (connectivity, identity, management); application landing zone = the environment a specific workload is deployed into, built on top of the platform."], ["Why design with PIM instead of standing RBAC assignments?", "It reduces the attack surface by granting privileged access only when needed, for a limited time, often requiring approval."], ["Front Door vs Traffic Manager vs Load Balancer — what scope does each operate at?", "Front Door = global, Layer 7 (HTTP/S) with WAF and caching; Traffic Manager = global, DNS-based routing (protocol-agnostic); Load Balancer = regional, Layer 4."], ["What's a key design consideration for data residency/compliance?", "Ensuring data storage and processing stay within approved regions/geographies, often enforced via Azure Policy and resource location constraints."], ["What criteria drive the VM vs Container vs Serverless compute decision?", "Workload duration/burstiness, need for OS-level control, startup latency tolerance, and operational overhead the team can support."], ["Federation vs synchronization vs cloud-only — what are the 3 hybrid identity models?", "Federation = authentication happens on-prem (e.g. AD FS) and Entra ID trusts it; Sync = accounts synced to Entra ID which handles auth itself; Cloud-only = no on-prem AD involved at all."], ["What should a business continuity plan design account for, beyond backup?", "Defined RTO/RPO targets, tested failover procedures, communication plans, and regularly scheduled DR drills."], ["What is 'defense in depth' in network security design?", "Layering multiple independent security controls (NSGs, firewalls, private endpoints, WAF, identity) so no single control failure exposes the whole system."]]
+};
+
+  // Fill a few topic gaps so more days have a matching card
+  FLASHCARDS.az900.push(
+    ["What's the difference between choosing a VM, App Service, or Azure Functions?", "VM = full OS control, most management; App Service = managed web hosting, less control; Functions = event-driven, no server management at all — a spectrum of control vs. convenience."],
+    ["Blob, Azure Files, and Disk Storage — what's each one for?", "Blob = unstructured object storage (files, media); Azure Files = SMB/NFS network file shares; Disk Storage = attached disks for VMs."],
+    ["What's the core building block of Azure networking?", "The Virtual Network (VNet) — an isolated network in Azure that you divide into subnets and connect resources within."],
+    ["Azure SQL vs Cosmos DB — when would you pick each?", "Azure SQL for relational, structured data with complex queries; Cosmos DB for globally distributed, high-scale NoSQL workloads needing low latency worldwide."]
+  );
+  FLASHCARDS.az104.push(
+    ["Microsoft 365 group vs Security group in Entra ID?", "Security groups control access to resources; Microsoft 365 groups also provide collaboration features (shared mailbox, calendar, Teams) on top of membership."],
+    ["What's the benefit of Azure File Sync cloud tiering?", "Infrequently used files are tiered to Azure while frequently used files stay cached locally, keeping the on-prem server's disk usage low without losing the full namespace."],
+    ["Azure Functions vs Container Instances — how do you choose?", "Functions for short, event-triggered, stateless workloads with no infrastructure management; Container Instances when you need a specific runtime/image without orchestration overhead."],
+    ["What problem does AKS solve compared to running many separate VMs?", "It orchestrates many containerized services on shared infrastructure — handling scheduling, scaling, and failover — instead of manually managing one VM per service."],
+    ["What is a custom script extension used for on a VM?", "Automatically running a script (install software, apply config) on a VM at deployment or on demand, without manual login."],
+    ["What does Bicep's what-if command do?", "Shows what changes a deployment WOULD make before actually applying them — a dry run to catch unintended changes."],
+    ["Why automate resource creation with CLI/PowerShell scripts instead of the portal?", "Repeatability, speed at scale, and the ability to version-control and rerun the exact same deployment steps."],
+    ["What does Azure Front Door add beyond a regional Load Balancer?", "Global, Layer-7 routing with caching, WAF, and automatic failover between regions — a Load Balancer only operates within one region at Layer 4."],
+    ["What does Azure Advisor check for an AZ-104 administrator?", "Personalized recommendations across cost, security, reliability, and performance for the resources you actually manage."]
+  );
+  FLASHCARDS.az305.push(
+    ["What should a centralized monitoring architecture funnel logs into across many subscriptions?", "A shared/centralized Log Analytics workspace (often feeding Microsoft Sentinel), typically enforced via Azure Policy-driven diagnostic settings."]
+  );
+
+  // Map each roadmap day to its best-matching flashcard (deck, index). null = no dedicated card (lab/review/exam day).
+  var DAY_CARD = {
+    1:{deck:"az900",idx:0}, 2:{deck:"az900",idx:4}, 3:{deck:"az900",idx:9},
+    4:{deck:"az900",idx:30}, 5:{deck:"az900",idx:31}, 6:{deck:"az900",idx:32}, 7:{deck:"az900",idx:33},
+    8:{deck:"az900",idx:18}, 9:{deck:"az900",idx:22}, 10:{deck:"az900",idx:12}, 11:{deck:"az900",idx:15},
+    12:{deck:"az900",idx:27}, 13:null, 14:null,
+
+    15:{deck:"az104",idx:30}, 16:{deck:"az104",idx:23}, 17:{deck:"az104",idx:22}, 18:{deck:"az104",idx:24},
+    19:{deck:"az104",idx:14}, 20:null, 21:null,
+    22:{deck:"az104",idx:0}, 23:{deck:"az104",idx:2}, 24:{deck:"az104",idx:31}, 25:{deck:"az104",idx:1},
+    26:{deck:"az104",idx:18}, 27:{deck:"az104",idx:29}, 28:null,
+    29:{deck:"az104",idx:3}, 30:{deck:"az104",idx:4}, 31:{deck:"az104",idx:5}, 32:{deck:"az104",idx:32},
+    33:{deck:"az104",idx:33}, 34:{deck:"az104",idx:34}, 35:null, 36:{deck:"az104",idx:17},
+    37:{deck:"az104",idx:35}, 38:{deck:"az104",idx:36}, 39:{deck:"az104",idx:18}, 40:{deck:"az104",idx:9},
+    41:{deck:"az104",idx:17}, 42:null,
+    43:{deck:"az104",idx:6}, 44:{deck:"az104",idx:7}, 45:{deck:"az104",idx:37}, 46:{deck:"az104",idx:12},
+    47:{deck:"az104",idx:26}, 48:{deck:"az104",idx:11}, 49:{deck:"az104",idx:10},
+    50:{deck:"az104",idx:28}, 51:{deck:"az104",idx:20}, 52:{deck:"az104",idx:21}, 53:{deck:"az104",idx:38},
+    54:null, 55:null, 56:null,
+
+    57:{deck:"az305",idx:22}, 58:{deck:"az305",idx:18}, 59:{deck:"az305",idx:4}, 60:{deck:"az305",idx:25},
+    61:{deck:"az305",idx:5}, 62:null, 63:null,
+    64:{deck:"az305",idx:7}, 65:{deck:"az305",idx:6}, 66:{deck:"az305",idx:9}, 67:{deck:"az305",idx:12},
+    68:{deck:"az305",idx:13}, 69:null, 70:null,
+    71:{deck:"az305",idx:1}, 72:{deck:"az305",idx:2}, 73:{deck:"az305",idx:9}, 74:{deck:"az305",idx:1},
+    75:null, 76:null, 77:null,
+    78:{deck:"az305",idx:21}, 79:{deck:"az305",idx:16}, 80:{deck:"az305",idx:3}, 81:{deck:"az305",idx:14},
+    82:{deck:"az305",idx:19}, 83:{deck:"az305",idx:11}, 84:null,
+    85:null, 86:null, 87:null, 88:null, 89:null, 90:null, 91:null
+  };
+
+  var TOTAL_DAYS = 91;
+  var progress = {};
+  var startDate = null;
+
+  function pad(n){ return n<10 ? "0"+n : ""+n; }
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  }
+
+  document.getElementById("rev-date").textContent = todayStr();
+
+  async function loadState(){
+    try{
+      var pVal = await store.get("roadmap-progress");
+      if(pVal){ progress = JSON.parse(pVal); }
+    }catch(e){ progress = {}; }
+    try{
+      var sVal = await store.get("roadmap-start-date");
+      if(sVal){ startDate = sVal; document.getElementById("start-date").value = sVal; }
+    }catch(e){ startDate = null; }
+  }
+
+  async function saveProgress(){
+    try{ await store.set("roadmap-progress", JSON.stringify(progress)); }
+    catch(e){ console.error("Storage error", e); }
+  }
+
+  async function saveStartDate(v){
+    try{ await store.set("roadmap-start-date", v); }
+    catch(e){ console.error("Storage error", e); }
+  }
+
+  function computeTodayDay(){
+    if(!startDate) return null;
+    var start = new Date(startDate+"T00:00:00");
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    var diffDays = Math.floor((now - start) / 86400000) + 1;
+    if(diffDays < 1 || diffDays > TOTAL_DAYS) return null;
+    return diffDays;
+  }
+
+  function render(){
+    var container = document.getElementById("phases");
+    container.innerHTML = "";
+    var todayDay = computeTodayDay();
+
+    DATA.forEach(function(phase, pIdx){
+      var allDays = [];
+      phase.weeks.forEach(function(w){ w.days.forEach(function(d){ allDays.push(d[0]); }); });
+      var doneCount = allDays.filter(function(n){ return progress[n]; }).length;
+
+      var phaseEl = document.createElement("div");
+      phaseEl.className = "phase";
+
+      var header = document.createElement("div");
+      header.className = "phase-header";
+      header.innerHTML =
+        '<div class="phase-header-left">'+
+          '<div class="phase-num font-mono">0'+(pIdx+1)+'</div>'+
+          '<div>'+
+            '<div class="phase-title font-tech">'+phase.code+' — '+phase.title+'</div>'+
+            '<div class="phase-sub">'+phase.sub+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:14px;">'+
+          '<div class="phase-progress-text">'+doneCount+' / '+allDays.length+'</div>'+
+          '<div class="chevron"></div>'+
+        '</div>';
+      header.addEventListener("click", function(){
+        phaseEl.classList.toggle("collapsed");
+      });
+
+      var body = document.createElement("div");
+      body.className = "phase-body";
+
+      phase.weeks.forEach(function(week){
+        var wb = document.createElement("div");
+        wb.className = "week-block";
+        var wl = document.createElement("div");
+        wl.className = "week-label font-tech";
+        wl.textContent = week.label;
+        wb.appendChild(wl);
+
+        var grid = document.createElement("div");
+        grid.className = "day-grid";
+
+        week.days.forEach(function(row){
+          var num=row[0], topic=row[1], link=row[2], lab=row[3], usecase=row[4], video=row[5];
+          var cell = document.createElement("div");
+          cell.className = "day-cell" + (progress[num] ? " done" : "") + (todayDay===num ? " today" : "");
+
+          var check = document.createElement("div");
+          check.className = "day-check";
+          check.tabIndex = 0;
+          check.setAttribute("role","checkbox");
+          check.setAttribute("aria-checked", progress[num] ? "true" : "false");
+          check.textContent = progress[num] ? "✓" : "";
+          function toggle(){
+            progress[num] = !progress[num];
+            saveProgress();
+            render();
+          }
+          check.addEventListener("click", toggle);
+          check.addEventListener("keydown", function(e){
+            if(e.key==="Enter" || e.key===" "){ e.preventDefault(); toggle(); }
+          });
+
+          var main = document.createElement("div");
+          main.className = "day-main";
+          var metaHtml = '<div class="day-meta"><b>Lab</b>'+lab+'</div>';
+          if(usecase && usecase !== "—"){
+            metaHtml += '<div class="day-meta"><b>Use case</b>'+usecase+'</div>';
+          }
+          var dayCard = DAY_CARD[num];
+          var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : "az305");
+          var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
+          main.innerHTML =
+            '<span class="day-num font-mono">DAY '+num+(todayDay===num ? " · TODAY" : "")+'</span>'+
+            '<div class="day-topic">'+topic+'</div>'+
+            metaHtml+
+            '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">'+
+              '<a class="day-link" href="'+link+'" target="_blank" rel="noopener">Docs ↗</a>'+
+              '<a class="day-link" href="'+video+'" target="_blank" rel="noopener">Video ↗</a>'+
+              '<button type="button" class="day-link fc-jump-btn" style="background:none;border:none;padding:0;font-size:10px;letter-spacing:0.02em;cursor:pointer;">'+fcLabel+'</button>'+
+            '</div>';
+          main.addEventListener("click", function(e){
+            if(e.target.tagName !== "A" && !e.target.classList.contains("fc-jump-btn")){ toggle(); }
+          });
+          main.querySelector(".fc-jump-btn").addEventListener("click", function(e){
+            e.stopPropagation();
+            if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
+            else { showDayFlashcard(fallbackDeck, 0); }
+          });
+
+          cell.appendChild(check);
+          cell.appendChild(main);
+          grid.appendChild(cell);
+        });
+
+        wb.appendChild(grid);
+        body.appendChild(wb);
+      });
+
+      phaseEl.appendChild(header);
+      phaseEl.appendChild(body);
+      container.appendChild(phaseEl);
+    });
+
+    var doneTotal = Object.keys(progress).filter(function(k){ return progress[k]; }).length;
+    var pct = Math.round((doneTotal / TOTAL_DAYS) * 100);
+    document.getElementById("overall-stat").textContent = doneTotal + " / " + TOTAL_DAYS + " days · " + pct + "%";
+    document.getElementById("ruler-fill").style.width = pct + "%";
+
+    var ticksEl = document.getElementById("ruler-ticks");
+    if(!ticksEl.childElementCount){
+      for(var i=0;i<91;i++){
+        var t = document.createElement("div");
+        t.className = "ruler-tick" + (i%7===0 ? " major" : "");
+        ticksEl.appendChild(t);
+      }
+    }
+
+    var todayMarker = document.getElementById("ruler-today");
+    if(todayDay){
+      todayMarker.style.display = "block";
+      todayMarker.style.left = ((todayDay-1)/TOTAL_DAYS*100) + "%";
+    } else {
+      todayMarker.style.display = "none";
+    }
+  }
+
+  var renewalDates = { az104:null, az305:null };
+
+  async function loadRenewalDates(){
+    try{
+      var aVal = await store.get("az104-pass-date");
+      if(aVal){ renewalDates.az104 = aVal; document.getElementById("az104-date").value = aVal; }
+    }catch(e){}
+    try{
+      var bVal = await store.get("az305-pass-date");
+      if(bVal){ renewalDates.az305 = bVal; document.getElementById("az305-date").value = bVal; }
+    }catch(e){}
+    renderRenewalStatus();
+  }
+
+  function daysBetween(a,b){ return Math.floor((b-a)/86400000); }
+
+  function renewalStatusText(passDateStr){
+    if(!passDateStr) return "Not yet passed";
+    var pass = new Date(passDateStr+"T00:00:00");
+    var now = new Date(); now.setHours(0,0,0,0);
+    var expiry = new Date(pass); expiry.setFullYear(expiry.getFullYear()+1);
+    var renewalOpens = new Date(expiry); renewalOpens.setMonth(renewalOpens.getMonth()-6);
+    if(now > expiry){
+      return "EXPIRED " + daysBetween(expiry, now) + "d ago — renew ASAP";
+    } else if(now >= renewalOpens){
+      return "Renewal window open · expires in " + daysBetween(now, expiry) + "d";
+    } else {
+      return "Valid · renewal opens in " + daysBetween(now, renewalOpens) + "d · expires in " + daysBetween(now, expiry) + "d";
+    }
+  }
+
+  function renderRenewalStatus(){
+    document.getElementById("az104-status").textContent = renewalStatusText(renewalDates.az104);
+    document.getElementById("az305-status").textContent = renewalStatusText(renewalDates.az305);
+  }
+
+  document.getElementById("az104-date").addEventListener("change", function(e){
+    renewalDates.az104 = e.target.value || null;
+    try{ store.set("az104-pass-date", renewalDates.az104 || ""); }catch(err){}
+    renderRenewalStatus();
+  });
+  document.getElementById("az305-date").addEventListener("change", function(e){
+    renewalDates.az305 = e.target.value || null;
+    try{ store.set("az305-pass-date", renewalDates.az305 || ""); }catch(err){}
+    renderRenewalStatus();
+  });
+
+  document.getElementById("start-date").addEventListener("change", function(e){
+    startDate = e.target.value || null;
+    saveStartDate(startDate || "");
+    render();
+  });
+
+  document.getElementById("reset-btn").addEventListener("click", function(){
+    if(confirm("Clear all progress? This cannot be undone.")){
+      progress = {};
+      saveProgress();
+      render();
+    }
+  });
+
+  document.getElementById("expand-all-btn").addEventListener("click", function(e){
+    var collapsedAny = document.querySelectorAll(".phase.collapsed").length > 0;
+    document.querySelectorAll(".phase").forEach(function(p){
+      if(collapsedAny){ p.classList.remove("collapsed"); }
+      else { p.classList.add("collapsed"); }
+    });
+    e.target.textContent = collapsedAny ? "Collapse all" : "Expand all";
+  });
+
+  // ===== Flashcards =====
+  var fcState = { deck:"az900", order:[], idx:0 };
+
+  function fcResetOrder(){
+    var n = FLASHCARDS[fcState.deck].length;
+    fcState.order = [];
+    for(var i=0;i<n;i++){ fcState.order.push(i); }
+    fcState.idx = 0;
+  }
+
+  var DECK_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect" };
+
+  function fcRender(){
+    var card = FLASHCARDS[fcState.deck][fcState.order[fcState.idx]];
+    document.getElementById("fc-front").textContent = card[0];
+    document.getElementById("fc-back").textContent = card[1];
+    document.getElementById("fc-progress").textContent = "Card " + (fcState.idx+1) + " of " + fcState.order.length;
+    document.getElementById("fc-card").classList.remove("flipped");
+    document.getElementById("fc-modal-title").textContent = DECK_NAMES[fcState.deck] + " — flashcards";
+  }
+
+  function openFlashcardModal(){
+    document.getElementById("fc-modal-overlay").classList.add("open");
+  }
+  function closeFlashcardModal(){
+    document.getElementById("fc-modal-overlay").classList.remove("open");
+  }
+  document.getElementById("fc-modal-close").addEventListener("click", closeFlashcardModal);
+  document.getElementById("fc-modal-overlay").addEventListener("click", function(e){
+    if(e.target.id === "fc-modal-overlay"){ closeFlashcardModal(); }
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){ closeFlashcardModal(); }
+  });
+  document.getElementById("fc-open-az900").addEventListener("click", function(){ showDayFlashcard("az900", 0); });
+  document.getElementById("fc-open-az104").addEventListener("click", function(){ showDayFlashcard("az104", 0); });
+  document.getElementById("fc-open-az305").addEventListener("click", function(){ showDayFlashcard("az305", 0); });
+
+  function showDayFlashcard(deck, idx){
+    document.querySelectorAll(".fc-tab").forEach(function(t){
+      t.classList.toggle("active", t.dataset.deck === deck);
+    });
+    fcState.deck = deck;
+    fcResetOrder();
+    fcState.idx = idx;
+    fcRender();
+    openFlashcardModal();
+  }
+
+  document.querySelectorAll(".fc-tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".fc-tab").forEach(function(t){ t.classList.remove("active"); });
+      tab.classList.add("active");
+      fcState.deck = tab.dataset.deck;
+      fcResetOrder();
+      fcRender();
+    });
+  });
+
+  document.getElementById("fc-card").addEventListener("click", function(){
+    document.getElementById("fc-card").classList.toggle("flipped");
+  });
+  document.getElementById("fc-flip").addEventListener("click", function(){
+    document.getElementById("fc-card").classList.toggle("flipped");
+  });
+  document.getElementById("fc-next").addEventListener("click", function(){
+    fcState.idx = (fcState.idx + 1) % fcState.order.length;
+    fcRender();
+  });
+  document.getElementById("fc-prev").addEventListener("click", function(){
+    fcState.idx = (fcState.idx - 1 + fcState.order.length) % fcState.order.length;
+    fcRender();
+  });
+  document.getElementById("fc-shuffle").addEventListener("click", function(){
+    for(var i=fcState.order.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp = fcState.order[i]; fcState.order[i]=fcState.order[j]; fcState.order[j]=tmp;
+    }
+    fcState.idx = 0;
+    fcRender();
+  });
+
+  fcResetOrder();
+  fcRender();
+
+  // ===== Auth =====
+  function initApp(){
+    document.getElementById("auth-screen").style.display = "none";
+    document.getElementById("app-root").style.display = "block";
+    document.getElementById("account-email").textContent = currentUser.email;
+    loadState().then(render);
+    loadRenewalDates();
+  }
+
+  function showAuthError(msg){
+    var el = document.getElementById("auth-msg");
+    el.className = "auth-msg error";
+    el.textContent = msg;
+  }
+  function showAuthSuccess(msg){
+    var el = document.getElementById("auth-msg");
+    el.className = "auth-msg success";
+    el.textContent = msg;
+  }
+
+  var authMode = "signin"; // or "signup"
+
+  if(!window.SUPABASE_URL || window.SUPABASE_URL.indexOf("YOUR_SUPABASE") === 0){
+    document.getElementById("auth-config-warning").style.display = "block";
+    document.getElementById("auth-submit").disabled = true;
+  } else {
+    supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+    supabaseClient.auth.getSession().then(function(res){
+      if(res.data && res.data.session){
+        currentUser = res.data.session.user;
+        initApp();
+      }
+    });
+
+    supabaseClient.auth.onAuthStateChange(function(event, session){
+      if(event === "SIGNED_IN" && session && !currentUser){
+        currentUser = session.user;
+        initApp();
+      }
+      if(event === "SIGNED_OUT"){
+        currentUser = null;
+      }
+    });
+
+    document.getElementById("auth-toggle-btn").addEventListener("click", function(){
+      authMode = authMode === "signin" ? "signup" : "signin";
+      document.getElementById("auth-submit").textContent = authMode === "signin" ? "Sign In" : "Create Account";
+      document.getElementById("auth-toggle-text").textContent = authMode === "signin" ? "Don't have an account?" : "Already have an account?";
+      document.getElementById("auth-toggle-btn").textContent = authMode === "signin" ? "Create one" : "Sign in";
+      document.getElementById("auth-msg").className = "auth-msg";
+    });
+
+    document.getElementById("auth-submit").addEventListener("click", async function(){
+      var email = document.getElementById("auth-email").value.trim();
+      var password = document.getElementById("auth-password").value;
+      if(!email || !password){ showAuthError("Enter both email and password."); return; }
+      document.getElementById("auth-submit").disabled = true;
+      try{
+        if(authMode === "signup"){
+          var res = await supabaseClient.auth.signUp({ email: email, password: password });
+          if(res.error){ showAuthError(res.error.message); }
+          else if(res.data.user && !res.data.session){
+            showAuthSuccess("Account created — check your email to confirm, then sign in.");
+          } else if(res.data.session){
+            currentUser = res.data.session.user;
+            initApp();
+          }
+        } else {
+          var res2 = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
+          if(res2.error){ showAuthError(res2.error.message); }
+          else { currentUser = res2.data.session.user; initApp(); }
+        }
+      }catch(e){
+        showAuthError("Something went wrong: " + e.message);
+      }
+      document.getElementById("auth-submit").disabled = false;
+    });
+
+    document.getElementById("signout-btn").addEventListener("click", async function(){
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      document.getElementById("app-root").style.display = "none";
+      document.getElementById("auth-screen").style.display = "flex";
+      document.getElementById("auth-email").value = "";
+      document.getElementById("auth-password").value = "";
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
