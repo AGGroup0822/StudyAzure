@@ -24,6 +24,24 @@
     --border:#28527A;
     --border-soft:#1D4468;
   }
+  html[data-theme="light"]{
+    --bg:#F2F6F9;
+    --panel:#FFFFFF;
+    --panel-2:#E9F0F5;
+    --grid-minor:rgba(14,42,71,0.04);
+    --grid-major:rgba(14,138,118,0.08);
+    --ink:#152634;
+    --ink-muted:#4C6478;
+    --ink-dim:#7891A3;
+    --teal:#0E8A76;
+    --amber:#9C6B0A;
+    --border:#C7D6E0;
+    --border-soft:#DCE6ED;
+  }
+  body, .panel, .panel-2, .day-cell, .phase, .titleblock, .ruler-wrap, .notes, .resource-card,
+  .fc-modal, .dm-modal, .side-panel, .auth-box{
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -453,16 +471,88 @@
     justify-content:center;
     padding:20px;
   }
-  .auth-box{
+  .auth-shell{
+    display:flex;
+    max-width:920px;
     width:100%;
-    max-width:380px;
     border:1px solid var(--border);
     background:var(--panel);
-    padding:26px 24px;
+    overflow:hidden;
+  }
+  .auth-brand{
+    flex:1;
+    min-width:0;
+    background:
+      linear-gradient(rgba(111,214,196,0.06) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, rgba(111,214,196,0.06) 1px, transparent 1px) 0 0/40px 40px,
+      var(--panel-2);
+    padding:36px 32px;
+    border-right:1px solid var(--border-soft);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .auth-brand-badge{
+    font-size:10px;color:var(--teal);letter-spacing:0.08em;margin-bottom:14px;
+  }
+  .auth-brand-title{
+    font-size:26px;font-weight:700;line-height:1.25;color:var(--ink);margin-bottom:14px;
+  }
+  .auth-brand-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:26px;}
+  .auth-features{list-style:none;margin:0;padding:0;}
+  .auth-features li{
+    display:flex;align-items:flex-start;gap:10px;
+    font-size:12.5px;color:var(--ink-muted);line-height:1.5;margin-bottom:12px;
+  }
+  .auth-feature-icon{flex-shrink:0;font-size:14px;}
+  .auth-box{
+    flex:1;
+    min-width:0;
+    max-width:380px;
+    padding:36px 32px;
   }
   .auth-title{font-size:18px;font-weight:700;margin-bottom:4px;}
   .auth-sub{font-size:12px;color:var(--ink-muted);margin-bottom:20px;}
   .auth-field{margin-bottom:14px;}
+  .auth-guest-btn{
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--border);
+    color:var(--ink-muted);
+    padding:10px;
+    font-size:12px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .auth-guest-btn:hover{border-color:var(--ink-muted);color:var(--ink);}
+  .auth-guest-note{font-size:10px;color:var(--ink-dim);margin-top:8px;line-height:1.5;}
+  @media (max-width:760px){
+    .auth-brand{display:none;}
+    .auth-box{max-width:none;}
+  }
+
+  /* ===== Guest banner ===== */
+  .guest-banner{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+    background:rgba(242,193,78,0.1);
+    border:1px solid var(--amber);
+    color:var(--ink);
+    padding:10px 20px;
+    font-size:12.5px;
+    max-width:1180px;margin:0 auto 16px;
+  }
+  .guest-banner b{color:var(--amber);}
+  .guest-banner-btn{
+    background:var(--amber);border:none;color:var(--bg);
+    padding:7px 14px;font-size:11px;font-weight:700;
+    cursor:pointer;font-family:inherit;white-space:nowrap;
+  }
+  .guest-banner-btn:hover{opacity:0.85;}
+  .guest-banner.pulse{animation:guestpulse 0.6s ease;}
+  @keyframes guestpulse{
+    0%,100%{border-color:var(--amber);}
+    50%{border-color:var(--teal);background:rgba(111,214,196,0.12);}
+  }
   .auth-field label{
     display:block;
     font-size:10px;
@@ -591,6 +681,106 @@
     font-family:ui-monospace,monospace;font-size:10px;color:var(--ink-dim);
   }
 
+  /* ===== Whiteboard ===== */
+  .wb-toolbar{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .wb-btn{
+    background:var(--panel-2);border:1px solid var(--border);
+    color:var(--ink-muted);width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;cursor:pointer;font-family:inherit;
+  }
+  .wb-btn.active{border-color:var(--teal);color:var(--teal);background:rgba(111,214,196,0.1);}
+  .wb-btn:hover{border-color:var(--teal);}
+  .wb-swatch{
+    width:22px;height:22px;border-radius:50%;cursor:pointer;
+    border:2px solid transparent;
+  }
+  .wb-swatch.active{border-color:var(--teal);}
+  .wb-sep{width:1px;height:24px;background:var(--border-soft);}
+  .wb-canvas-wrap{
+    position:relative;width:100%;
+    aspect-ratio:16/9;
+    border:1px solid var(--border);
+    touch-action:none;
+    background:#fff;
+  }
+  .wb-canvas-wrap canvas{
+    position:absolute;inset:0;width:100%;height:100%;
+    cursor:crosshair;
+  }
+  .wb-status{font-size:10px;color:var(--ink-dim);margin-top:8px;}
+
+  /* ===== Side panel (tools) ===== */
+  .sp-toggle{
+    position:fixed;top:50%;right:0;transform:translateY(-50%);
+    background:var(--panel);border:1px solid var(--border);border-right:none;
+    color:var(--teal);padding:14px 8px;
+    font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+    writing-mode:vertical-rl;cursor:pointer;font-family:inherit;
+    z-index:900;
+  }
+  .sp-toggle:hover{background:rgba(111,214,196,0.08);}
+  .side-panel{
+    position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;
+    background:var(--panel);border-left:1px solid var(--border);
+    transform:translateX(100%);transition:transform .25s ease;
+    z-index:950;overflow-y:auto;padding:18px 16px 40px;
+  }
+  .side-panel.open{transform:translateX(0);}
+  .sp-header{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border-soft);
+  }
+  .sp-header-title{font-size:13px;font-weight:700;}
+  .sp-close{
+    background:transparent;border:1px solid var(--border);color:var(--ink-muted);
+    width:26px;height:26px;cursor:pointer;font-family:inherit;
+  }
+  .sp-close:hover{border-color:var(--amber);color:var(--amber);}
+  .sp-section{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border-soft);}
+  .sp-section:last-child{border-bottom:none;}
+  .sp-label{
+    font-size:10px;color:var(--ink-dim);text-transform:uppercase;
+    letter-spacing:0.06em;margin-bottom:8px;
+  }
+  .sp-clock-time{
+    font-family:ui-monospace,monospace;font-size:28px;color:var(--teal);
+    letter-spacing:0.02em;
+  }
+  .sp-clock-date{font-size:11px;color:var(--ink-muted);margin-top:2px;}
+  .sp-timer-display{
+    font-family:ui-monospace,monospace;font-size:32px;color:var(--ink);
+    text-align:center;margin:8px 0;
+  }
+  .sp-timer-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .sp-btn{
+    background:var(--panel-2);border:1px solid var(--border);color:var(--ink-muted);
+    padding:6px 12px;font-size:11px;cursor:pointer;font-family:inherit;
+  }
+  .sp-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .sp-btn.primary{border-color:var(--teal);color:var(--teal);}
+  .sp-select{
+    background:var(--panel-2);border:1px solid var(--border);color:var(--ink);
+    padding:6px 8px;font-size:11px;font-family:inherit;
+  }
+  .sp-snapshot{font-size:12px;line-height:1.8;color:var(--ink-muted);}
+  .sp-snapshot b{color:var(--teal);font-weight:600;}
+  .sp-notes textarea{
+    width:100%;min-height:100px;background:var(--panel-2);border:1px solid var(--border);
+    color:var(--ink);padding:8px;font-family:inherit;font-size:12px;line-height:1.5;resize:vertical;
+  }
+  .sp-notes-status{font-size:10px;color:var(--ink-dim);margin-top:4px;}
+  .sp-fullbtn{width:100%;text-align:center;}
+  .sp-week-row{margin-bottom:8px;}
+  .sp-week-label{font-size:10px;color:var(--ink-muted);margin-bottom:3px;display:flex;justify-content:space-between;}
+  .sp-week-bar-track{height:6px;background:var(--panel-2);border:1px solid var(--border-soft);}
+  .sp-week-bar-fill{height:100%;background:var(--teal);}
+
+
+
 
   @media (max-width:640px){
     .titleblock{grid-template-columns:1fr;}
@@ -608,30 +798,117 @@
 <body>
 
 <div class="auth-screen" id="auth-screen">
-  <div class="auth-box">
-    <div class="auth-title font-tech">Azure Roadmap — Sign In</div>
-    <div class="auth-sub">Your progress syncs to your account, accessible from any device.</div>
-    <div id="auth-config-warning" class="auth-config-warning" style="display:none;">
-      This page hasn't been connected to a database yet — the site owner needs to add their Supabase project URL and key. See the setup instructions.
+  <div class="auth-shell">
+    <div class="auth-brand">
+      <div class="auth-brand-badge font-tech">Azure Certification Roadmap</div>
+      <div class="auth-brand-title">Foundations to<br>Solutions Architect</div>
+      <div class="auth-brand-sub">A 145-day guided path through AZ-900, AZ-104, AZ-305, and real-world architecture practice.</div>
+      <ul class="auth-features">
+        <li><span class="auth-feature-icon">📅</span>145-day structured roadmap across 4 phases</li>
+        <li><span class="auth-feature-icon">▶</span>Embedded video lessons, no leaving the site</li>
+        <li><span class="auth-feature-icon">🗂️</span>85+ built-in flashcards with spaced review</li>
+        <li><span class="auth-feature-icon">✏️</span>Whiteboard for architecture diagrams</li>
+        <li><span class="auth-feature-icon">⏱</span>Time tracking &amp; progress synced to your account</li>
+      </ul>
     </div>
-    <div class="auth-field">
-      <label>Email</label>
-      <input type="email" id="auth-email" autocomplete="email">
+
+    <div class="auth-box">
+      <div class="auth-title font-tech" id="auth-title-text">Sign In</div>
+      <div class="auth-sub">Your progress syncs to your account, accessible from any device.</div>
+      <div id="auth-config-warning" class="auth-config-warning" style="display:none;">
+        This page hasn't been connected to a database yet — the site owner needs to add their Supabase project URL and key. See the setup instructions.
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="auth-email" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="auth-password" autocomplete="current-password">
+      </div>
+      <button class="auth-btn" id="auth-submit">Sign In</button>
+      <div class="auth-toggle">
+        <span id="auth-toggle-text">Don't have an account?</span>
+        <button id="auth-toggle-btn">Create one</button>
+      </div>
+      <div class="auth-msg" id="auth-msg"></div>
+
+      <div class="auth-divider">or</div>
+      <button class="auth-guest-btn" id="auth-guest-btn">👀 Continue as Guest (preview only)</button>
+      <div class="auth-guest-note">Guests can browse the day list and topics, but videos, docs, flashcards, whiteboard, and progress tracking require a free account.</div>
     </div>
-    <div class="auth-field">
-      <label>Password</label>
-      <input type="password" id="auth-password" autocomplete="current-password">
-    </div>
-    <button class="auth-btn" id="auth-submit">Sign In</button>
-    <div class="auth-toggle">
-      <span id="auth-toggle-text">Don't have an account?</span>
-      <button id="auth-toggle-btn">Create one</button>
-    </div>
-    <div class="auth-msg" id="auth-msg"></div>
   </div>
 </div>
 
 <div id="app-root" style="display:none;">
+
+<div class="guest-banner" id="guest-banner" style="display:none;">
+  <span>👀 You're browsing as a <b>guest</b> — videos, docs, flashcards, whiteboard, and progress tracking are locked.</span>
+  <button class="guest-banner-btn" id="guest-register-btn">Create free account →</button>
+</div>
+
+<button class="sp-toggle" id="sp-toggle">Tools</button>
+<aside class="side-panel" id="side-panel">
+  <div class="sp-header">
+    <div class="sp-header-title font-tech">Tools</div>
+    <button class="sp-close" id="sp-close">✕</button>
+  </div>
+
+
+  <div class="sp-section">
+    <div class="sp-label">Clock</div>
+    <div class="sp-clock-time font-mono" id="sp-clock-time">--:--:--</div>
+    <div class="sp-clock-date" id="sp-clock-date">—</div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Study Timer</div>
+    <div class="sp-timer-display" id="sp-timer-display">25:00</div>
+    <div class="sp-timer-row">
+      <button class="sp-btn primary" id="sp-timer-toggle">Start</button>
+      <button class="sp-btn" id="sp-timer-reset">Reset</button>
+      <select class="sp-select" id="sp-timer-preset">
+        <option value="15">15 min</option>
+        <option value="25" selected>25 min</option>
+        <option value="50">50 min</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Appearance</div>
+    <button class="sp-btn sp-fullbtn" id="sp-theme-toggle">🌙 Switch to light mode</button>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Time by Week</div>
+    <div id="sp-week-chart" style="max-height:180px;overflow-y:auto;"></div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Quick Jump</div>
+    <button class="sp-btn sp-fullbtn" id="sp-jump-today">Open today's day</button>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Progress Snapshot</div>
+    <div class="sp-snapshot" id="sp-snapshot">Loading…</div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Quick Review</div>
+    <button class="sp-btn sp-fullbtn" id="sp-random-card">🎲 Random flashcard</button>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-label">Quick Notes</div>
+    <div class="sp-notes">
+      <textarea id="sp-quicknotes" placeholder="General scratchpad — not tied to any specific day."></textarea>
+      <div class="sp-notes-status" id="sp-quicknotes-status"></div>
+    </div>
+  </div>
+</aside>
+
 <div class="sheet">
 
   <div class="titleblock font-tech">
@@ -802,6 +1079,7 @@
       <button class="dm-tab" data-panel="dm-video">Video</button>
       <button class="dm-tab" data-panel="dm-docs">Docs</button>
       <button class="dm-tab" data-panel="dm-notes">Notes</button>
+      <button class="dm-tab" data-panel="dm-whiteboard">Whiteboard</button>
     </div>
 
     <div class="dm-panel active" id="dm-overview">
@@ -821,6 +1099,32 @@
     <div class="dm-panel" id="dm-notes">
       <textarea id="dm-notes-text" placeholder="Jot down anything you want to remember about this topic — saved automatically to your account."></textarea>
       <div class="dm-notes-saved" id="dm-notes-saved"></div>
+    </div>
+
+    <div class="dm-panel" id="dm-whiteboard">
+      <div class="wb-toolbar">
+        <button class="wb-btn active" data-tool="pen" title="Pen">✏️</button>
+        <button class="wb-btn" data-tool="rect" title="Rectangle">▭</button>
+        <button class="wb-btn" data-tool="circle" title="Circle">◯</button>
+        <button class="wb-btn" data-tool="line" title="Line / Arrow">↗</button>
+        <button class="wb-btn" data-tool="text" title="Text">T</button>
+        <button class="wb-btn" data-tool="eraser" title="Eraser">⌫</button>
+        <div class="wb-sep"></div>
+        <div class="wb-swatch active" data-color="#1a1a2e" style="background:#1a1a2e;"></div>
+        <div class="wb-swatch" data-color="#0E2A47" style="background:#0E2A47;"></div>
+        <div class="wb-swatch" data-color="#1B7A6E" style="background:#1B7A6E;"></div>
+        <div class="wb-swatch" data-color="#C0392B" style="background:#C0392B;"></div>
+        <div class="wb-swatch" data-color="#B8860B" style="background:#B8860B;"></div>
+        <div class="wb-sep"></div>
+        <button class="btn" id="wb-clear">Clear</button>
+        <button class="btn" id="wb-save">Save</button>
+        <button class="btn" id="wb-download">Download PNG</button>
+      </div>
+      <div class="wb-canvas-wrap">
+        <canvas id="wb-canvas" width="1000" height="562"></canvas>
+        <canvas id="wb-overlay" width="1000" height="562"></canvas>
+      </div>
+      <div class="wb-status" id="wb-status">Draw a diagram for this day — arrows/boxes work well for architecture sketches.</div>
     </div>
 
     <div class="dm-footer">
@@ -867,6 +1171,7 @@
   // Storage backend: reads/writes a Postgres table in your Supabase project,
   // scoped to the signed-in user via the "user_id" column + Row Level Security.
   var currentUser = null;
+  var isGuest = false;
   var supabaseClient = null;
 
   var store = {
@@ -1670,6 +1975,9 @@
     var totalSecs = Object.values(timeSpent).reduce(function(a,b){ return a+b; }, 0);
     var totalHrs = (totalSecs/3600).toFixed(1);
     document.getElementById("overall-stat").textContent = doneTotal + " / " + TOTAL_DAYS + " days · " + pct + "% · " + totalHrs + "h logged";
+    if(typeof spRefreshSnapshot === "function"){ spRefreshSnapshot(); }
+    if(typeof spRefreshJumpToday === "function"){ spRefreshJumpToday(); }
+    if(typeof spRenderWeekChart === "function"){ spRenderWeekChart(); }
     document.getElementById("ruler-fill").style.width = pct + "%";
 
     var ticksEl = document.getElementById("ruler-ticks");
@@ -1802,6 +2110,7 @@
   document.getElementById("fc-open-az305").addEventListener("click", function(){ showDayFlashcard("az305", 0); });
 
   function showDayFlashcard(deck, idx){
+    if(guestBlock()) return;
     document.querySelectorAll(".fc-tab").forEach(function(t){
       t.classList.toggle("active", t.dataset.deck === deck);
     });
@@ -1872,9 +2181,27 @@
     document.getElementById("dm-overlay").classList.add("open");
     dmUpdateTimerDisplay();
     dmTimerInterval = setInterval(dmUpdateTimerDisplay, 1000);
+    wbLoadForDay(num);
+  }
+
+  function guestBlock(){
+    if(!isGuest) return false;
+    var banner = document.getElementById("guest-banner");
+    banner.classList.remove("pulse");
+    void banner.offsetWidth;
+    banner.classList.add("pulse");
+    if(typeof banner.scrollIntoView === "function"){
+      try{ banner.scrollIntoView({behavior:"smooth", block:"start"}); }catch(e){}
+    }
+    return true;
   }
 
   function dmSwitchTab(panelId){
+    var guestLocked = ["dm-video","dm-docs","dm-whiteboard","dm-notes"];
+    if(isGuest && guestLocked.indexOf(panelId) !== -1){
+      guestBlock();
+      panelId = "dm-overview";
+    }
     document.querySelectorAll(".dm-tab").forEach(function(t){
       t.classList.toggle("active", t.dataset.panel === panelId);
     });
@@ -1901,6 +2228,7 @@
       dayNotes[dmCurrentDay] = notesVal;
       saveDayNotes();
     }
+    if(wb.dirty){ wbSave(false); }
     document.getElementById("dm-video-iframe").src = "";
     document.getElementById("dm-docs-iframe").src = "";
     document.getElementById("dm-overlay").classList.remove("open");
@@ -1926,6 +2254,368 @@
     var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : "az305");
     if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
     else { showDayFlashcard(fallbackDeck, 0); }
+  });
+
+  // ===== Whiteboard =====
+  var wb = { tool:"pen", color:"#1a1a2e", width:3, drawing:false, startX:0, startY:0, dirty:false };
+  var wbCanvas = document.getElementById("wb-canvas");
+  var wbOverlay = document.getElementById("wb-overlay");
+  var wbCtx = wbCanvas.getContext("2d");
+  var wbOctx = wbOverlay.getContext("2d");
+  var wbAvailable = !!(wbCtx && wbOctx);
+  var wbCurrentDay = null;
+  var wbSavedCache = {}; // dayNum -> dataURL, cached after first load this session
+
+  function wbFillWhite(ctx, canvas){
+    if(!ctx) return;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+  }
+  if(wbAvailable){ wbFillWhite(wbCtx, wbCanvas); }
+  else { document.getElementById("wb-status").textContent = "Whiteboard isn't supported in this browser."; }
+
+  function wbGetPos(e){
+    var rect = wbCanvas.getBoundingClientRect();
+    var scaleX = wbCanvas.width / rect.width;
+    var scaleY = wbCanvas.height / rect.height;
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+  }
+
+  function wbDrawShapePreview(x0,y0,x1,y1){
+    wbOctx.clearRect(0,0,wbOverlay.width,wbOverlay.height);
+    wbOctx.strokeStyle = wb.color;
+    wbOctx.lineWidth = wb.width;
+    wbOctx.lineCap = "round";
+    if(wb.tool === "rect"){
+      wbOctx.strokeRect(Math.min(x0,x1), Math.min(y0,y1), Math.abs(x1-x0), Math.abs(y1-y0));
+    } else if(wb.tool === "circle"){
+      var rx = Math.abs(x1-x0)/2, ry = Math.abs(y1-y0)/2;
+      var cx = Math.min(x0,x1)+rx, cy = Math.min(y0,y1)+ry;
+      wbOctx.beginPath();
+      wbOctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+      wbOctx.stroke();
+    } else if(wb.tool === "line"){
+      wbOctx.beginPath();
+      wbOctx.moveTo(x0,y0);
+      wbOctx.lineTo(x1,y1);
+      wbOctx.stroke();
+      // arrowhead
+      var angle = Math.atan2(y1-y0, x1-x0);
+      var headLen = 14;
+      wbOctx.beginPath();
+      wbOctx.moveTo(x1, y1);
+      wbOctx.lineTo(x1 - headLen*Math.cos(angle - Math.PI/6), y1 - headLen*Math.sin(angle - Math.PI/6));
+      wbOctx.moveTo(x1, y1);
+      wbOctx.lineTo(x1 - headLen*Math.cos(angle + Math.PI/6), y1 - headLen*Math.sin(angle + Math.PI/6));
+      wbOctx.stroke();
+    }
+  }
+
+  function wbCommitOverlay(){
+    wbCtx.drawImage(wbOverlay, 0, 0);
+    wbOctx.clearRect(0,0,wbOverlay.width,wbOverlay.height);
+  }
+
+  function wbPointerDown(e){
+    if(!wbAvailable) return;
+    e.preventDefault();
+    var pos = wbGetPos(e);
+    wb.drawing = true;
+    wb.startX = pos.x; wb.startY = pos.y;
+    wb.dirty = true;
+    document.getElementById("wb-status").textContent = "Unsaved changes";
+
+    if(wb.tool === "text"){
+      var txt = prompt("Text to add:");
+      wb.drawing = false;
+      if(txt){
+        wbCtx.fillStyle = wb.color;
+        wbCtx.font = "bold 22px sans-serif";
+        wbCtx.fillText(txt, pos.x, pos.y);
+      }
+      return;
+    }
+    if(wb.tool === "pen" || wb.tool === "eraser"){
+      wbCtx.beginPath();
+      wbCtx.moveTo(pos.x, pos.y);
+    }
+  }
+
+  function wbPointerMove(e){
+    if(!wb.drawing) return;
+    e.preventDefault();
+    var pos = wbGetPos(e);
+    if(wb.tool === "pen"){
+      wbCtx.strokeStyle = wb.color;
+      wbCtx.lineWidth = wb.width;
+      wbCtx.lineCap = "round";
+      wbCtx.lineTo(pos.x, pos.y);
+      wbCtx.stroke();
+    } else if(wb.tool === "eraser"){
+      wbCtx.strokeStyle = "#ffffff";
+      wbCtx.lineWidth = wb.width * 6;
+      wbCtx.lineCap = "round";
+      wbCtx.lineTo(pos.x, pos.y);
+      wbCtx.stroke();
+    } else if(wb.tool === "rect" || wb.tool === "circle" || wb.tool === "line"){
+      wbDrawShapePreview(wb.startX, wb.startY, pos.x, pos.y);
+    }
+  }
+
+  function wbPointerUp(e){
+    if(!wb.drawing) return;
+    wb.drawing = false;
+    if(wb.tool === "rect" || wb.tool === "circle" || wb.tool === "line"){
+      wbCommitOverlay();
+    }
+  }
+
+  wbCanvas.addEventListener("mousedown", wbPointerDown);
+  wbCanvas.addEventListener("mousemove", wbPointerMove);
+  window.addEventListener("mouseup", wbPointerUp);
+  wbCanvas.addEventListener("touchstart", wbPointerDown, { passive:false });
+  wbCanvas.addEventListener("touchmove", wbPointerMove, { passive:false });
+  wbCanvas.addEventListener("touchend", wbPointerUp);
+
+  document.querySelectorAll(".wb-btn[data-tool]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".wb-btn[data-tool]").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      wb.tool = btn.dataset.tool;
+    });
+  });
+  document.querySelectorAll(".wb-swatch").forEach(function(sw){
+    sw.addEventListener("click", function(){
+      document.querySelectorAll(".wb-swatch").forEach(function(s){ s.classList.remove("active"); });
+      sw.classList.add("active");
+      wb.color = sw.dataset.color;
+    });
+  });
+
+  document.getElementById("wb-clear").addEventListener("click", function(){
+    if(confirm("Clear this whiteboard? This can't be undone until you save again.")){
+      wbFillWhite(wbCtx, wbCanvas);
+      wb.dirty = true;
+      document.getElementById("wb-status").textContent = "Unsaved changes";
+    }
+  });
+
+  async function wbSave(showStatus){
+    if(wbCurrentDay === null) return;
+    var dataUrl = wbCanvas.toDataURL("image/png");
+    wbSavedCache[wbCurrentDay] = dataUrl;
+    try{
+      await store.set("whiteboard-" + wbCurrentDay, dataUrl);
+      wb.dirty = false;
+      if(showStatus){ document.getElementById("wb-status").textContent = "Saved."; }
+    }catch(e){
+      console.error("Whiteboard save error", e);
+      if(showStatus){ document.getElementById("wb-status").textContent = "Save failed — check your connection."; }
+    }
+  }
+  document.getElementById("wb-save").addEventListener("click", function(){ wbSave(true); });
+
+  document.getElementById("wb-download").addEventListener("click", function(){
+    var a = document.createElement("a");
+    a.href = wbCanvas.toDataURL("image/png");
+    a.download = "day-" + (wbCurrentDay || "whiteboard") + "-diagram.png";
+    a.click();
+  });
+
+  async function wbLoadForDay(num){
+    wbCurrentDay = num;
+    wb.dirty = false;
+    wbFillWhite(wbCtx, wbCanvas);
+    document.getElementById("wb-status").textContent = "Draw a diagram for this day — arrows/boxes work well for architecture sketches.";
+    var dataUrl = null;
+    try{ dataUrl = await store.get("whiteboard-" + num); }catch(e){}
+    if(dataUrl){
+      var img = new Image();
+      img.onload = function(){ wbCtx.drawImage(img, 0, 0, wbCanvas.width, wbCanvas.height); };
+      img.src = dataUrl;
+      document.getElementById("wb-status").textContent = "Loaded your saved diagram for this day.";
+    }
+  }
+
+  // ===== Side panel =====
+  document.getElementById("sp-toggle").addEventListener("click", function(){
+    document.getElementById("side-panel").classList.add("open");
+    spRefreshSnapshot();
+    spRefreshJumpToday();
+  });
+  document.getElementById("sp-close").addEventListener("click", function(){
+    document.getElementById("side-panel").classList.remove("open");
+  });
+
+  // -- Clock --
+  var WEEKDAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function spTickClock(){
+    var d = new Date();
+    var hh = pad(d.getHours()), mm = pad(d.getMinutes()), ss = pad(d.getSeconds());
+    document.getElementById("sp-clock-time").textContent = hh + ":" + mm + ":" + ss;
+    document.getElementById("sp-clock-date").textContent =
+      WEEKDAY_NAMES[d.getDay()] + ", " + MONTH_NAMES[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  }
+  spTickClock();
+  setInterval(spTickClock, 1000);
+
+  // -- Study timer (Pomodoro-style countdown) --
+  var spTimerSecs = 25*60;
+  var spTimerRunning = false;
+  var spTimerInterval = null;
+
+  function spFormatMMSS(secs){
+    var m = Math.floor(secs/60), s = secs%60;
+    return pad(m) + ":" + pad(s);
+  }
+  function spRenderTimer(){
+    document.getElementById("sp-timer-display").textContent = spFormatMMSS(Math.max(0,spTimerSecs));
+  }
+  spRenderTimer();
+
+  document.getElementById("sp-timer-toggle").addEventListener("click", function(){
+    var btn = document.getElementById("sp-timer-toggle");
+    if(spTimerRunning){
+      clearInterval(spTimerInterval);
+      spTimerRunning = false;
+      btn.textContent = "Resume";
+    } else {
+      spTimerRunning = true;
+      btn.textContent = "Pause";
+      spTimerInterval = setInterval(function(){
+        spTimerSecs--;
+        spRenderTimer();
+        if(spTimerSecs <= 0){
+          clearInterval(spTimerInterval);
+          spTimerRunning = false;
+          btn.textContent = "Start";
+          document.getElementById("sp-timer-display").textContent = "Time's up!";
+          setTimeout(spRenderTimer, 2500);
+        }
+      }, 1000);
+    }
+  });
+  document.getElementById("sp-timer-reset").addEventListener("click", function(){
+    clearInterval(spTimerInterval);
+    spTimerRunning = false;
+    document.getElementById("sp-timer-toggle").textContent = "Start";
+    spTimerSecs = parseInt(document.getElementById("sp-timer-preset").value, 10) * 60;
+    spRenderTimer();
+  });
+  document.getElementById("sp-timer-preset").addEventListener("change", function(e){
+    if(!spTimerRunning){
+      spTimerSecs = parseInt(e.target.value, 10) * 60;
+      spRenderTimer();
+    }
+  });
+
+  // -- Theme toggle --
+  function spApplyTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    document.getElementById("sp-theme-toggle").textContent =
+      theme === "light" ? "☀️ Switch to dark mode" : "🌙 Switch to light mode";
+    try{ localStorage.setItem("theme-preference", theme); }catch(e){}
+  }
+  (function initTheme(){
+    var saved = null;
+    try{ saved = localStorage.getItem("theme-preference"); }catch(e){}
+    spApplyTheme(saved === "light" ? "light" : "dark");
+  })();
+  document.getElementById("sp-theme-toggle").addEventListener("click", function(){
+    var current = document.documentElement.getAttribute("data-theme");
+    spApplyTheme(current === "light" ? "dark" : "light");
+  });
+
+  // -- Weekly time-spent chart (per roadmap week, not calendar week) --
+  function spRenderWeekChart(){
+    var container = document.getElementById("sp-week-chart");
+    var rows = [];
+    DATA.forEach(function(phase){
+      phase.weeks.forEach(function(week){
+        var secs = 0;
+        week.days.forEach(function(d){ secs += (timeSpent[d[0]] || 0); });
+        rows.push({ label: phase.code + " · " + week.label.split("·")[0].trim(), secs: secs });
+      });
+    });
+    var maxSecs = Math.max.apply(null, rows.map(function(r){ return r.secs; }).concat([1]));
+    container.innerHTML = rows.map(function(r){
+      var pct = Math.round((r.secs / maxSecs) * 100);
+      var mins = Math.round(r.secs / 60);
+      return '<div class="sp-week-row">'+
+        '<div class="sp-week-label"><span>'+r.label+'</span><span>'+mins+'m</span></div>'+
+        '<div class="sp-week-bar-track"><div class="sp-week-bar-fill" style="width:'+pct+'%;"></div></div>'+
+      '</div>';
+    }).join("");
+  }
+
+
+  // -- Quick jump to today's day --
+  function spRefreshJumpToday(){
+    var today = computeTodayDay();
+    var btn = document.getElementById("sp-jump-today");
+    if(today){
+      btn.textContent = "Open Day " + today + " (today)";
+      btn.disabled = false;
+    } else if(!startDate){
+      btn.textContent = "Set a start date first";
+      btn.disabled = true;
+    } else {
+      btn.textContent = "Outside plan range";
+      btn.disabled = true;
+    }
+  }
+  document.getElementById("sp-jump-today").addEventListener("click", function(){
+    var today = computeTodayDay();
+    if(today){
+      document.getElementById("side-panel").classList.remove("open");
+      openDayModal(today, "dm-overview");
+    }
+  });
+
+  // -- Progress snapshot --
+  function spRefreshSnapshot(){
+    var doneTotal = Object.keys(progress).filter(function(k){ return progress[k]; }).length;
+    var pct = Math.round((doneTotal / TOTAL_DAYS) * 100);
+    var totalSecs = Object.values(timeSpent).reduce(function(a,b){ return a+b; }, 0);
+    var totalHrs = (totalSecs/3600).toFixed(1);
+    document.getElementById("sp-snapshot").innerHTML =
+      "Days complete: <b>" + doneTotal + " / " + TOTAL_DAYS + "</b> (" + pct + "%)<br>" +
+      "Time logged: <b>" + totalHrs + "h</b>";
+  }
+
+  // -- Random flashcard --
+  document.getElementById("sp-random-card").addEventListener("click", function(){
+    var decks = ["az900","az104","az305"];
+    var deck = decks[Math.floor(Math.random()*decks.length)];
+    var idx = Math.floor(Math.random()*FLASHCARDS[deck].length);
+    document.getElementById("side-panel").classList.remove("open");
+    showDayFlashcard(deck, idx);
+  });
+
+  // -- Quick notes (global scratchpad) --
+  var spQuickNotesDirty = false;
+  async function spLoadQuickNotes(){
+    try{
+      var v = await store.get("quick-notes-global");
+      if(v){ document.getElementById("sp-quicknotes").value = v; }
+    }catch(e){}
+  }
+  document.getElementById("sp-quicknotes").addEventListener("input", function(){
+    spQuickNotesDirty = true;
+    document.getElementById("sp-quicknotes-status").textContent = "Unsaved…";
+  });
+  document.getElementById("sp-quicknotes").addEventListener("blur", async function(e){
+    if(!spQuickNotesDirty) return;
+    try{
+      await store.set("quick-notes-global", e.target.value);
+      spQuickNotesDirty = false;
+      document.getElementById("sp-quicknotes-status").textContent = "Saved.";
+    }catch(err){
+      document.getElementById("sp-quicknotes-status").textContent = "Save failed.";
+    }
   });
 
   document.querySelectorAll(".fc-tab").forEach(function(tab){
@@ -1971,6 +2661,7 @@
     document.getElementById("account-email").textContent = currentUser.email;
     loadState().then(render);
     loadRenewalDates();
+    spLoadQuickNotes();
   }
 
   function showAuthError(msg){
@@ -1990,6 +2681,8 @@
     document.getElementById("auth-config-warning").style.display = "block";
     document.getElementById("auth-submit").disabled = true;
   } else {
+   try {
+    if(!window.supabase){ throw new Error("Supabase library failed to load."); }
     supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
     supabaseClient.auth.getSession().then(function(res){
@@ -2012,6 +2705,7 @@
     document.getElementById("auth-toggle-btn").addEventListener("click", function(){
       authMode = authMode === "signin" ? "signup" : "signin";
       document.getElementById("auth-submit").textContent = authMode === "signin" ? "Sign In" : "Create Account";
+      document.getElementById("auth-title-text").textContent = authMode === "signin" ? "Sign In" : "Create Account";
       document.getElementById("auth-toggle-text").textContent = authMode === "signin" ? "Don't have an account?" : "Already have an account?";
       document.getElementById("auth-toggle-btn").textContent = authMode === "signin" ? "Create one" : "Sign in";
       document.getElementById("auth-msg").className = "auth-msg";
@@ -2044,6 +2738,13 @@
     });
 
     document.getElementById("signout-btn").addEventListener("click", async function(){
+      if(isGuest){
+        isGuest = false;
+        document.getElementById("guest-banner").style.display = "none";
+        document.getElementById("app-root").style.display = "none";
+        document.getElementById("auth-screen").style.display = "flex";
+        return;
+      }
       await supabaseClient.auth.signOut();
       currentUser = null;
       document.getElementById("app-root").style.display = "none";
@@ -2051,7 +2752,45 @@
       document.getElementById("auth-email").value = "";
       document.getElementById("auth-password").value = "";
     });
+   } catch(initErr){
+    console.error("Supabase initialization failed:", initErr);
+    document.getElementById("auth-config-warning").style.display = "block";
+    document.getElementById("auth-config-warning").textContent =
+      "Couldn't connect to the database (network issue or the Supabase library failed to load). You can still continue as a guest below, or try refreshing.";
+    document.getElementById("auth-submit").disabled = true;
+   }
   }
+
+  // ===== Guest mode (works even without Supabase configured) =====
+  function goToSignup(){
+    isGuest = false;
+    document.getElementById("guest-banner").style.display = "none";
+    document.getElementById("app-root").style.display = "none";
+    document.getElementById("auth-screen").style.display = "flex";
+    if(typeof authMode !== "undefined"){
+      authMode = "signup";
+      document.getElementById("auth-submit").textContent = "Create Account";
+      document.getElementById("auth-title-text").textContent = "Create Account";
+      document.getElementById("auth-toggle-text").textContent = "Already have an account?";
+      document.getElementById("auth-toggle-btn").textContent = "Sign in";
+    }
+  }
+
+  document.getElementById("auth-guest-btn").addEventListener("click", function(){
+    isGuest = true;
+    currentUser = null;
+    progress = {}; timeSpent = {}; dayNotes = {}; startDate = null;
+    document.getElementById("auth-screen").style.display = "none";
+    document.getElementById("app-root").style.display = "block";
+    document.getElementById("account-email").textContent = "Guest";
+    document.getElementById("signout-btn").textContent = "Exit guest mode";
+    document.getElementById("guest-banner").style.display = "flex";
+    document.getElementById("sp-quicknotes").setAttribute("readonly", "readonly");
+    document.getElementById("sp-quicknotes").placeholder = "Sign up to use Quick Notes.";
+    render();
+  });
+
+  document.getElementById("guest-register-btn").addEventListener("click", goToSignup);
 
 })();
 </script>
