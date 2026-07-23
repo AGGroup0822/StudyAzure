@@ -6,8 +6,6 @@
 <title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
-  // See setup instructions — Project Settings → API in your Supabase dashboard.
   window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
   window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
 </script>
@@ -649,7 +647,11 @@
     text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;font-family:inherit;
   }
   .dm-tab.active{color:var(--teal);border-bottom-color:var(--teal);}
-  .dm-panel{display:none;}
+  .dm-panel-area{
+    height:440px;
+    overflow-y:auto;
+  }
+  .dm-panel{display:none;height:100%;}
   .dm-panel.active{display:block;}
   .dm-overview-block{margin-bottom:14px;font-size:13px;line-height:1.6;color:var(--ink);}
   .dm-overview-block b{
@@ -657,21 +659,23 @@
     letter-spacing:0.05em;margin-bottom:4px;
   }
   .dm-embed-wrap{
-    position:relative;width:100%;
+    position:relative;width:100%;height:100%;
     background:var(--panel-2);border:1px solid var(--border-soft);
   }
-  .dm-embed-wrap.video{aspect-ratio:16/9;}
-  .dm-embed-wrap.docs{height:60vh;}
   .dm-embed-wrap iframe{width:100%;height:100%;border:0;display:block;}
+  .dm-video-fallback{
+    font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
+  }
+  .dm-video-fallback a{color:var(--teal);}
   .dm-fallback-note{
     font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
   }
   .dm-fallback-note a{color:var(--teal);}
   .dm-notes textarea{
-    width:100%;min-height:140px;
+    width:100%;height:calc(100% - 24px);box-sizing:border-box;
     background:var(--panel-2);border:1px solid var(--border);
     color:var(--ink);padding:10px;font-family:inherit;font-size:13px;
-    line-height:1.6;resize:vertical;
+    line-height:1.6;resize:none;
   }
   .dm-notes-saved{font-size:10px;color:var(--ink-dim);margin-top:6px;}
   .dm-footer{
@@ -704,7 +708,7 @@
   .wb-sep{width:1px;height:24px;background:var(--border-soft);}
   .wb-canvas-wrap{
     position:relative;width:100%;
-    aspect-ratio:16/9;
+    height:340px;
     border:1px solid var(--border);
     touch-action:none;
     background:#fff;
@@ -1108,17 +1112,19 @@
       <button class="dm-tab" data-panel="dm-whiteboard">Whiteboard</button>
     </div>
 
+    <div class="dm-panel-area">
     <div class="dm-panel active" id="dm-overview">
       <div class="dm-overview-block"><b>Lab</b><span id="dm-lab"></span></div>
       <div class="dm-overview-block" id="dm-usecase-wrap"><b>Use case</b><span id="dm-usecase"></span></div>
     </div>
 
     <div class="dm-panel" id="dm-video">
-      <div class="dm-embed-wrap video"><iframe id="dm-video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="dm-embed-wrap"><iframe id="dm-video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="dm-video-fallback">Some creators disable embedding on other websites — if it says "Video unavailable," use <a id="dm-video-link" href="#" target="_blank" rel="noopener">Watch on YouTube ↗</a> instead.</div>
     </div>
 
     <div class="dm-panel" id="dm-docs">
-      <div class="dm-embed-wrap docs"><iframe id="dm-docs-iframe" src=""></iframe></div>
+      <div class="dm-embed-wrap"><iframe id="dm-docs-iframe" src=""></iframe></div>
       <div class="dm-fallback-note">Some sites (including most Microsoft Learn pages) block embedding for security and won't render above — if the panel looks blank, use <a id="dm-docs-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
     </div>
 
@@ -1151,6 +1157,7 @@
         <canvas id="wb-overlay" width="1000" height="562"></canvas>
       </div>
       <div class="wb-status" id="wb-status">Draw a diagram for this day — arrows/boxes work well for architecture sketches.</div>
+    </div>
     </div>
 
     <div class="dm-footer">
@@ -2195,6 +2202,7 @@
 
     var embed = youtubeEmbedUrl(info.video);
     document.getElementById("dm-video-iframe").src = embed || "";
+    document.getElementById("dm-video-link").href = info.video;
     document.getElementById("dm-docs-iframe").src = info.link;
     document.getElementById("dm-docs-link").href = info.link;
 
