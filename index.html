@@ -6,8 +6,6 @@
 <title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
-  // See setup instructions — Project Settings → API in your Supabase dashboard.
   window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
   window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
 </script>
@@ -512,28 +510,53 @@
     max-width:680px;width:100%;max-height:88vh;overflow-y:auto;
     padding:24px;position:relative;
   }
-  .quiz-question{margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border-soft);}
-  .quiz-question:last-of-type{border-bottom:none;}
-  .quiz-q-text{font-size:14px;font-weight:600;margin-bottom:12px;line-height:1.5;}
+  .quiz-palette{
+    display:flex;flex-wrap:wrap;gap:6px;
+    margin-bottom:18px;padding-bottom:16px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .quiz-palette-btn{
+    width:32px;height:32px;
+    border:1px solid var(--border);
+    background:var(--panel-2);
+    color:var(--ink-muted);
+    font-size:12px;font-family:ui-monospace,monospace;
+    cursor:pointer;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .15s ease;
+  }
+  .quiz-palette-btn:hover{border-color:var(--teal);}
+  .quiz-palette-btn.current{border-color:var(--teal);border-width:2px;color:var(--teal);font-weight:700;}
+  .quiz-palette-btn.answered{background:rgba(59,130,246,0.14);border-color:#3B82F6;color:#3B82F6;}
+  .quiz-palette-btn.correct{background:rgba(16,185,129,0.15);border-color:#10B981;color:#10B981;}
+  .quiz-palette-btn.incorrect{background:rgba(245,166,35,0.15);border-color:var(--amber);color:var(--amber);}
+  .quiz-q-text{font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.5;}
   .quiz-option{
     display:flex;align-items:flex-start;gap:10px;
-    padding:8px 10px;margin-bottom:6px;
+    padding:10px 12px;margin-bottom:8px;
     border:1px solid var(--border-soft);cursor:pointer;
-    font-size:13px;line-height:1.5;
+    font-size:13.5px;line-height:1.5;border-radius:8px;
+    transition:all .15s ease;
   }
   .quiz-option:hover{border-color:var(--border);}
+  .quiz-option.selected{border-color:var(--teal);background:rgba(91,141,239,0.06);}
   .quiz-option input{margin-top:2px;}
-  .quiz-option.correct{border-color:var(--teal);background:rgba(91,141,239,0.08);}
-  .quiz-option.incorrect{border-color:var(--amber);background:rgba(242,193,78,0.08);}
+  .quiz-option.correct{border-color:#10B981;background:rgba(16,185,129,0.08);}
+  .quiz-option.incorrect{border-color:var(--amber);background:rgba(245,166,35,0.08);}
   .quiz-explain{
-    font-size:12px;color:var(--ink-muted);margin-top:8px;padding:10px;
-    background:var(--panel-2);border-left:2px solid var(--teal);display:none;
+    font-size:12px;color:var(--ink-muted);margin-top:10px;padding:12px;
+    background:var(--panel-2);border-left:2px solid var(--teal);display:none;border-radius:6px;
   }
   .quiz-explain.show{display:block;}
+  .quiz-nav-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:8px;padding-top:14px;border-top:1px solid var(--border-soft);
+  }
+  .quiz-q-position{font-size:11px;color:var(--ink-dim);font-family:ui-monospace,monospace;}
   .quiz-score-banner{
-    text-align:center;padding:20px;margin-bottom:20px;
+    text-align:center;padding:20px;margin-bottom:18px;
     border:1px solid var(--teal);background:rgba(91,141,239,0.06);
-    font-size:16px;font-weight:700;color:var(--teal);
+    font-size:16px;font-weight:700;color:var(--teal);border-radius:10px;
   }
   .quiz-badge{
     font-size:11px;color:var(--ink-dim);font-family:ui-monospace,monospace;
@@ -1642,11 +1665,20 @@
   <div class="quiz-modal">
     <button class="fc-modal-close" id="quiz-close" aria-label="Close">✕</button>
     <div class="fc-modal-title font-tech" id="quiz-title">Quiz</div>
-    <div class="quiz-progress-wrap">
-      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
-      <div class="quiz-progress-text" id="quiz-progress-text">0 answered</div>
+
+    <div class="quiz-palette" id="quiz-palette"></div>
+
+    <div class="quiz-score-banner" id="quiz-score-banner" style="display:none;"></div>
+
+    <div id="quiz-question-area"></div>
+
+    <div class="quiz-nav-footer">
+      <button class="btn" id="quiz-prev-q">← Previous</button>
+      <span class="quiz-q-position" id="quiz-q-position">Question 1 of 8</span>
+      <button class="btn" id="quiz-next-q">Next →</button>
     </div>
-    <div id="quiz-body"></div>
+
+    <button class="btn" id="quiz-submit-btn" style="width:100%;padding:12px;margin-top:14px;">Submit Quiz</button>
   </div>
 </div>
 
@@ -2755,89 +2787,136 @@
   // ===== Quiz =====
   var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
 
+  var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
+
+  // Exam-style quiz state: one question visible at a time, palette to jump around,
+  // answers tracked but not scored until Submit.
+  var quizState = { key:null, questions:[], current:0, answers:{}, submitted:false };
+
   function openQuiz(quizKey){
     if(guestBlock()) return;
-    var questions = QUIZZES[quizKey];
-    document.getElementById("quiz-title").textContent = QUIZ_NAMES[quizKey] + " — Quiz (" + questions.length + " questions)";
-    var body = document.getElementById("quiz-body");
-    var html = "";
-    questions.forEach(function(q, qi){
-      html += '<div class="quiz-question" data-qi="'+qi+'">';
-      html += '<div class="quiz-q-text">'+(qi+1)+'. '+q.q+'</div>';
-      q.options.forEach(function(opt, oi){
-        html += '<label class="quiz-option" data-oi="'+oi+'">'+
-          '<input type="radio" name="quiz-q-'+qi+'" value="'+oi+'"> <span>'+opt+'</span>'+
-        '</label>';
-      });
-      html += '<div class="quiz-explain" id="quiz-explain-'+qi+'"></div>';
-      html += '</div>';
-    });
-    html += '<button class="btn" id="quiz-submit-btn" style="width:100%;padding:12px;">Submit Quiz</button>';
-    html += '<div id="quiz-result" style="display:none;"></div>';
-    body.innerHTML = html;
-
-    function updateQuizProgress(){
-      var answered = 0;
-      questions.forEach(function(q, qi){
-        if(document.querySelector('input[name="quiz-q-'+qi+'"]:checked')) answered++;
-      });
-      document.getElementById("quiz-progress-fill").style.width = Math.round((answered/questions.length)*100) + "%";
-      document.getElementById("quiz-progress-text").textContent = answered + " / " + questions.length + " answered";
-    }
-    updateQuizProgress();
-    body.querySelectorAll('input[type="radio"]').forEach(function(inp){
-      inp.addEventListener("change", updateQuizProgress);
-    });
-
-    document.getElementById("quiz-submit-btn").addEventListener("click", function(){
-      quizSubmit(quizKey, questions);
-    });
-
+    quizState = { key:quizKey, questions:QUIZZES[quizKey], current:0, answers:{}, submitted:false };
+    document.getElementById("quiz-title").textContent = QUIZ_NAMES[quizKey] + " — Quiz (" + quizState.questions.length + " questions)";
+    document.getElementById("quiz-score-banner").style.display = "none";
+    document.getElementById("quiz-submit-btn").style.display = "block";
+    document.getElementById("quiz-submit-btn").textContent = "Submit Quiz";
+    quizRenderPalette();
+    quizRenderQuestion();
     document.getElementById("quiz-overlay").classList.add("open");
   }
 
-  function quizSubmit(quizKey, questions){
-    var correct = 0;
-    var allAnswered = true;
-    questions.forEach(function(q, qi){
-      var selected = document.querySelector('input[name="quiz-q-'+qi+'"]:checked');
-      var qDiv = document.querySelector('.quiz-question[data-qi="'+qi+'"]');
-      if(!selected){ allAnswered = false; return; }
-      var selVal = parseInt(selected.value, 10);
-      qDiv.querySelectorAll(".quiz-option").forEach(function(opt){
-        var oi = parseInt(opt.dataset.oi, 10);
-        if(oi === q.correct){ opt.classList.add("correct"); }
-        else if(oi === selVal){ opt.classList.add("incorrect"); }
-        opt.querySelector("input").disabled = true;
+  function quizRenderPalette(){
+    var palette = document.getElementById("quiz-palette");
+    palette.innerHTML = quizState.questions.map(function(q, qi){
+      var cls = "quiz-palette-btn";
+      if(qi === quizState.current){ cls += " current"; }
+      if(quizState.submitted){
+        if(quizState.answers[qi] === q.correct){ cls += " correct"; }
+        else { cls += " incorrect"; }
+      } else if(quizState.answers[qi] !== undefined){
+        cls += " answered";
+      }
+      return '<button type="button" class="'+cls+'" data-qi="'+qi+'">'+(qi+1)+'</button>';
+    }).join("");
+    palette.querySelectorAll(".quiz-palette-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        quizState.current = parseInt(btn.dataset.qi, 10);
+        quizRenderPalette();
+        quizRenderQuestion();
       });
-      if(selVal === q.correct){ correct++; }
-      var explain = document.getElementById("quiz-explain-"+qi);
-      explain.textContent = q.explain;
-      explain.classList.add("show");
     });
+  }
 
-    if(!allAnswered){
-      alert("Please answer every question before submitting.");
-      // revert any partial disabling from questions that were answered
-      document.querySelectorAll(".quiz-option input").forEach(function(inp){ inp.disabled = false; });
-      document.querySelectorAll(".quiz-option").forEach(function(opt){ opt.classList.remove("correct","incorrect"); });
-      document.querySelectorAll(".quiz-explain").forEach(function(el){ el.classList.remove("show"); });
-      return;
+  function quizRenderQuestion(){
+    var qi = quizState.current;
+    var q = quizState.questions[qi];
+    var area = document.getElementById("quiz-question-area");
+    var selected = quizState.answers[qi];
+
+    var html = '<div class="quiz-q-text">'+(qi+1)+'. '+q.q+'</div>';
+    q.options.forEach(function(opt, oi){
+      var cls = "quiz-option";
+      if(quizState.submitted){
+        if(oi === q.correct){ cls += " correct"; }
+        else if(oi === selected){ cls += " incorrect"; }
+      } else if(oi === selected){
+        cls += " selected";
+      }
+      html += '<label class="'+cls+'" data-oi="'+oi+'">'+
+        '<input type="radio" name="quiz-current-q" value="'+oi+'"'+(oi===selected?' checked':'')+(quizState.submitted?' disabled':'')+'> <span>'+opt+'</span>'+
+      '</label>';
+    });
+    if(quizState.submitted){
+      html += '<div class="quiz-explain show">'+q.explain+'</div>';
+    }
+    area.innerHTML = html;
+
+    if(!quizState.submitted){
+      area.querySelectorAll('input[type="radio"]').forEach(function(inp){
+        inp.addEventListener("change", function(){
+          quizState.answers[qi] = parseInt(inp.value, 10);
+          quizRenderPalette();
+          quizRenderQuestion();
+        });
+      });
     }
 
-    document.getElementById("quiz-submit-btn").style.display = "none";
-    var pct = Math.round((correct/questions.length)*100);
-    var resultDiv = document.getElementById("quiz-result");
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = '<div class="quiz-score-banner">Score: '+correct+' / '+questions.length+' ('+pct+'%)</div>';
+    document.getElementById("quiz-q-position").textContent = "Question " + (qi+1) + " of " + quizState.questions.length;
+    document.getElementById("quiz-prev-q").disabled = (qi === 0);
+    document.getElementById("quiz-next-q").disabled = (qi === quizState.questions.length - 1);
+  }
 
-    var prevBest = quizScores[quizKey];
+  document.getElementById("quiz-prev-q").addEventListener("click", function(){
+    if(quizState.current > 0){
+      quizState.current--;
+      quizRenderPalette();
+      quizRenderQuestion();
+    }
+  });
+  document.getElementById("quiz-next-q").addEventListener("click", function(){
+    if(quizState.current < quizState.questions.length - 1){
+      quizState.current++;
+      quizRenderPalette();
+      quizRenderQuestion();
+    }
+  });
+
+  document.getElementById("quiz-submit-btn").addEventListener("click", function(){
+    if(quizState.submitted) return;
+    var unanswered = [];
+    quizState.questions.forEach(function(q, qi){
+      if(quizState.answers[qi] === undefined){ unanswered.push(qi + 1); }
+    });
+    if(unanswered.length > 0){
+      var proceed = confirm(
+        "Question" + (unanswered.length > 1 ? "s" : "") + " " + unanswered.join(", ") +
+        " unanswered — they'll count as incorrect. Submit anyway?"
+      );
+      if(!proceed) return;
+    }
+
+    var correct = 0;
+    quizState.questions.forEach(function(q, qi){
+      if(quizState.answers[qi] === q.correct){ correct++; }
+    });
+    quizState.submitted = true;
+
+    var pct = Math.round((correct/quizState.questions.length)*100);
+    var banner = document.getElementById("quiz-score-banner");
+    banner.style.display = "block";
+    banner.innerHTML = "Score: " + correct + " / " + quizState.questions.length + " (" + pct + "%) — click any question number below to review it.";
+    document.getElementById("quiz-submit-btn").style.display = "none";
+
+    quizRenderPalette();
+    quizRenderQuestion();
+
+    var prevBest = quizScores[quizState.key];
     if(!prevBest || correct > prevBest.correct){
-      quizScores[quizKey] = { correct: correct, total: questions.length };
+      quizScores[quizState.key] = { correct: correct, total: quizState.questions.length };
       saveQuizScores();
       render();
     }
-  }
+  });
 
   document.getElementById("quiz-close").addEventListener("click", function(){
     document.getElementById("quiz-overlay").classList.remove("open");
@@ -3691,6 +3770,16 @@
       document.getElementById("auth-toggle-btn").textContent = "Sign in";
     }
   }
+
+  ["auth-email", "auth-password"].forEach(function(fieldId){
+    document.getElementById(fieldId).addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        e.preventDefault();
+        var submitBtn = document.getElementById("auth-submit");
+        if(!submitBtn.disabled){ submitBtn.click(); }
+      }
+    });
+  });
 
   document.getElementById("auth-guest-btn").addEventListener("click", function(){
     isGuest = true;
