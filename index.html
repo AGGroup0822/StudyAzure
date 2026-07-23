@@ -27,18 +27,33 @@
     --border-soft:#1D4468;
   }
   html[data-theme="light"]{
-    --bg:#F2F6F9;
+    --bg:#F5F8FA;
     --panel:#FFFFFF;
-    --panel-2:#E9F0F5;
-    --grid-minor:rgba(14,42,71,0.04);
-    --grid-major:rgba(14,138,118,0.08);
-    --ink:#152634;
-    --ink-muted:#4C6478;
-    --ink-dim:#7891A3;
-    --teal:#0E8A76;
-    --amber:#9C6B0A;
-    --border:#C7D6E0;
-    --border-soft:#DCE6ED;
+    --panel-2:#EFF4F7;
+    --grid-minor:rgba(20,50,80,0.035);
+    --grid-major:rgba(11,130,113,0.07);
+    --ink:#1C2B3A;
+    --ink-muted:#52697D;
+    --ink-dim:#8398AB;
+    --teal:#0B8271;
+    --amber:#9A6B0C;
+    --border:#D6E1E8;
+    --border-soft:#E6EDF2;
+  }
+  html[data-theme="light"] .titleblock,
+  html[data-theme="light"] .ruler-wrap,
+  html[data-theme="light"] .phase,
+  html[data-theme="light"] .notes,
+  html[data-theme="light"] .resource-card,
+  html[data-theme="light"] .fc-modal,
+  html[data-theme="light"] .dm-modal,
+  html[data-theme="light"] .quiz-modal,
+  html[data-theme="light"] .side-panel,
+  html[data-theme="light"] .auth-shell{
+    box-shadow: 0 2px 10px rgba(20,40,60,0.07);
+  }
+  html[data-theme="light"] .day-cell:hover{
+    box-shadow: 0 1px 5px rgba(20,40,60,0.08);
   }
   body, .panel, .panel-2, .day-cell, .phase, .titleblock, .ruler-wrap, .notes, .resource-card,
   .fc-modal, .dm-modal, .side-panel, .auth-box{
@@ -531,6 +546,9 @@
   .auth-brand-badge{
     font-size:10px;color:var(--teal);letter-spacing:0.08em;margin-bottom:14px;
   }
+  .auth-illustration{
+    width:100%;max-width:280px;height:auto;margin-bottom:18px;display:block;
+  }
   .auth-brand-title{
     font-size:26px;font-weight:700;line-height:1.25;color:var(--ink);margin-bottom:14px;
   }
@@ -707,7 +725,7 @@
     font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
   }
   .dm-fallback-note a{color:var(--teal);}
-  .dm-notes textarea{
+  #dm-notes textarea{
     width:100%;height:calc(100% - 24px);box-sizing:border-box;
     background:var(--panel-2);border:1px solid var(--border);
     color:var(--ink);padding:10px;font-family:inherit;font-size:13px;
@@ -775,6 +793,10 @@
     z-index:950;overflow-y:auto;padding:18px 16px 40px;
   }
   .side-panel.open{transform:translateX(0);}
+  #app-root{transition:margin-left .25s ease;}
+  @media (min-width:900px){
+    body.sp-open #app-root{margin-left:300px;}
+  }
   .sp-header{
     display:flex;justify-content:space-between;align-items:center;
     margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border-soft);
@@ -862,6 +884,20 @@
   <div class="auth-shell">
     <div class="auth-brand">
       <div class="auth-brand-badge font-tech">Azure Certification Roadmap</div>
+      <svg class="auth-illustration" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="160" y1="70" x2="60" y2="24" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="160" y1="70" x2="260" y2="24" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="160" y1="70" x2="60" y2="116" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="160" y1="70" x2="260" y2="116" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="160" y1="70" x2="160" y2="18" stroke="var(--border)" stroke-width="1.5"/>
+        <circle cx="160" cy="70" r="22" fill="none" stroke="var(--teal)" stroke-width="2"/>
+        <path d="M150 72c0-6 5-10 10-9 1-6 7-10 13-8 5 1 8 6 7 10h-1c3 0 5 3 5 5 0 3-2 5-5 5h-27c-3 0-5-2-5-5 0-2 1-4 3-4z" fill="var(--teal)" opacity="0.18"/>
+        <circle cx="60" cy="24" r="9" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="260" cy="24" r="9" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="60" cy="116" r="9" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="260" cy="116" r="9" fill="none" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="160" cy="18" r="7" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"/>
+      </svg>
       <div class="auth-brand-title">Foundations to<br>Solutions Architect</div>
       <div class="auth-brand-sub">A 145-day guided path through AZ-900, AZ-104, AZ-305, and real-world architecture practice.</div>
       <ul class="auth-features">
@@ -1200,7 +1236,11 @@
       <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-muted);">
         <input type="checkbox" id="dm-complete-check"> Mark day complete
       </label>
-      <button class="btn" id="dm-flashcard-btn">Open flashcard</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn" id="dm-prev-day">← Prev Day</button>
+        <button class="btn" id="dm-flashcard-btn">Open flashcard</button>
+        <button class="btn" id="dm-next-day">Next Day →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1986,18 +2026,34 @@
     return diffDays;
   }
 
+  var phaseCollapsed = {}; // pIdx -> boolean, persists across renders so manual toggles survive
+
   function render(){
     var container = document.getElementById("phases");
     container.innerHTML = "";
     var todayDay = computeTodayDay();
+
+    // Determine the "active" phase (first one not fully complete) once, for smart defaults
+    var activePhaseIdx = 0;
+    for(var pi=0; pi<DATA.length; pi++){
+      var pDays = [];
+      DATA[pi].weeks.forEach(function(w){ w.days.forEach(function(d){ pDays.push(d[0]); }); });
+      var pDone = pDays.filter(function(n){ return progress[n]; }).length;
+      if(pDone < pDays.length){ activePhaseIdx = pi; break; }
+      activePhaseIdx = pi;
+    }
 
     DATA.forEach(function(phase, pIdx){
       var allDays = [];
       phase.weeks.forEach(function(w){ w.days.forEach(function(d){ allDays.push(d[0]); }); });
       var doneCount = allDays.filter(function(n){ return progress[n]; }).length;
 
+      if(phaseCollapsed[pIdx] === undefined){
+        phaseCollapsed[pIdx] = (pIdx !== activePhaseIdx);
+      }
+
       var phaseEl = document.createElement("div");
-      phaseEl.className = "phase";
+      phaseEl.className = "phase" + (phaseCollapsed[pIdx] ? " collapsed" : "");
 
       var quizKeys = ["az900","az104","az305","phase4"];
       var quizKey = quizKeys[pIdx];
@@ -2025,6 +2081,7 @@
         openQuiz(quizKey);
       });
       header.addEventListener("click", function(){
+        phaseCollapsed[pIdx] = !phaseCollapsed[pIdx];
         phaseEl.classList.toggle("collapsed");
       });
 
@@ -2200,9 +2257,9 @@
 
   document.getElementById("expand-all-btn").addEventListener("click", function(e){
     var collapsedAny = document.querySelectorAll(".phase.collapsed").length > 0;
-    document.querySelectorAll(".phase").forEach(function(p){
-      if(collapsedAny){ p.classList.remove("collapsed"); }
-      else { p.classList.add("collapsed"); }
+    document.querySelectorAll(".phase").forEach(function(p, idx){
+      if(collapsedAny){ p.classList.remove("collapsed"); phaseCollapsed[idx] = false; }
+      else { p.classList.add("collapsed"); phaseCollapsed[idx] = true; }
     });
     e.target.textContent = collapsedAny ? "Collapse all" : "Expand all";
   });
@@ -2398,6 +2455,8 @@
     document.getElementById("dm-notes-saved").textContent = "";
 
     document.getElementById("dm-complete-check").checked = !!progress[num];
+    document.getElementById("dm-prev-day").disabled = (num <= 1);
+    document.getElementById("dm-next-day").disabled = (num >= TOTAL_DAYS);
 
     dmSwitchTab(initialPanel || "dm-overview");
     document.getElementById("dm-overlay").classList.add("open");
@@ -2477,6 +2536,36 @@
     if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
     else { showDayFlashcard(fallbackDeck, 0); }
   });
+
+  document.getElementById("dm-prev-day").addEventListener("click", function(){
+    if(dmCurrentDay === null || dmCurrentDay <= 1) return;
+    var activeTab = document.querySelector(".dm-tab.active").dataset.panel;
+    dmNavigateTo(dmCurrentDay - 1, activeTab);
+  });
+  document.getElementById("dm-next-day").addEventListener("click", function(){
+    if(dmCurrentDay === null || dmCurrentDay >= TOTAL_DAYS) return;
+    var activeTab = document.querySelector(".dm-tab.active").dataset.panel;
+    dmNavigateTo(dmCurrentDay + 1, activeTab);
+  });
+
+  function dmNavigateTo(num, keepPanel){
+    // Save current day's timer/notes/whiteboard before switching, same as a normal close, but stay open
+    if(dmTimerInterval){ clearInterval(dmTimerInterval); dmTimerInterval = null; }
+    if(dmCurrentDay !== null && dmSessionStart){
+      var elapsed = (Date.now() - dmSessionStart) / 1000;
+      if(elapsed > 1){
+        timeSpent[dmCurrentDay] = (timeSpent[dmCurrentDay] || 0) + elapsed;
+        saveTimeSpent();
+      }
+    }
+    var notesVal = document.getElementById("dm-notes-text").value;
+    if(dmCurrentDay !== null && notesVal !== (dayNotes[dmCurrentDay] || "")){
+      dayNotes[dmCurrentDay] = notesVal;
+      saveDayNotes();
+    }
+    if(wb.dirty){ wbSave(false); }
+    openDayModal(num, keepPanel);
+  }
 
   // ===== Whiteboard =====
   var wb = { tool:"pen", color:"#1a1a2e", width:3, drawing:false, startX:0, startY:0, dirty:false };
@@ -2662,14 +2751,20 @@
   }
 
   // ===== Side panel =====
-  document.getElementById("sp-toggle").addEventListener("click", function(){
+  function spOpenPanel(){
     document.getElementById("side-panel").classList.add("open");
+    document.body.classList.add("sp-open");
+  }
+  function spClosePanel(){
+    document.getElementById("side-panel").classList.remove("open");
+    document.body.classList.remove("sp-open");
+  }
+  document.getElementById("sp-toggle").addEventListener("click", function(){
+    spOpenPanel();
     spRefreshSnapshot();
     spRefreshJumpToday();
   });
-  document.getElementById("sp-close").addEventListener("click", function(){
-    document.getElementById("side-panel").classList.remove("open");
-  });
+  document.getElementById("sp-close").addEventListener("click", spClosePanel);
 
   // -- Clock --
   var WEEKDAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -2707,7 +2802,7 @@
   spRenderTimer();
 
   document.getElementById("floating-timer").addEventListener("click", function(){
-    document.getElementById("side-panel").classList.add("open");
+    spOpenPanel();
   });
 
   document.getElementById("sp-timer-toggle").addEventListener("click", function(){
@@ -2807,7 +2902,7 @@
   document.getElementById("sp-jump-today").addEventListener("click", function(){
     var today = computeTodayDay();
     if(today){
-      document.getElementById("side-panel").classList.remove("open");
+      spClosePanel();
       openDayModal(today, "dm-overview");
     }
   });
@@ -2828,7 +2923,7 @@
     var decks = ["az900","az104","az305"];
     var deck = decks[Math.floor(Math.random()*decks.length)];
     var idx = Math.floor(Math.random()*FLASHCARDS[deck].length);
-    document.getElementById("side-panel").classList.remove("open");
+    spClosePanel();
     showDayFlashcard(deck, idx);
   });
 
