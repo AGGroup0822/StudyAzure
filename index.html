@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -734,6 +734,22 @@
     font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
   }
   .dm-fallback-note a{color:var(--teal);}
+  .dm-docs-blocked{
+    display:none;
+    height:100%;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    background:var(--panel-2);
+    border:1px solid var(--border-soft);
+    border-radius: var(--radius);
+  }
+  .dm-docs-blocked.show{display:flex;}
+  .dm-docs-blocked-icon{font-size:32px;margin-bottom:10px;}
+  .dm-docs-blocked-title{font-size:15px;font-weight:700;margin-bottom:8px;}
+  .dm-docs-blocked-text{font-size:12.5px;color:var(--ink-muted);max-width:420px;line-height:1.6;}
   #dm-notes textarea{
     width:100%;height:calc(100% - 24px);box-sizing:border-box;
     background:var(--panel-2);border:1px solid var(--border);
@@ -994,6 +1010,96 @@
   ::-webkit-scrollbar-track{background:transparent;}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
   ::-webkit-scrollbar-thumb:hover{background:var(--ink-dim);}
+
+
+  /* ========================================================= */
+  /* COLOR PASS — real color instead of monochrome neutrals.    */
+  /* ========================================================= */
+
+  /* Per-phase accent color (set inline per phase via --phase-accent) */
+  .phase{border-left:4px solid var(--phase-accent, var(--teal)) !important;}
+  .phase-num{
+    background:var(--phase-accent, var(--teal));
+    color:#fff !important;
+    width:34px;height:34px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;
+  }
+  .phase-progress-text{color:var(--phase-accent, var(--teal)) !important;}
+
+  /* Vivid primary buttons instead of flat outlined ones */
+  .auth-btn, .quiz-open-btn, .day-link.open-lesson-btn{
+    background:linear-gradient(135deg,#3B82F6,#6366F1) !important;
+    color:#fff !important;
+    border:none !important;
+  }
+  .quiz-open-btn{
+    background:linear-gradient(135deg,#3B82F6,#6366F1) !important;
+    color:#fff !important;
+    border:none !important;
+    padding:6px 14px !important;
+  }
+  .auth-guest-btn{
+    border:1px dashed var(--teal) !important;
+    color:var(--teal) !important;
+  }
+
+  /* Colorful progress ruler */
+  .ruler-fill{background:linear-gradient(90deg,#3B82F6,#10B981) !important;}
+
+  /* Colorful checkbox */
+  .day-check{transition:all .15s ease;}
+  .day-cell.done .day-check{
+    background:linear-gradient(135deg,#10B981,#059669) !important;
+    border-color:#10B981 !important;
+    color:#fff !important;
+  }
+
+  /* Quiz badges get color when passed */
+  .quiz-badge.pass{
+    background:rgba(16,185,129,0.12);
+    color:#059669 !important;
+    padding:3px 10px;
+    border-radius:999px;
+    font-weight:600;
+  }
+
+  /* Active tabs pick up teal->blue gradient tint */
+  .dm-tab.active, .fc-tab.active{
+    background:linear-gradient(135deg, rgba(59,130,246,0.14), rgba(16,185,129,0.14)) !important;
+    border-color:#3B82F6 !important;
+    color:#3B82F6 !important;
+  }
+
+  /* Guest banner in warm amber-orange instead of muted */
+  .guest-banner{
+    background:linear-gradient(135deg, rgba(249,115,22,0.10), rgba(251,191,36,0.10)) !important;
+    border-color:#F97316 !important;
+  }
+  .guest-banner b{color:#F97316 !important;}
+  .guest-banner-btn{
+    background:linear-gradient(135deg,#F97316,#FBBF24) !important;
+    color:#fff !important;
+  }
+
+  /* Floating timer in vivid teal-green */
+  .floating-timer{
+    border-color:#10B981 !important;
+    color:#10B981 !important;
+  }
+  .floating-timer-dot{background:#10B981 !important;}
+
+  /* Sidebar toggle tab in brand blue */
+  .sp-toggle{
+    background:linear-gradient(135deg,#3B82F6,#6366F1) !important;
+    color:#fff !important;
+    border:none !important;
+  }
+
+  /* Login illustration nodes get their own color pop */
+  .auth-illustration circle[stroke="var(--teal)"]{stroke:#3B82F6;}
+  .auth-illustration circle[stroke="var(--amber)"]{stroke:#F97316;}
 
 </style>
 </head>
@@ -1315,8 +1421,14 @@
     </div>
 
     <div class="dm-panel" id="dm-docs">
-      <div class="dm-embed-wrap"><iframe id="dm-docs-iframe" src=""></iframe></div>
-      <div class="dm-fallback-note">Some sites (including most Microsoft Learn pages) block embedding for security and won't render above — if the panel looks blank, use <a id="dm-docs-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
+      <div class="dm-embed-wrap" id="dm-docs-embed-wrap"><iframe id="dm-docs-iframe" src=""></iframe></div>
+      <div class="dm-docs-blocked" id="dm-docs-blocked">
+        <div class="dm-docs-blocked-icon">🔗</div>
+        <div class="dm-docs-blocked-title">This site can't be shown here</div>
+        <div class="dm-docs-blocked-text">This page blocks embedding on other websites (a security setting the site owner controls, not something this app can override).</div>
+        <a id="dm-docs-blocked-link" class="btn" href="#" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;">Click here to open in a new tab ↗</a>
+      </div>
+      <div class="dm-fallback-note" id="dm-docs-fallback-note">If this panel ever looks blank instead of loading, use <a id="dm-docs-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
     </div>
 
     <div class="dm-panel" id="dm-notes">
@@ -2173,6 +2285,8 @@
 
       var phaseEl = document.createElement("div");
       phaseEl.className = "phase" + (phaseCollapsed[pIdx] ? " collapsed" : "");
+      var PHASE_COLORS = ["#3B82F6","#8B5CF6","#10B981","#F97316"];
+      phaseEl.style.setProperty("--phase-accent", PHASE_COLORS[pIdx]);
 
       var quizKeys = ["az900","az104","az305","phase4"];
       var quizKey = quizKeys[pIdx];
@@ -2523,6 +2637,16 @@
   var dmSessionStart = null;
   var dmTimerInterval = null;
 
+  // Domains known to send X-Frame-Options/CSP headers that block embedding.
+  // Checked in advance so we never show the browser's raw "refused to connect" error.
+  var NON_EMBEDDABLE_DOMAINS = ["microsoft.com","github.com","linkedin.com","hashicorp.com"];
+  function isEmbeddable(url){
+    try{
+      var host = new URL(url).hostname;
+      return !NON_EMBEDDABLE_DOMAINS.some(function(d){ return host.indexOf(d) !== -1; });
+    }catch(e){ return true; }
+  }
+
   function youtubeEmbedUrl(url){
     var id = null, start = 0;
     var m1 = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
@@ -2567,7 +2691,18 @@
     var embed = youtubeEmbedUrl(info.video);
     document.getElementById("dm-video-iframe").src = embed || "";
     document.getElementById("dm-video-link").href = info.video;
-    document.getElementById("dm-docs-iframe").src = info.link;
+    if(isEmbeddable(info.link)){
+      document.getElementById("dm-docs-iframe").src = info.link;
+      document.getElementById("dm-docs-embed-wrap").style.display = "block";
+      document.getElementById("dm-docs-blocked").classList.remove("show");
+      document.getElementById("dm-docs-fallback-note").style.display = "block";
+    } else {
+      document.getElementById("dm-docs-iframe").src = "";
+      document.getElementById("dm-docs-embed-wrap").style.display = "none";
+      document.getElementById("dm-docs-blocked").classList.add("show");
+      document.getElementById("dm-docs-blocked-link").href = info.link;
+      document.getElementById("dm-docs-fallback-note").style.display = "none";
+    }
     document.getElementById("dm-docs-link").href = info.link;
 
     document.getElementById("dm-notes-text").value = dayNotes[num] || "";
@@ -2973,7 +3108,7 @@
   (function initTheme(){
     var saved = null;
     try{ saved = localStorage.getItem("theme-preference"); }catch(e){}
-    spApplyTheme(saved === "light" ? "light" : "dark");
+    spApplyTheme(saved === "dark" ? "dark" : "light");
   })();
   document.getElementById("sp-theme-toggle").addEventListener("click", function(){
     var current = document.documentElement.getAttribute("data-theme");
