@@ -11,55 +11,58 @@
 </script>
 <style>
   :root{
-    --bg:#111826;
-    --panel:#182234;
-    --panel-2:#1F2C40;
-    --grid-minor:rgba(255,255,255,0.05);
-    --grid-major:rgba(91,141,239,0.12);
-    --ink:#EAF1F8;
-    --ink-muted:#9FB0C8;
-    --ink-dim:#6E8098;
-    --teal:#5B8DEF;
-    --amber:#F5A623;
-    --border:#2C3B52;
-    --border-soft:#28374C;
-    --radius:12px;
-    --radius-sm:8px;
-    --shadow:0 8px 30px rgba(0,0,0,0.35);
-    --shadow-sm:0 2px 10px rgba(0,0,0,0.25);
+    --bg:#1B2027;
+    --panel:#242A34;
+    --panel-2:#2C3340;
+    --grid-minor:rgba(255,255,255,0.045);
+    --grid-major:rgba(91,156,255,0.12);
+    --ink:#EDEFF3;
+    --ink-muted:#AEB6C4;
+    --ink-dim:#7C8695;
+    --teal:#5B9CFF;
+    --amber:#FFB648;
+    --accent-2:#22C3D6;
+    --border:#3A4150;
+    --border-soft:#323847;
+    --radius:18px;
+    --radius-sm:12px;
+    --shadow:0 14px 36px rgba(10,14,20,0.35);
+    --shadow-sm:0 4px 16px rgba(10,14,20,0.25);
   }
   html[data-theme="light"]{
-    --bg:#F5F7FB;
+    --bg:#FAFBFC;
     --panel:#FFFFFF;
-    --panel-2:#EEF2F9;
-    --grid-minor:rgba(20,50,80,0.035);
-    --grid-major:rgba(47,111,228,0.08);
-    --ink:#1B2436;
-    --ink-muted:#54637D;
-    --ink-dim:#8492A8;
-    --teal:#2857C9;
-    --amber:#B5700A;
-    --border:#D9E0EC;
-    --border-soft:#E8ECF4;
-    --radius:12px;
-    --radius-sm:8px;
-    --shadow:0 8px 30px rgba(20,40,60,0.10);
-    --shadow-sm:0 2px 10px rgba(20,40,60,0.07);
+    --panel-2:#F4F6F9;
+    --grid-minor:rgba(15,45,90,0.025);
+    --grid-major:rgba(15,98,215,0.06);
+    --ink:#23272F;
+    --ink-muted:#5B6472;
+    --ink-dim:#8A93A3;
+    --teal:#1B6EC2;
+    --amber:#B7791A;
+    --accent-2:#0891B2;
+    --border:#E4E8EE;
+    --border-soft:#EEF1F5;
+    --radius:18px;
+    --radius-sm:12px;
+    --shadow:0 10px 28px rgba(20,40,80,0.08);
+    --shadow-sm:0 2px 10px rgba(20,40,80,0.06);
   }
   /* Login screen always uses the light palette, regardless of the saved app theme preference */
   #auth-screen{
-    --bg:#F5F7FB;
+    --bg:#FAFBFC;
     --panel:#FFFFFF;
-    --panel-2:#EEF2F9;
-    --grid-minor:rgba(20,50,80,0.035);
-    --grid-major:rgba(47,111,228,0.08);
-    --ink:#1B2436;
-    --ink-muted:#54637D;
-    --ink-dim:#8492A8;
-    --teal:#2857C9;
-    --amber:#B5700A;
-    --border:#D9E0EC;
-    --border-soft:#E8ECF4;
+    --panel-2:#F4F6F9;
+    --grid-minor:rgba(15,45,90,0.025);
+    --grid-major:rgba(15,98,215,0.06);
+    --ink:#23272F;
+    --ink-muted:#5B6472;
+    --ink-dim:#8A93A3;
+    --teal:#1B6EC2;
+    --amber:#B7791A;
+    --accent-2:#0891B2;
+    --border:#E4E8EE;
+    --border-soft:#EEF1F5;
   }
   html[data-theme="light"] .titleblock,
   html[data-theme="light"] .ruler-wrap,
@@ -88,7 +91,7 @@
       radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(91,141,239,0.05), transparent),
       var(--bg);
     color:var(--ink);
-    font-family: -apple-system, "Inter", "Segoe UI", Roboto, sans-serif;
+    font-family: "Segoe UI", -apple-system, "Inter", Roboto, sans-serif;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
     min-height:100vh;
@@ -112,12 +115,9 @@
     border:1px solid var(--border);
     background:var(--panel);
     display:grid;
-    grid-template-columns: 1.4fr 1px repeat(5, 1fr);
+    grid-template-columns: 1.4fr 1px repeat(4, 1fr);
     align-items:stretch;
     margin-bottom:22px;
-    position:sticky;
-    top:0;
-    z-index:500;
   }
   .titleblock .cell{
     padding:12px 16px;
@@ -777,9 +777,9 @@
   }
   .dm-embed-wrap iframe{width:100%;height:100%;border:0;display:block;}
   .dm-video-fallback{
-    font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
+    font-size:12px;color:var(--ink-muted);margin-top:10px;line-height:1.6;
+    display:flex;flex-direction:column;align-items:flex-start;
   }
-  .dm-video-fallback a{color:var(--teal);}
   .dm-fallback-note{
     font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.6;
   }
@@ -882,8 +882,38 @@
     width:26px;height:26px;cursor:pointer;font-family:inherit;
   }
   .sp-close:hover{border-color:var(--amber);color:var(--amber);}
+  .sp-pin-toggle{
+    display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;
+    font-size:10px;color:var(--ink-dim);
+  }
+  .sp-pin-toggle input{position:absolute;opacity:0;width:0;height:0;}
+  .sp-pin-slider{
+    position:relative;flex-shrink:0;width:28px;height:16px;border-radius:999px;
+    background:var(--border);transition:background .15s ease;
+  }
+  .sp-pin-slider::before{
+    content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;
+    background:#fff;transition:transform .15s ease;
+  }
+  .sp-pin-toggle input:checked + .sp-pin-slider{background:var(--teal);}
+  .sp-pin-toggle input:checked + .sp-pin-slider::before{transform:translateX(12px);}
+  .sp-pin-text{white-space:nowrap;}
   .sp-section{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border-soft);}
-  .sp-section:last-child{border-bottom:none;}
+  .sp-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+
+  /* Collapsible Tools categories — collapsed by default except Study */
+  .sp-category{border-bottom:1px solid var(--border-soft);margin-bottom:14px;padding-bottom:4px;}
+  .sp-category:last-child{border-bottom:none;}
+  .sp-cat-header{
+    width:100%;display:flex;align-items:center;justify-content:space-between;
+    background:none;border:none;cursor:pointer;font-family:inherit;
+    padding:6px 0 10px;font-size:11px;font-weight:700;color:var(--ink);
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+  .sp-cat-chevron{font-size:9px;color:var(--ink-dim);transition:transform .15s ease;}
+  .sp-category.open .sp-cat-chevron{transform:rotate(180deg);}
+  .sp-cat-body{max-height:0;overflow:hidden;}
+  .sp-category.open .sp-cat-body{max-height:2000px;padding-bottom:8px;}
   .sp-swatch-row{display:flex;gap:8px;}
   .sp-swatch{
     width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;
@@ -1075,8 +1105,8 @@
   /* Auth panel gets a vivid azure-toned wash instead of flat gray */
   .auth-brand{
     background:
-      radial-gradient(circle at 15% 15%, rgba(91,141,239,0.18), transparent 55%),
-      radial-gradient(circle at 85% 85%, rgba(16,185,129,0.14), transparent 55%),
+      radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--teal) 10%, transparent), transparent 55%),
+      radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 55%),
       var(--panel-2) !important;
   }
   .auth-stats{display:flex;gap:22px;margin-bottom:24px;}
@@ -1218,6 +1248,310 @@
   .quiz-progress-track{height:6px;background:var(--panel-2);border:1px solid var(--border-soft);border-radius:6px;overflow:hidden;}
   .quiz-progress-fill{display:block;height:100%;width:0%;background:linear-gradient(90deg,#3B82F6,#10B981);transition:width .25s ease;}
   .quiz-progress-text{font-size:10px;color:var(--ink-dim);margin-top:6px;font-family:ui-monospace,monospace;}
+
+  /* ========================================================= */
+  /* FLOATING COMPACT HEADER — appears once scrolled past the   */
+  /* full title block. Shows time, date, and overall progress.  */
+  /* ========================================================= */
+  .floating-header{
+    position:fixed;top:0;left:0;right:0;
+    z-index:600;
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    box-shadow:var(--shadow-sm);
+    padding:9px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+    transform:translateY(-100%);
+    opacity:0;
+    transition:transform .25s ease, opacity .25s ease;
+    cursor:pointer;
+  }
+  .floating-header.show{transform:translateY(0);opacity:1;}
+  #app-root.sp-open ~ .floating-header,
+  body.sp-open .floating-header{ /* no shift needed, header spans behind panel */ }
+  .fh-left{display:flex;align-items:center;gap:10px;min-width:0;}
+  .fh-title{font-family:var(--disp,inherit);font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap;}
+  .fh-title .font-tech{font-size:13px;}
+  .fh-right{display:flex;align-items:center;gap:18px;flex-shrink:0;}
+  .fh-stat{display:flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:11.5px;color:var(--ink-muted);white-space:nowrap;}
+  .fh-stat b{color:var(--ink);font-weight:600;}
+  .fh-progress-track{width:70px;height:5px;background:var(--panel-2);border:1px solid var(--border-soft);border-radius:4px;overflow:hidden;display:inline-block;}
+  .fh-progress-fill{display:block;height:100%;background:linear-gradient(90deg,#3B82F6,#10B981);width:0%;transition:width .3s ease;}
+  @media (max-width:640px){
+    .fh-title{display:none;}
+    .floating-header{padding:8px 12px;}
+    .fh-right{gap:10px;}
+  }
+
+  /* ========================================================= */
+  /* ANIMATIONS                                                 */
+  /* ========================================================= */
+  @keyframes fadeInUp{
+    from{opacity:0;transform:translateY(8px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .day-cell{animation:fadeInUp .35s ease both;}
+  .phase-body .week-block:nth-child(1) .day-cell{animation-delay:.02s;}
+
+  @keyframes checkPop{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.35);}
+    100%{transform:scale(1);}
+  }
+  .day-check.just-checked{animation:checkPop .35s cubic-bezier(.34,1.56,.64,1);}
+
+  /* Signature moment: confetti burst on 100% phase completion */
+  .confetti-piece{
+    position:fixed;top:-10px;
+    width:8px;height:14px;
+    z-index:2000;
+    pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{ transform: translateY(105vh) rotate(var(--rot,360deg)); opacity:0.9; }
+  }
+  .phase-complete-banner{
+    position:fixed;top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0.85);
+    background:var(--panel);border:1px solid var(--teal);
+    box-shadow:var(--shadow);
+    padding:26px 34px;border-radius:var(--radius,14px);
+    text-align:center;z-index:2001;
+    opacity:0;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .phase-complete-banner.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  .phase-complete-banner .big{font-size:20px;font-weight:700;margin-bottom:6px;}
+  .phase-complete-banner .small{font-size:13px;color:var(--ink-muted);}
+
+  @media (prefers-reduced-motion: reduce){
+    .day-cell{animation:none;}
+    .day-check.just-checked{animation:none;}
+    .confetti-piece{display:none;}
+  }
+
+  /* ========================================================= */
+  /* POLISH PASS — original hero, Fluent-style icons, and a     */
+  /* quieter, less crowded surface. Same ids/classes throughout.*/
+  /* ========================================================= */
+
+  .hero{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:28px;
+    padding:38px 40px;
+    margin-bottom:18px;
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:
+      radial-gradient(720px 360px at 88% -10%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent),
+      radial-gradient(560px 320px at 8% 120%, color-mix(in srgb, var(--teal) 13%, transparent), transparent),
+      linear-gradient(135deg, color-mix(in srgb, var(--teal) 5%, var(--panel)), var(--panel));
+    border:1px solid var(--border-soft);
+    box-shadow:var(--shadow);
+  }
+  .hero-copy{flex:1;min-width:0;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--teal);background:color-mix(in srgb, var(--teal) 14%, transparent);
+    padding:5px 12px;border-radius:999px;margin-bottom:14px;
+  }
+  .hero-title{font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.22;color:var(--ink);margin-bottom:8px;letter-spacing:-0.01em;}
+  .hero-title em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--teal),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-sub{font-size:13.5px;color:var(--ink-muted);line-height:1.6;max-width:520px;margin-bottom:20px;}
+  .hero-stats{display:flex;gap:26px;flex-wrap:wrap;}
+  .hero-stat b{display:block;font-size:20px;font-weight:800;color:var(--ink);}
+  .hero-stat span{font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.05em;}
+  .hero-visual{flex-shrink:0;width:200px;}
+  .hero-visual svg{width:100%;height:auto;display:block;}
+  @media (max-width:760px){
+    .hero-visual{display:none;}
+    .hero{padding:28px 24px;}
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .hero{animation:heroIn .5s ease both;}
+  }
+  @keyframes heroIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  /* Titleblock recedes to a quiet meta strip now that .hero carries the headline */
+  .titleblock{box-shadow:none !important;background:var(--panel-2) !important;}
+  .titleblock .tb-title small{display:none;}
+  .titleblock .tb-title{font-size:13px;color:var(--ink-muted);font-weight:600;}
+  .titleblock .cell{padding:9px 14px;}
+
+  /* Legend recedes — the course nav rail already carries the color key */
+  .phase-legend{opacity:.7;}
+  .phase-legend .item{font-size:10px;}
+
+  /* Breathing room between major blocks instead of tight stacking */
+  .phase{margin-bottom:26px;}
+  .notes{margin-top:26px;}
+
+  /* ---- Icons (hand-drawn, Fluent-style — no external requests) ---- */
+  .course-nav-btn{flex-direction:row !important;align-items:center !important;gap:10px !important;opacity:.7;}
+  .course-nav-btn:hover{opacity:1;}
+  .course-nav-btn.active{opacity:1;box-shadow:var(--shadow-sm);}
+  .course-nav-icon{
+    width:32px;height:32px;border-radius:9px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:color-mix(in srgb, var(--nav-accent) 16%, transparent);
+    color:var(--nav-accent);
+  }
+  .course-nav-btn.active .course-nav-icon{background:var(--nav-accent);color:#fff;}
+  .course-nav-icon svg{width:17px;height:17px;}
+  .course-nav-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;}
+
+  /* Collapsible per-course topic/syllabus tree in the sidebar */
+  .cnv-toggle{
+    flex-shrink:0;width:20px;height:20px;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;color:var(--ink-dim);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .cnv-toggle:hover{background:var(--border-soft);color:var(--ink-muted);}
+  .cnv-toggle.open{transform:rotate(180deg);}
+  .cnv-tree{
+    max-height:0;overflow:hidden;
+    margin:0 0 0 6px;
+    border-left:2px solid var(--border-soft);
+  }
+  .cnv-tree.open{max-height:340px;overflow-y:auto;margin-bottom:6px;}
+  .cnv-week{padding:6px 0 6px 12px;}
+  .cnv-week-label{
+    font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.04em;
+    cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:6px;
+    padding:2px 0;
+  }
+  .cnv-week-label:hover{color:var(--ink-muted);}
+  .cnv-week-chevron{flex-shrink:0;font-size:9px;transition:transform .15s ease;}
+  .cnv-week-chevron.open{transform:rotate(180deg);}
+  .cnv-days{max-height:0;overflow:hidden;}
+  .cnv-days.open{max-height:2000px;}
+  .cnv-day{
+    display:block;width:100%;text-align:left;background:none;border:none;font-family:inherit;
+    font-size:10.5px;line-height:1.4;color:var(--ink-muted);cursor:pointer;
+    padding:4px 6px 4px 0;border-radius:4px;
+  }
+  .cnv-day:hover{color:var(--teal);background:color-mix(in srgb, var(--teal) 8%, transparent);}
+  .cnv-day.done{color:var(--ink-dim);text-decoration:line-through;text-decoration-color:var(--border-soft);}
+  .cnv-day b{font-family:ui-monospace,monospace;font-weight:600;margin-right:4px;color:var(--ink-dim);}
+
+  .phase-header-left{gap:12px !important;}
+  .phase-icon{
+    width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:color-mix(in srgb, var(--phase-accent, var(--teal)) 16%, transparent);
+    color:var(--phase-accent, var(--teal));
+  }
+  .phase-icon svg{width:19px;height:19px;}
+
+  .resource-card{position:relative;padding-left:17px !important;}
+  .resource-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--teal);opacity:.55;
+  }
+  .resource-card:nth-child(3n+2)::before{background:var(--accent-2);}
+  .resource-card:nth-child(3n)::before{background:var(--amber);}
+
+  /* Account bar — sits in the hero's top-right corner (integrated, not a floating overlay) */
+  .account-bar{
+    position:absolute;top:16px;right:20px;z-index:5;
+    display:flex;align-items:center;gap:10px;
+    background:color-mix(in srgb, var(--panel) 88%, transparent);
+    border:1px solid var(--border-soft);
+    border-radius:999px;padding:6px 8px 6px 14px;
+    box-shadow:var(--shadow-sm);
+    backdrop-filter:blur(4px);
+  }
+  .account-bar-email{
+    font-size:11px;color:var(--ink-muted);max-width:220px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .account-bar .signout-btn{
+    border-radius:999px !important;
+    border-color:var(--amber) !important;
+    color:var(--amber) !important;
+    background:color-mix(in srgb, var(--amber) 10%, transparent) !important;
+  }
+  .account-bar .signout-btn:hover{background:color-mix(in srgb, var(--amber) 20%, transparent) !important;}
+  @media (max-width:760px){
+    .account-bar{top:10px;right:12px;padding:5px 6px 5px 10px;}
+    .account-bar-email{max-width:70px;}
+  }
+  /* Docked into the floating header once it's shown — one bar, not two */
+  .account-bar.docked{
+    position:static;top:auto;right:auto;
+    background:none;border:none;box-shadow:none;
+    padding:0;border-radius:0;
+  }
+  .account-bar.docked .account-bar-email{max-width:180px;}
+  .account-bar.docked .signout-btn{padding:4px 10px;font-size:9px;}
+
+  /* High-contrast "open elsewhere" buttons/links — replaces low-contrast text links */
+  .open-elsewhere-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    background:linear-gradient(135deg,#3B82F6,#6366F1);
+    color:#fff !important;font-weight:600;font-size:12.5px;
+    padding:9px 16px;border-radius:var(--radius-sm);
+    text-decoration:none;margin-top:12px;
+    box-shadow:var(--shadow-sm);
+  }
+  .open-elsewhere-btn:hover{opacity:.92;}
+  .open-elsewhere-link{
+    color:var(--teal) !important;font-weight:700;
+    text-decoration:underline;text-underline-offset:2px;
+  }
+
+  /* Mock Interview modal */
+  .mi-tip{
+    font-size:12px;line-height:1.6;color:var(--ink-muted);
+    background:color-mix(in srgb, var(--teal) 8%, var(--panel-2));
+    border-left:3px solid var(--teal);border-radius:8px;
+    padding:10px 14px;margin-bottom:18px;
+  }
+  .mi-tip b{color:var(--ink);}
+  .mi-q-label{
+    font-size:10px;color:var(--ink-dim);text-transform:uppercase;
+    letter-spacing:0.05em;margin-bottom:6px;font-weight:600;
+  }
+  .mi-q-text{font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:16px;}
+  .mi-answer{
+    width:100%;min-height:110px;box-sizing:border-box;
+    background:var(--panel-2);border:1px solid var(--border);color:var(--ink);
+    padding:10px;font-family:inherit;font-size:13px;line-height:1.6;
+    border-radius:var(--radius-sm);resize:vertical;
+  }
+  .mi-answer:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb, var(--teal) 15%, transparent);}
+  .mi-model-wrap{margin-top:16px;}
+  .tips-list{margin:0 0 4px;padding-left:20px;}
+  .tips-list li{font-size:13px;line-height:1.6;color:var(--ink-muted);margin-bottom:12px;}
+  .tips-list b{color:var(--ink);}
+  .mi-model-text{
+    font-size:13px;color:var(--ink-muted);line-height:1.6;
+    background:var(--panel-2);border-left:2px solid var(--teal);
+    border-radius:6px;padding:12px;
+  }
+  .mi-ai-badge{
+    display:block;text-transform:none;letter-spacing:0;font-weight:400;
+    font-size:10.5px;color:var(--ink-dim);margin-top:3px;
+  }
+  .mi-feedback-wrap{margin-top:12px;}
+  .mi-feedback-status{font-size:11.5px;color:var(--ink-dim);line-height:1.5;margin-bottom:6px;}
+  .mi-feedback-text{
+    font-size:13px;color:var(--ink);line-height:1.6;
+    background:color-mix(in srgb, var(--accent-2) 8%, var(--panel-2));
+    border-left:2px solid var(--accent-2);
+    border-radius:6px;padding:12px;white-space:pre-wrap;
+  }
+  .mi-feedback-text:empty{display:none;}
 </style>
 </head>
 <body>
@@ -1291,31 +1625,78 @@
 
 <div id="app-root" style="display:none;">
 
+<div class="floating-header" id="floating-header">
+  <div class="fh-left">
+    <span class="fh-title font-tech">Azure Roadmap</span>
+  </div>
+  <div class="fh-right">
+    <span class="fh-stat" id="fh-clock">--:--</span>
+    <span class="fh-stat" id="fh-date">—</span>
+    <span class="fh-stat">
+      <span class="fh-progress-track"><span class="fh-progress-fill" id="fh-progress-fill"></span></span>
+      <b id="fh-progress-pct">0%</b>
+    </span>
+  </div>
+</div>
+
 <nav class="course-nav" id="course-nav">
   <div class="course-nav-brand">Roadmap</div>
   <button type="button" class="course-nav-btn" data-course="0" style="--nav-accent:#3B82F6;">
-    <span class="course-nav-code">AZ-900</span>
-    <span class="course-nav-title">Fundamentals</span>
-    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-0"></span></span>
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M6.5 15.5h8a3 3 0 0 0 .5-5.96 4.5 4.5 0 0 0-8.73-1.4A3.5 3.5 0 0 0 6.5 15.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">AZ-900</span>
+      <span class="course-nav-title">Fundamentals</span>
+      <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-0"></span></span>
+    </span>
+    <span class="cnv-toggle" data-toggle="0">▾</span>
   </button>
+  <div class="cnv-tree" id="cnv-tree-0"></div>
   <button type="button" class="course-nav-btn" data-course="1" style="--nav-accent:#8B5CF6;">
-    <span class="course-nav-code">AZ-104</span>
-    <span class="course-nav-title">Administrator</span>
-    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-1"></span></span>
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3.5" y="3.5" width="13" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.5"/><rect x="3.5" y="11" width="13" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="5.75" r=".8" fill="currentColor"/><circle cx="6" cy="13.25" r=".8" fill="currentColor"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">AZ-104</span>
+      <span class="course-nav-title">Administrator</span>
+      <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-1"></span></span>
+    </span>
+    <span class="cnv-toggle" data-toggle="1">▾</span>
   </button>
+  <div class="cnv-tree" id="cnv-tree-1"></div>
   <button type="button" class="course-nav-btn" data-course="2" style="--nav-accent:#10B981;">
-    <span class="course-nav-code">AZ-305</span>
-    <span class="course-nav-title">Solutions Architect</span>
-    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-2"></span></span>
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 17.5 7 10 11.5 2.5 7 10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2.5 10.5 10 15l7.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">AZ-305</span>
+      <span class="course-nav-title">Solutions Architect</span>
+      <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-2"></span></span>
+    </span>
+    <span class="cnv-toggle" data-toggle="2">▾</span>
   </button>
+  <div class="cnv-tree" id="cnv-tree-2"></div>
   <button type="button" class="course-nav-btn" data-course="3" style="--nav-accent:#F97316;">
-    <span class="course-nav-code">Phase 4</span>
-    <span class="course-nav-title">Real-World Practice</span>
-    <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-3"></span></span>
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2c2.5 1.6 4 4.4 4 7.5 0 1.7-.4 3-1 4.2l-3-1-3 1c-.6-1.2-1-2.5-1-4.2C6 6.4 7.5 3.6 10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="8.5" r="1.4" stroke="currentColor" stroke-width="1.3"/><path d="M7 13.5 5 17l3-1.2M13 13.5l2 3.5-3-1.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">Phase 4</span>
+      <span class="course-nav-title">Real-World Practice</span>
+      <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-3"></span></span>
+    </span>
+    <span class="cnv-toggle" data-toggle="3">▾</span>
   </button>
+  <div class="cnv-tree" id="cnv-tree-3"></div>
+  <button type="button" class="course-nav-btn" data-course="4" style="--nav-accent:#EC4899;">
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 10h15M10 2.5c2.2 2 3.4 4.8 3.4 7.5s-1.2 5.5-3.4 7.5c-2.2-2-3.4-4.8-3.4-7.5S7.8 4.5 10 2.5Z" stroke="currentColor" stroke-width="1.5"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">Phase 5</span>
+      <span class="course-nav-title">Modern Cloud</span>
+      <span class="course-nav-bar"><span class="course-nav-bar-fill" id="nav-bar-4"></span></span>
+    </span>
+    <span class="cnv-toggle" data-toggle="4">▾</span>
+  </button>
+  <div class="cnv-tree" id="cnv-tree-4"></div>
   <button type="button" class="course-nav-btn" data-course="resources" style="--nav-accent:#5B8DEF;">
-    <span class="course-nav-code">Resources</span>
-    <span class="course-nav-title">Notes · Links · Cards</span>
+    <span class="course-nav-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 5.2C8.7 4 6.7 3.5 3.5 3.5v11.8c3.2 0 5.2.5 6.5 1.7 1.3-1.2 3.3-1.7 6.5-1.7V3.5c-3.2 0-5.2.5-6.5 1.7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 5.2v11.8" stroke="currentColor" stroke-width="1.5"/></svg></span>
+    <span class="course-nav-copy">
+      <span class="course-nav-code">Resources</span>
+      <span class="course-nav-title">Notes · Links · Cards</span>
+    </span>
   </button>
 </nav>
 
@@ -1333,93 +1714,164 @@
 <aside class="side-panel" id="side-panel">
   <div class="sp-header">
     <div class="sp-header-title font-tech">Tools</div>
+    <label class="sp-pin-toggle" title="Keep panel open — don't close when clicking outside">
+      <input type="checkbox" id="sp-pin-check">
+      <span class="sp-pin-slider"></span>
+      <span class="sp-pin-text">Keep open</span>
+    </label>
     <button class="sp-close" id="sp-close">✕</button>
   </div>
 
 
-  <div class="sp-section">
+  <div class="sp-section" style="margin-bottom:14px;padding-bottom:14px;">
     <div class="sp-label">Clock</div>
     <div class="sp-clock-time font-mono" id="sp-clock-time">--:--:--</div>
     <div class="sp-clock-date" id="sp-clock-date">—</div>
   </div>
 
-  <div class="sp-section">
-    <div class="sp-label">Study Timer</div>
-    <div class="sp-timer-display" id="sp-timer-display">25:00</div>
-    <div class="sp-timer-row">
-      <button class="sp-btn primary" id="sp-timer-toggle">Start</button>
-      <button class="sp-btn" id="sp-timer-reset">Reset</button>
-      <select class="sp-select" id="sp-timer-preset">
-        <option value="15">15 min</option>
-        <option value="25" selected>25 min</option>
-        <option value="50">50 min</option>
-      </select>
+  <div class="sp-category open" data-cat="study">
+    <button type="button" class="sp-cat-header"><span>Study</span><span class="sp-cat-chevron">▾</span></button>
+    <div class="sp-cat-body">
+      <div class="sp-section">
+        <div class="sp-label">Study Timer</div>
+        <div class="sp-timer-display" id="sp-timer-display">25:00</div>
+        <div class="sp-timer-row">
+          <button class="sp-btn primary" id="sp-timer-toggle">Start</button>
+          <button class="sp-btn" id="sp-timer-reset">Reset</button>
+          <select class="sp-select" id="sp-timer-preset">
+            <option value="15">15 min</option>
+            <option value="25" selected>25 min</option>
+            <option value="50">50 min</option>
+          </select>
+        </div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Quick Jump</div>
+        <button class="sp-btn sp-fullbtn" id="sp-jump-today">Open today's day</button>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Quick Review</div>
+        <button class="sp-btn sp-fullbtn" id="sp-random-card">🎲 Random flashcard</button>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Study Streak</div>
+        <div class="sp-snapshot" id="sp-streak">🔥 0-day streak</div>
+      </div>
     </div>
   </div>
 
-  <div class="sp-section">
-    <div class="sp-label">Appearance</div>
-    <button class="sp-btn sp-fullbtn" id="sp-theme-toggle">🌙 Switch to light mode</button>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Accent Color</div>
-    <div class="sp-swatch-row" id="sp-accent-row">
-      <div class="sp-swatch" data-accent="#5B8DEF,#2857C9" style="background:#5B8DEF;" title="Azure blue"></div>
-      <div class="sp-swatch" data-accent="#8B5CF6,#6D28D9" style="background:#8B5CF6;" title="Violet"></div>
-      <div class="sp-swatch" data-accent="#10B981,#0E8F66" style="background:#10B981;" title="Emerald"></div>
-      <div class="sp-swatch" data-accent="#F97316,#C2570C" style="background:#F97316;" title="Amber"></div>
+  <div class="sp-category" data-cat="progress">
+    <button type="button" class="sp-cat-header"><span>Progress</span><span class="sp-cat-chevron">▾</span></button>
+    <div class="sp-cat-body">
+      <div class="sp-section">
+        <div class="sp-label">Progress Snapshot</div>
+        <div class="sp-snapshot" id="sp-snapshot">Loading…</div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Time by Week</div>
+        <div id="sp-week-chart" style="max-height:180px;overflow-y:auto;"></div>
+      </div>
     </div>
   </div>
 
-  <div class="sp-section">
-    <div class="sp-label">Card Density</div>
-    <div class="sp-seg" id="sp-density-seg">
-      <button type="button" class="sp-seg-btn" data-density="comfortable">Comfortable</button>
-      <button type="button" class="sp-seg-btn" data-density="compact">Compact</button>
+  <div class="sp-category" data-cat="appearance">
+    <button type="button" class="sp-cat-header"><span>Appearance</span><span class="sp-cat-chevron">▾</span></button>
+    <div class="sp-cat-body">
+      <div class="sp-section">
+        <div class="sp-label">Theme</div>
+        <button class="sp-btn sp-fullbtn" id="sp-theme-toggle">🌙 Switch to light mode</button>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Accent Color</div>
+        <div class="sp-swatch-row" id="sp-accent-row">
+          <div class="sp-swatch" data-accent="#5B8DEF,#2857C9" style="background:#5B8DEF;" title="Azure blue"></div>
+          <div class="sp-swatch" data-accent="#8B5CF6,#6D28D9" style="background:#8B5CF6;" title="Violet"></div>
+          <div class="sp-swatch" data-accent="#10B981,#0E8F66" style="background:#10B981;" title="Emerald"></div>
+          <div class="sp-swatch" data-accent="#F97316,#C2570C" style="background:#F97316;" title="Amber"></div>
+        </div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Card Density</div>
+        <div class="sp-seg" id="sp-density-seg">
+          <button type="button" class="sp-seg-btn" data-density="comfortable">Comfortable</button>
+          <button type="button" class="sp-seg-btn" data-density="compact">Compact</button>
+        </div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Text Size</div>
+        <input type="range" id="sp-fontscale" min="90" max="115" step="5" value="100" style="width:100%;">
+      </div>
     </div>
   </div>
 
-  <div class="sp-section">
-    <div class="sp-label">Text Size</div>
-    <input type="range" id="sp-fontscale" min="90" max="115" step="5" value="100" style="width:100%;">
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Time by Week</div>
-    <div id="sp-week-chart" style="max-height:180px;overflow-y:auto;"></div>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Quick Jump</div>
-    <button class="sp-btn sp-fullbtn" id="sp-jump-today">Open today's day</button>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Progress Snapshot</div>
-    <div class="sp-snapshot" id="sp-snapshot">Loading…</div>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Latest Azure Updates</div>
-    <div id="sp-azure-news">Loading…</div>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Quick Review</div>
-    <button class="sp-btn sp-fullbtn" id="sp-random-card">🎲 Random flashcard</button>
-  </div>
-
-  <div class="sp-section">
-    <div class="sp-label">Quick Notes</div>
-    <div class="sp-notes">
-      <textarea id="sp-quicknotes" placeholder="General scratchpad — not tied to any specific day."></textarea>
-      <div class="sp-notes-status" id="sp-quicknotes-status"></div>
+  <div class="sp-category" data-cat="data">
+    <button type="button" class="sp-cat-header"><span>Data</span><span class="sp-cat-chevron">▾</span></button>
+    <div class="sp-cat-body">
+      <div class="sp-section">
+        <div class="sp-label">Backup</div>
+        <button class="sp-btn sp-fullbtn" id="sp-export-btn" style="margin-bottom:6px;">⬇ Export progress</button>
+        <button class="sp-btn sp-fullbtn" id="sp-import-btn">⬆ Import progress</button>
+        <input type="file" id="sp-import-file" accept="application/json" style="display:none;">
+        <div class="sp-notes-status" id="sp-backup-status"></div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Quick Notes</div>
+        <div class="sp-notes">
+          <textarea id="sp-quicknotes" placeholder="General scratchpad — not tied to any specific day."></textarea>
+          <div class="sp-notes-status" id="sp-quicknotes-status"></div>
+        </div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-label">Latest Azure Updates</div>
+        <div id="sp-azure-news">Loading…</div>
+      </div>
     </div>
   </div>
 </aside>
 
 <div class="sheet">
+
+  <div class="hero">
+    <div class="account-bar" id="account-bar">
+      <span class="account-bar-email" id="account-email">—</span>
+      <button class="signout-btn" id="signout-btn">Sign out</button>
+    </div>
+    <div class="hero-copy">
+      <div class="hero-eyebrow">☁ Azure Certification Roadmap</div>
+      <div class="hero-title">Foundations to <em>Solutions Architect</em></div>
+      <div class="hero-sub">A guided, day-by-day path through AZ-900, AZ-104, and AZ-305 — lessons, labs, flashcards, and quizzes in one place.</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>185</b><span>Days</span></div>
+        <div class="hero-stat"><b>3</b><span>Certifications</span></div>
+        <div class="hero-stat"><b>85+</b><span>Flashcards</span></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="heroNodeGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--teal)"/>
+            <stop offset="1" stop-color="var(--accent-2)"/>
+          </linearGradient>
+        </defs>
+        <g stroke="var(--border)" stroke-width="1.4" opacity="0.8">
+          <line x1="110" y1="95" x2="34" y2="40"/>
+          <line x1="110" y1="95" x2="186" y2="40"/>
+          <line x1="110" y1="95" x2="30" y2="140"/>
+          <line x1="110" y1="95" x2="190" y2="140"/>
+          <line x1="110" y1="95" x2="110" y2="20"/>
+        </g>
+        <circle cx="110" cy="95" r="30" fill="url(#heroNodeGrad)" opacity="0.16"/>
+        <circle cx="110" cy="95" r="30" fill="none" stroke="url(#heroNodeGrad)" stroke-width="2.2"/>
+        <rect x="98" y="83" width="24" height="24" rx="5" fill="none" stroke="url(#heroNodeGrad)" stroke-width="2"/>
+        <circle cx="34" cy="40" r="11" fill="var(--panel)" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="186" cy="40" r="11" fill="var(--panel)" stroke="var(--amber)" stroke-width="2"/>
+        <circle cx="30" cy="140" r="11" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="2"/>
+        <circle cx="190" cy="140" r="11" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="2"/>
+        <circle cx="110" cy="20" r="8" fill="var(--panel)" stroke="var(--teal)" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
 
   <div class="titleblock font-tech">
     <div class="cell tb-title">
@@ -1433,7 +1885,7 @@
     </div>
     <div class="cell">
       <div class="tb-label">Span</div>
-      <div class="tb-value">145 days</div>
+      <div class="tb-value">185 days</div>
     </div>
     <div class="cell">
       <div class="tb-label">Sheet</div>
@@ -1443,17 +1895,12 @@
       <div class="tb-label">Rev</div>
       <div class="tb-value" id="rev-date">—</div>
     </div>
-    <div class="cell">
-      <div class="tb-label">Account</div>
-      <div class="tb-value" id="account-email" style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div>
-      <button class="signout-btn" id="signout-btn" style="margin-top:6px;">Sign out</button>
-    </div>
   </div>
 
   <div class="ruler-wrap">
     <div class="ruler-head">
       <div class="label font-tech">Overall progress</div>
-      <div class="stat font-mono" id="overall-stat">0 / 145 days · 0%</div>
+      <div class="stat font-mono" id="overall-stat">0 / 185 days · 0%</div>
     </div>
     <div class="ruler" id="ruler">
       <div class="ruler-fill" id="ruler-fill" style="width:0%"></div>
@@ -1461,10 +1908,11 @@
       <div class="ruler-today" id="ruler-today" style="display:none;"></div>
     </div>
     <div class="phase-legend font-tech">
-      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-900 · days 1–14</div>
-      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-104 · days 15–56</div>
-      <div class="item"><span class="swatch" style="background:rgba(91,141,239,0.4)"></span>AZ-305 · days 57–91</div>
-      <div class="item"><span class="swatch" style="background:rgba(242,193,78,0.4)"></span>Phase 4 (real-world) · days 92–145</div>
+      <div class="item"><span class="swatch" style="background:#3B82F6"></span>AZ-900 · days 1–14</div>
+      <div class="item"><span class="swatch" style="background:#8B5CF6"></span>AZ-104 · days 15–56</div>
+      <div class="item"><span class="swatch" style="background:#10B981"></span>AZ-305 · days 57–91</div>
+      <div class="item"><span class="swatch" style="background:#F97316"></span>Phase 4 (real-world) · days 92–145</div>
+      <div class="item"><span class="swatch" style="background:#EC4899"></span>Phase 5 (modern cloud) · days 146–185</div>
     </div>
     <div class="controls">
       <label class="font-tech">Start date
@@ -1474,24 +1922,6 @@
     </div>
   </div>
 
-  <div class="ruler-wrap">
-    <div class="ruler-head">
-      <div class="label font-tech">Certification renewal tracker</div>
-      <div class="stat font-mono" style="color:var(--ink-muted);font-size:11px;">AZ-900 doesn't expire · AZ-104 &amp; AZ-305 renew every 12 months</div>
-    </div>
-    <div class="controls" style="border-top:none;margin-top:2px;padding-top:4px;">
-      <label class="font-tech">AZ-104 pass date
-        <input type="date" id="az104-date">
-      </label>
-      <span class="font-mono" id="az104-status" style="font-size:12px;color:var(--ink-muted);"></span>
-    </div>
-    <div class="controls">
-      <label class="font-tech">AZ-305 pass date
-        <input type="date" id="az305-date">
-      </label>
-      <span class="font-mono" id="az305-status" style="font-size:12px;color:var(--ink-muted);"></span>
-    </div>
-  </div>
 
   <div id="phases"></div>
 
@@ -1572,6 +2002,7 @@
       <button class="btn" id="fc-open-az104">Browse AZ-104 deck</button>
       <button class="btn" id="fc-open-az305">Browse AZ-305 deck</button>
       <button class="btn" id="fc-open-phase4">Browse Phase 4 deck</button>
+      <button class="btn" id="fc-open-moderncloud">Browse Phase 5 deck</button>
     </div>
   </div>
   </div>
@@ -1602,7 +2033,10 @@
 
     <div class="dm-panel" id="dm-video">
       <div class="dm-embed-wrap"><iframe id="dm-video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <div class="dm-video-fallback">Some creators disable embedding on other websites — if it says "Video unavailable," use <a id="dm-video-link" href="#" target="_blank" rel="noopener">Watch on YouTube ↗</a> instead.</div>
+      <div class="dm-video-fallback">
+        This is a local file, not a hosted website — YouTube blocks embedding here for many videos regardless of the creator's settings. If the player shows "Video unavailable" or an error (e.g. "Error 153"), that's why: this video needs to be watched directly on YouTube.
+        <a id="dm-video-link" class="open-elsewhere-btn" href="#" target="_blank" rel="noopener">▶ Click here to open on YouTube ↗</a>
+      </div>
     </div>
 
     <div class="dm-panel" id="dm-docs">
@@ -1611,9 +2045,9 @@
         <div class="dm-docs-blocked-icon">🔗</div>
         <div class="dm-docs-blocked-title">This site can't be shown here</div>
         <div class="dm-docs-blocked-text">This page blocks embedding on other websites (a security setting the site owner controls, not something this app can override).</div>
-        <a id="dm-docs-blocked-link" class="btn" href="#" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;">Click here to open in a new tab ↗</a>
+        <a id="dm-docs-blocked-link" class="open-elsewhere-btn" href="#" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;">Click here to open in a new tab ↗</a>
       </div>
-      <div class="dm-fallback-note" id="dm-docs-fallback-note">If this panel ever looks blank instead of loading, use <a id="dm-docs-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
+      <div class="dm-fallback-note" id="dm-docs-fallback-note">If this panel ever looks blank instead of loading, use <a id="dm-docs-link" class="open-elsewhere-link" href="#" target="_blank" rel="noopener">Open in new tab ↗</a> instead.</div>
     </div>
 
     <div class="dm-panel" id="dm-notes">
@@ -1646,6 +2080,7 @@
       </div>
       <div class="wb-status" id="wb-status">Draw a diagram for this day — arrows/boxes work well for architecture sketches.</div>
     </div>
+
     </div>
 
     <div class="dm-footer">
@@ -1682,6 +2117,56 @@
   </div>
 </div>
 
+<div class="fc-modal-overlay" id="tips-overlay">
+  <div class="quiz-modal" style="max-width:480px;">
+    <button class="fc-modal-close" id="tips-close" aria-label="Close">✕</button>
+    <div class="fc-modal-title font-tech">👋 Welcome — a few tips</div>
+    <ul class="tips-list">
+      <li><b>Click any day</b> — in the day grid or the sidebar syllabus tree — to open its lesson, video, docs, and notes.</li>
+      <li><b>Use the sidebar</b> — click the little arrow on a course to browse its full topic list and jump straight to any day.</li>
+      <li><b>Take Quiz</b> and <b>Mock Interview</b> live in each course header — practice both as you go, not just at the end.</li>
+      <li><b>Tools panel</b> (bottom-right tab) has a study timer, quick jump to today, and your progress snapshot.</li>
+      <li>Progress saves automatically — just check off days as you complete them.</li>
+    </ul>
+    <button type="button" class="btn" id="tips-got-it" style="width:100%;padding:10px;margin-top:6px;">Got it</button>
+  </div>
+</div>
+
+<div class="fc-modal-overlay" id="mi-overlay">
+  <div class="quiz-modal" id="mi-modal">
+    <button class="fc-modal-close" id="mi-close" aria-label="Close">✕</button>
+    <div class="fc-modal-title font-tech" id="mi-title">Mock Interview</div>
+
+    <div class="mi-tip" id="mi-tip">
+      <b>How to structure an answer:</b> Context (what's being asked) → Approach (what you'd do) → Trade-off (what you're giving up / why this over an alternative) → Outcome (the result or what it enables). Say it out loud like you're in the room, not like you're reciting a definition.
+    </div>
+
+    <div class="mi-q-label">Interview question</div>
+    <div class="mi-q-text" id="mi-q-text"></div>
+
+    <div class="mi-q-label">Your answer <span class="mi-ai-badge">AI feedback runs locally in your browser — no server, nothing sent anywhere</span></div>
+    <textarea id="mi-answer" class="mi-answer" placeholder="Type your own answer first — thinking it through yourself is what actually builds recall, not just reading the model answer."></textarea>
+    <button type="button" class="btn" id="mi-feedback-btn" style="width:100%;padding:10px;margin-top:10px;">🧠 Get AI Feedback</button>
+    <div class="mi-feedback-wrap" id="mi-feedback-wrap" style="display:none;">
+      <div class="mi-feedback-status" id="mi-feedback-status"></div>
+      <div class="mi-feedback-text" id="mi-feedback-text"></div>
+    </div>
+
+    <button type="button" class="btn" id="mi-reveal" style="width:100%;padding:10px;margin-top:10px;">Reveal Model Answer</button>
+
+    <div class="mi-model-wrap" id="mi-model-wrap" style="display:none;">
+      <div class="mi-q-label">Model answer</div>
+      <div class="mi-model-text" id="mi-model-text"></div>
+    </div>
+
+    <div class="quiz-nav-footer">
+      <button class="btn" id="mi-prev">← Previous</button>
+      <span class="quiz-q-position" id="mi-position">Question 1 of 8</span>
+      <button class="btn" id="mi-next">Next →</button>
+    </div>
+  </div>
+</div>
+
 <div class="fc-modal-overlay" id="fc-modal-overlay">
   <div class="fc-modal">
     <button class="fc-modal-close" id="fc-modal-close" aria-label="Close">✕</button>
@@ -1691,6 +2176,7 @@
       <button class="fc-tab" data-deck="az104">AZ-104</button>
       <button class="fc-tab" data-deck="az305">AZ-305</button>
       <button class="fc-tab" data-deck="phase4">Phase 4</button>
+      <button class="fc-tab" data-deck="moderncloud">Phase 5</button>
     </div>
     <div class="fc-stage">
       <div class="fc-progress" id="fc-progress">Card 1 of 30</div>
@@ -2265,10 +2751,339 @@
             "This is the actual point of the last 145 days — turning study time into a documented, provable track record.", "https://learn.microsoft.com/en-us/azure/architecture/"]
         ]}
       ]
+    },
+    {
+      code:"PHASE 5", title:"Modern Cloud",
+      sub:"IaC (Bicep &amp; Terraform) · Containers &amp; Kubernetes · Networking Depth · Identity · CI/CD · Security · Observability &amp; FinOps",
+      weeks:[
+        { label:"Track 1 · Infrastructure as Code (#1 priority) · Days 146–152", days:[
+          [146,"Bicep fundamentals — syntax, resources, params, outputs", "https://learn.microsoft.com/en-us/training/paths/fundamentals-bicep/",
+            "Work through Bicep Fundamentals Module 1 in the free sandbox, writing your first resource block by hand.",
+            "A platform team standardizes on Bicep so every new resource starts from a reviewed, version-controlled template instead of manual portal clicks.", "https://learn.microsoft.com/en-us/training/paths/fundamentals-bicep/"],
+          [147,"Deploy Azure resources with Bicep + what-if", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks",
+            "Deploy a storage account via Bicep, then run 'what-if' before applying a change to see it predicted first.",
+            "An engineer catches an unintended change before it hits production, because what-if flagged it during review.", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks"],
+          [148,"Bicep modules &amp; reusable templates", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules",
+            "Refactor a single Bicep file into a reusable module with parameters, then call it from two environments.",
+            "A consultancy reuses the same parameterized Bicep module to stand up a landing zone for every new client in hours, not days.", "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules"],
+          [149,"Terraform basics — providers, state, plan/apply", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started",
+            "Install Terraform locally and run through the official plan/apply/destroy cycle on a trivial resource.",
+            "A multi-cloud team standardizes on Terraform specifically because it isn't locked to one vendor's tooling.", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started"],
+          [150,"Terraform on Azure — azurerm provider, deploy VNet + VM", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build",
+            "Use the azurerm provider to deploy a VNet and a VM, then tear it down with terraform destroy.",
+            "An engineer proves out a design in a disposable sandbox subscription before ever touching production.", "https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build"],
+          [151,"Remote state in an Azure Storage backend", "https://developer.hashicorp.com/terraform/language/state",
+            "Move your Terraform state from local to an Azure Storage account backend, with state locking enabled.",
+            "A team avoids a corrupted deployment after two engineers nearly ran apply at once, because remote locking prevented the collision.", "https://developer.hashicorp.com/terraform/language/state"],
+          [152,"HashiCorp Terraform Associate — study guide + practice exam", "https://developer.hashicorp.com/terraform/tutorials/certification-003",
+            "Take a full-length Terraform Associate practice exam and review every missed question.",
+            "This cert gives the CV a vendor-neutral IaC credential that reads well alongside Azure-specific certifications.", "https://developer.hashicorp.com/terraform/tutorials/certification-003"]
+        ]},
+        { label:"Track 2 · Containers &amp; Kubernetes (#2 priority) · Days 153–158", days:[
+          [153,"Docker fundamentals — images, containers, Dockerfile", "https://docs.docker.com/get-started/",
+            "Write a Dockerfile for a simple app, build the image, and run it locally.",
+            "A developer ships an app that behaves identically on their laptop, in CI, and in production — same image everywhere.", "https://docs.docker.com/get-started/"],
+          [154,"Build &amp; push an image to Azure Container Registry (ACR)", "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal",
+            "Push your locally-built image to ACR and pull it back down to confirm it works.",
+            "A team centralizes all container images in one private registry instead of scattering them across public accounts.", "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal"],
+          [155,"Kubernetes core concepts — pods, deployments, services", "https://kubernetes.io/docs/concepts/overview/",
+            "Read through pods, deployments, and services, then sketch how they relate to each other from memory.",
+            "An engineer explains in an interview why a Deployment manages Pods while a Service gives them stable networking — a very commonly asked question.", "https://kubernetes.io/docs/concepts/overview/"],
+          [156,"Deploy to AKS — create a cluster, kubectl basics", "https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-portal",
+            "Create a small AKS cluster and deploy your Day 154 image to it using kubectl.",
+            "A team moves from one VM per service to a dozen containerized services sharing one orchestrated cluster.", "https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-portal"],
+          [157,"AKS networking, ingress, scaling &amp; Helm intro", "https://learn.microsoft.com/en-us/azure/aks/concepts-network",
+            "Expose your deployment via an ingress controller, and install one application using a Helm chart.",
+            "A platform team packages a complex multi-resource app as one Helm chart so any engineer installs it with a single command.", "https://learn.microsoft.com/en-us/azure/aks/concepts-network"],
+          [158,"Pick a cert: KCNA (entry) or CKA (hands-on) and schedule it", "https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate/",
+            "Compare the KCNA and CKA exam objectives and pick the one matching your current hands-on depth.",
+            "KCNA is the fast entry credential; CKA is the harder-to-fake, hands-on credential employers weight more heavily.", "https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate/"]
+        ]},
+        { label:"Track 3 · Azure Networking Depth (#3 priority) · Days 159–164", days:[
+          [159,"Hub-and-spoke topology &amp; VNet peering", "https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke",
+            "Diagram a hub-spoke topology connecting a firewall hub to 2 spoke VNets for a fictional company.",
+            "An enterprise centralizes firewall and connectivity in one hub so every business unit's spoke inherits the same security posture.", "https://youtu.be/0Knf9nub4-k"],
+          [160,"Hybrid connectivity — VPN Gateway &amp; ExpressRoute", "https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways",
+            "Compare the latency, cost, and reliability trade-offs of VPN Gateway vs. ExpressRoute for a fictional scenario.",
+            "A bank uses ExpressRoute instead of a VPN because compliance rules exclude routing sensitive data over the public internet.", "https://youtu.be/0Knf9nub4-k"],
+          [161,"Azure Firewall, NSGs &amp; Application Security Groups", "https://learn.microsoft.com/en-us/azure/firewall/overview",
+            "Design a layered rule set: NSG at the subnet, ASG grouping VMs by role, Azure Firewall at the edge.",
+            "A security team implements defense in depth so one misconfigured rule doesn't expose the whole environment.", "https://youtu.be/0Knf9nub4-k"],
+          [162,"Load balancing — LB vs App Gateway vs Front Door vs Traffic Manager", "https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/load-balancing-overview",
+            "Given 4 scenarios, pick the correct load balancing service for each of the four options.",
+            "A global SaaS company uses Front Door for global routing and regional Load Balancers within each region — not interchangeable.", "https://youtu.be/0Knf9nub4-k"],
+          [163,"Private Endpoints, Private Link &amp; Azure DNS", "https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview",
+            "Add a private endpoint to a PaaS resource and confirm it resolves to a private IP via a private DNS zone.",
+            "A financial services company removes all public IP exposure on its databases by routing everything through Private Link.", "https://youtu.be/0Knf9nub4-k"],
+          [164,"AZ-700 study guide + labs", "https://learn.microsoft.com/en-us/credentials/certifications/azure-network-engineer-associate/",
+            "Read the AZ-700 skills-measured outline and map each domain to a day you've already completed.",
+            "This cert formally validates networking depth that's currently invisible on the CV despite the underlying skill being present.", "https://youtu.be/0Knf9nub4-k"]
+        ]},
+        { label:"Track 4 · Identity Specialisation (#4 priority) · Days 165–169", days:[
+          [165,"Privileged Identity Management (PIM)", "https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure",
+            "Configure a PIM policy requiring approval for Owner-role activation, then test activating it yourself.",
+            "An organization eliminates standing admin access — every privileged action is time-boxed, approved, and logged.", "https://youtu.be/0Knf9nub4-k"],
+          [166,"Identity Protection &amp; risk-based Conditional Access", "https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection",
+            "Create a Conditional Access policy requiring MFA only for risky sign-ins, using Identity Protection's risk signals.",
+            "A company blocks a real credential-stuffing attack automatically because Identity Protection flagged the pattern as high-risk.", "https://youtu.be/0Knf9nub4-k"],
+          [167,"Entra ID Governance — access reviews &amp; entitlement management", "https://learn.microsoft.com/en-us/entra/id-governance/access-reviews-overview",
+            "Set up a recurring access review for a group's membership and complete one review cycle.",
+            "An auditor confirms stale access is being caught systematically, not just when someone happens to notice it.", "https://youtu.be/0Knf9nub4-k"],
+          [168,"App registrations, enterprise apps, SSO (SAML / OIDC) deep dive", "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+            "Register a sample app in Entra ID and configure SSO via OIDC for it.",
+            "An internal tool goes from its own separate login to using the same company SSO everyone already trusts.", "https://youtu.be/0Knf9nub4-k"],
+          [169,"SC-300 Identity &amp; Access Administrator — study guide + exam", "https://learn.microsoft.com/en-us/credentials/certifications/identity-and-access-administrator/",
+            "Take an SC-300 practice assessment and identify your two weakest domains for focused review.",
+            "This cert turns identity — already your strongest practical skill — into a credential the CV can't overlook.", "https://youtu.be/0Knf9nub4-k"]
+        ]},
+        { label:"Track 5 · CI/CD &amp; Automation · Days 170–174", days:[
+          [170,"Git fundamentals — branches, pull requests, merge strategy", "https://learn.microsoft.com/en-us/training/modules/intro-to-git/",
+            "Practice creating a branch, making a change, opening a pull request, and merging it — even solo.",
+            "A team catches a bad infrastructure change in review, before it's ever applied, because it went through a PR first.", "https://learn.microsoft.com/en-us/training/modules/intro-to-git/"],
+          [171,"GitHub Actions — workflows, jobs, secrets", "https://docs.github.com/en/actions/writing-workflows/quickstart",
+            "Write a workflow that runs automatically on every push and just prints a message.",
+            "A team automatically validates every pull request's Terraform plan before a human has to review it manually.", "https://docs.github.com/en/actions/writing-workflows/quickstart"],
+          [172,"Azure DevOps Pipelines — YAML, stages, environments", "https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline",
+            "Create a basic YAML pipeline with a build stage and a deploy stage.",
+            "An enterprise standardizes deployments through one pipeline definition instead of engineers running commands from their laptops.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline"],
+          [173,"Build a pipeline that deploys your Bicep / Terraform", "https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/terraform",
+            "Wire your Terraform or Bicep code from Track 1 into a pipeline that plans and applies automatically.",
+            "This is the moment IaC actually becomes infrastructure as code, rather than infrastructure as a script someone runs manually.", "https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/terraform"],
+          [174,"AZ-400 DevOps Engineer Expert (optional, layers on later)", "https://learn.microsoft.com/en-us/credentials/certifications/devops-engineer-expert/",
+            "Skim the AZ-400 skills outline and note which topics you've already covered versus what's new.",
+            "This expert-level cert is optional but signals DevOps maturity beyond just knowing individual tools.", "https://learn.microsoft.com/en-us/credentials/certifications/devops-engineer-expert/"]
+        ]},
+        { label:"Track 6 · Cloud Security &amp; SecOps · Days 175–180", days:[
+          [175,"Microsoft Defender for Cloud — secure score &amp; recommendations", "https://learn.microsoft.com/en-us/azure/defender-for-cloud/getting-started",
+            "Enable Defender for Cloud on a subscription and review your secure score.",
+            "A security team prioritizes a real remediation backlog using secure score instead of guessing what to fix first.", "https://youtu.be/0Knf9nub4-k"],
+          [176,"Microsoft Sentinel — SIEM basics, data connectors", "https://learn.microsoft.com/en-us/training/paths/security-ops-sentinel/",
+            "Connect one data source to Sentinel and confirm data is flowing in.",
+            "A SOC gets a single pane of glass across every log source instead of checking a dozen separate portals.", "https://learn.microsoft.com/en-us/training/paths/security-ops-sentinel/"],
+          [177,"KQL for threat hunting &amp; log queries", "https://learn.microsoft.com/en-us/azure/sentinel/hunting",
+            "Write a KQL hunting query looking for failed sign-ins followed by a success from the same account.",
+            "An analyst catches a compromised account days before it would have been noticed manually.", "https://learn.microsoft.com/en-us/azure/sentinel/hunting"],
+          [178,"Key Vault — secrets, keys, certificates, access model", "https://learn.microsoft.com/en-us/azure/key-vault/general/overview",
+            "Store a secret in Key Vault and reference it from a pipeline instead of hardcoding it.",
+            "A leaked GitHub repo doesn't leak any credentials, because none were ever hardcoded in the first place.", "https://learn.microsoft.com/en-us/azure/key-vault/general/overview"],
+          [179,"Defender XDR overview &amp; incident response", "https://learn.microsoft.com/en-us/defender-xdr/microsoft-365-defender",
+            "Read through a sample XDR incident timeline and identify the actual root cause versus the noisy alerts around it.",
+            "A responder correlates signals across identity, endpoint, and cloud instead of investigating three disconnected alerts.", "https://learn.microsoft.com/en-us/defender-xdr/microsoft-365-defender"],
+          [180,"AZ-500 Security Engineer — study guide", "https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/",
+            "Take an AZ-500 practice assessment and log your weakest domain.",
+            "This cert directly matches your existing hardening and compliance work — one of the most naturally-earned certs on this list.", "https://youtu.be/0Knf9nub4-k"]
+        ]},
+        { label:"Track 7 · Observability &amp; FinOps · Days 181–185", days:[
+          [181,"Azure Monitor &amp; Log Analytics workspaces", "https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview",
+            "Set up a Log Analytics workspace and route one resource's diagnostic logs into it.",
+            "A team debugs an outage by querying centralized logs instead of remoting into individual VMs one at a time.", "https://youtu.be/0Knf9nub4-k"],
+          [182,"KQL fundamentals — query metrics &amp; logs", "https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/",
+            "Write 3 KQL queries against your own data: error count by resource, slowest requests, failed logins today.",
+            "Real KQL fluency comes from querying your own messy data, not textbook examples.", "https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/"],
+          [183,"Workbooks, alerts &amp; dashboards", "https://learn.microsoft.com/en-us/azure/azure-monitor/visualize/workbooks-overview",
+            "Build one workbook visualizing a metric you care about, and one alert rule that would actually page someone.",
+            "A badly-tuned alert that fires constantly gets ignored — a well-designed one gets acted on immediately.", "https://learn.microsoft.com/en-us/azure/azure-monitor/visualize/workbooks-overview"],
+          [184,"Azure Cost Management, budgets &amp; FinOps basics", "https://learn.microsoft.com/en-us/azure/cost-management-billing/",
+            "Review Cost Management for a subscription and identify one concrete optimization.",
+            "A FinOps team cuts cloud spend 20% in a quarter just by acting on recommendations nobody had looked at before.", "https://learn.microsoft.com/en-us/azure/cost-management-billing/"],
+          [185,"Well-Architected pillars: Cost Optimisation &amp; Operational Excellence", "https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/",
+            "Score a past project against these two pillars and note one gap in each.",
+            "This is the checklist real architecture review boards use before signing off on a design.", "https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/"]
+        ]}
+      ]
     }
   ];
 
   // Flat lookup: day number -> {topic, link, video, lab, usecase, phaseTitle}
+  var INTERVIEW_QUESTIONS = {
+    1:{q:"How would you explain the difference between IaaS, PaaS, and SaaS to a non-technical stakeholder?", a:"IaaS is renting the building blocks — servers, storage, networking — and you manage everything above that, like the OS and apps. PaaS is renting a fully-equipped kitchen — the platform handles the OS and runtime, you just bring your application code. SaaS is ordering takeout — you just use the finished product, like Office 365, with zero infrastructure management. The trade-off across all three is control versus convenience."},
+    2:{q:"Why would a company choose to deploy across multiple Azure regions instead of just scaling up within one?", a:"Multi-region deployment protects against a full regional outage, reduces latency for geographically distributed users, and can be required for data residency/compliance reasons. Scaling within one region only protects against a single datacenter or zone failure, not a regional-level event."},
+    3:{q:"Walk me through how you'd structure management groups, subscriptions, and resource groups for a company with 3 business units.", a:"I'd put a management group at the top for org-wide policy, then one management group per business unit beneath it, each containing that unit's subscriptions (commonly split by environment — prod/non-prod). Resource groups within each subscription would group resources by application or lifecycle, so related resources can be managed and deleted together."},
+    4:{q:"When would you choose a VM over Azure Functions for a workload?", a:"VMs make sense when you need full OS control, have long-running or stateful processes, or need specific software/drivers Functions can't support. Functions are better for short, event-triggered, stateless workloads where you want zero infrastructure management and pay-per-execution pricing."},
+    5:{q:"A client needs to store 10TB of infrequently-accessed compliance documents cheaply. What would you recommend?", a:"Blob Storage in the Cool or Archive access tier, depending on how infrequently they're accessed and how quickly retrieval is needed — Archive is cheapest but has retrieval latency measured in hours, Cool is cheaper than Hot but instantly accessible."},
+    6:{q:"What's the difference between a public and private IP in Azure, and when does it matter?", a:"A public IP is internet-reachable; a private IP only exists within the VNet (or peered/connected networks). It matters for security — resources that don't need direct internet exposure, like databases, should generally only have private IPs, reached via private endpoints or through a controlled gateway."},
+    7:{q:"How would you decide between Azure SQL and Cosmos DB for a new project?", a:"If the data is relational, needs complex joins/transactions, and fits a known schema, Azure SQL is the natural fit. If I need global distribution with low latency everywhere, a flexible/semi-structured schema, or massive horizontal scale, Cosmos DB is the better choice."},
+    8:{q:"Why is MFA considered such a critical control, and what's a scenario where it directly stops a real attack?", a:"Passwords alone are frequently compromised through phishing or credential stuffing. MFA adds a second factor an attacker typically doesn't have. A common real scenario: a user's password is leaked in a breach, an attacker tries to sign in, and MFA blocks it because they don't have the user's phone or authenticator app."},
+    9:{q:"What does Microsoft Defender for Cloud actually help a team do day to day?", a:"It continuously scans your environment for misconfigurations and vulnerabilities, gives you a secure score, and prioritizes recommendations by impact — so instead of guessing what to fix, the team works from a ranked, actionable list."},
+    10:{q:"What's the practical difference between using Azure Policy and just relying on RBAC?", a:"RBAC controls who can do what; it doesn't stop an authorized user from creating a misconfigured resource. Policy enforces rules on the resources themselves — like blocking public storage accounts or unapproved regions — regardless of who's deploying, closing a gap RBAC alone leaves open."},
+    11:{q:"How would you design an alerting strategy that avoids alert fatigue?", a:"Only alert on things that require action, not just anything unusual. Set thresholds based on real historical baselines rather than arbitrary numbers, group related alerts, and route them to the right owner instead of one shared inbox everyone tunes out."},
+    12:{q:"How would you estimate and justify Azure costs to a finance stakeholder who's skeptical about cloud migration?", a:"I'd use the Pricing Calculator to build a realistic estimate based on actual workload sizing, then use the TCO Calculator to compare against their current on-prem costs including hardware refresh cycles, power, and staff time — cloud often looks more expensive at a glance but wins on total cost of ownership."},
+    13:{q:"What's your approach to studying for and passing a certification exam like AZ-900?", a:"Hands-on practice matters more than memorization — I work through the actual Microsoft Learn modules with a live sandbox, take a timed practice exam near the end to build pacing, and specifically review any domain where my practice score is weakest rather than re-studying everything evenly."},
+    14:{q:"How do you stay calm and focused walking into a certification exam?", a:"Preparation is what actually creates calm — I trust the process I followed, review a short summary of weak areas the morning of, and treat any single hard question as low-stakes since the exam is scored across the whole domain, not one question."},
+
+    15:{q:"How would you bulk-onboard 500 new employees into Entra ID efficiently?", a:"Use a CSV bulk import through the portal or Microsoft Graph API/PowerShell to create accounts and assign group memberships programmatically, rather than manual one-by-one creation — critical at that scale for consistency and speed."},
+    16:{q:"When would you create a custom RBAC role instead of using a built-in one?", a:"When no built-in role matches the exact permission set needed — for example, a role that can restart VMs but not delete them. Custom roles let you apply least-privilege precisely instead of over-granting a broader built-in role."},
+    17:{q:"How do you enforce that no VM can ever be deployed outside two approved regions?", a:"An Azure Policy with a 'deny' effect scoped at the management group level, checking the location property against an allowed list — this blocks non-compliant deployments before they're created, rather than catching them after the fact."},
+    18:{q:"A critical production resource group got accidentally deleted last month. How would you prevent that going forward?", a:"Apply a CanNotDelete resource lock on the resource group. It blocks deletion attempts entirely regardless of the user's RBAC permissions, until someone explicitly removes the lock first — an intentional extra step."},
+    19:{q:"How would you reduce standing admin access without slowing down your team's ability to respond to incidents?", a:"Use PIM to make privileged roles eligible rather than permanently assigned — engineers activate the role only when needed, for a limited window, with logging (and approval for the most sensitive roles). Fast enough for incident response but removes 24/7 standing risk."},
+    20:{q:"If you inherited a subscription with zero governance in place, what would you set up first?", a:"I'd start with an RBAC audit and cleanup, then a baseline Azure Policy set (tagging, allowed regions/SKUs), resource locks on anything critical, and a cost budget with alerts — roughly in that order of risk reduction."},
+    21:{q:"What's a governance mistake you've seen or could see a team make early on?", a:"Applying policies too broadly too fast without testing in audit mode first, which can unexpectedly block legitimate deployments and erode trust in governance tooling — I'd always roll out in 'audit' mode before switching to 'deny'."},
+    22:{q:"How would you choose between ZRS and GRS for a customer-facing app's storage account?", a:"ZRS protects against a datacenter/zone failure within the region — fine if the app can tolerate a regional outage. GRS adds cross-region replication, protecting against a full regional disaster, at the cost of async replication lag. For customer-facing critical data, I'd lean GRS or GZRS."},
+    23:{q:"How would you cut storage costs for a media company with years of old footage nobody accesses anymore?", a:"A lifecycle management rule that automatically moves blobs to Cool after 30 days of inactivity and Archive after 90-180 days — no manual intervention needed, and it can dramatically cut costs on rarely-accessed data."},
+    24:{q:"A branch office has slow WAN links but needs access to shared files stored in Azure. How do you solve it?", a:"Azure File Sync with cloud tiering — the branch keeps a local cache of frequently-used files for fast access, while Azure Files remains the source of truth, syncing changes in the background."},
+    25:{q:"How would you give a third-party vendor temporary access to upload files without sharing your storage account keys?", a:"Generate a SAS token scoped to just the container/permissions they need, with a short expiry — they get exactly the access required, and it auto-expires without you needing to rotate account keys."},
+    26:{q:"What's the difference between what Azure Backup and Azure Site Recovery each protect against?", a:"Backup protects against data loss or corruption — restoring to a point in time. Site Recovery protects against a regional outage by replicating whole VMs/workloads so you can fail over — different failure modes, often used together."},
+    27:{q:"Talk me through configuring a storage account with both redundancy and backup for a new project.", a:"I'd choose redundancy based on criticality/RTO needs (GZRS for critical customer data), then layer Azure Backup with a retention policy matching compliance requirements — redundancy handles infrastructure failure, backup handles data-level mistakes."},
+    28:{q:"What's a real trade-off between storage cost and storage resilience you've had to navigate?", a:"Choosing GRS/GZRS for critical data despite the cost premium over LRS, while using LRS for easily-regenerable dev/test data — resilience budget should track the actual business impact of losing that data."},
+    29:{q:"Why would you choose availability zones over availability sets for a new critical workload?", a:"Availability zones span separate physical datacenters, protecting against a full datacenter failure — availability sets only protect against failures within one datacenter (rack/host level). Zones give a stronger resilience guarantee where the region supports them."},
+    30:{q:"How would you design autoscaling for a workload with a predictable daily traffic spike?", a:"Combine a schedule-based scale-out ahead of the known spike with metric-based autoscale (CPU/queue length) as a safety net for unexpected demand — scheduled scaling avoids the lag of reactive-only autoscale."},
+    31:{q:"How do you deploy a new version of a web app with zero downtime and an easy rollback path?", a:"Deploy to a staging slot, run smoke tests against it, then swap staging and production — the swap is near-instant, and if something's wrong you swap back just as fast."},
+    32:{q:"When would you pick Azure Functions over Container Instances for a short-lived task?", a:"Functions if it's event-triggered and stateless with no special runtime needs — less to manage. Container Instances if you need a specific container image/runtime Functions doesn't support, but still don't want full orchestration overhead."},
+    33:{q:"Why would a team move from several individual VMs running services to AKS?", a:"Centralized orchestration — scheduling, self-healing, scaling, and rolling deployments are handled by Kubernetes instead of manually per VM, and resource utilization improves since containers share underlying compute more efficiently than one VM per service."},
+    34:{q:"How would you ensure every new VM automatically gets a required monitoring agent installed?", a:"A custom script extension (or a specific VM extension for the monitoring agent) applied at deployment time, ideally baked into your IaC template so it's automatic and consistent rather than a manual post-deployment step."},
+    35:{q:"How would you architect a web app that needs to handle unpredictable traffic spikes reliably?", a:"App Service or VMSS behind a Load Balancer, with autoscale rules, plus deployment slots for safe releases — the combination gives elasticity and safe deployment in one design."},
+    36:{q:"Why would a team move from portal-based deployments to Bicep?", a:"Repeatability and review — Bicep templates are version-controlled, can be code-reviewed before deployment, and guarantee the same environment is created every time, eliminating configuration drift from manual clicking."},
+    37:{q:"How do you avoid duplicating the same Bicep code across dev, test, and prod environments?", a:"Build a parameterized module once, then call it with different parameter files per environment — the logic lives in one place, only the values differ."},
+    38:{q:"When would you reach for Azure CLI scripting instead of the portal?", a:"Anything repetitive, bulk, or that needs to run consistently/on a schedule — like cleaning up unused resource groups weekly. Portal clicking doesn't scale and isn't repeatable."},
+    39:{q:"How would you test that your disaster recovery plan actually works, not just that it's configured?", a:"Run an actual failover drill to the secondary region on a schedule, not just review the config — untested DR plans routinely fail in ways only discovered during a real incident."},
+    40:{q:"A client's app needs SSL termination and path-based routing across microservices. What would you deploy?", a:"Application Gateway — it operates at Layer 7 and understands HTTP, supporting path-based routing and SSL offload, which a Layer-4 Load Balancer can't do."},
+    41:{q:"Walk me through automating an environment deployment end-to-end with Bicep.", a:"Define the resources as parameterized Bicep modules, store them in source control, then deploy via CLI or a pipeline — the entire environment becomes reproducible from one command instead of manual setup."},
+    42:{q:"What's the biggest compute-related mistake you've seen in a real environment?", a:"Under-provisioned VMs with no autoscaling causing an outage during a traffic spike — one that could have been avoided with VMSS and proper autoscale rules configured ahead of time."},
+    43:{q:"How would you segment a VNet to isolate a database tier from the public internet?", a:"Put the database in its own subnet with an NSG that only allows inbound traffic from the application subnet's IP range on the specific required port — nothing else, including no direct internet inbound."},
+    44:{q:"Two departments need to share a database but keep their networks separate otherwise. How do you connect them?", a:"VNet peering between the two VNets, with NSG rules scoped tightly to only allow the specific traffic needed to reach the shared database — peering alone doesn't grant access, NSGs still apply."},
+    45:{q:"A global company wants users routed to their nearest healthy region. What service handles that?", a:"Azure Front Door — a global, Layer-7 service with health-probing and geographic routing, unlike a regional Load Balancer or Application Gateway which only operate within one region."},
+    46:{q:"When is a Site-to-Site VPN not good enough and you need ExpressRoute instead?", a:"When the workload needs guaranteed bandwidth, lower and more consistent latency, or the traffic can't route over the public internet at all for compliance reasons — VPN is cheaper but shares public internet paths."},
+    47:{q:"How would you route users to the closest of three regional deployments?", a:"Traffic Manager with performance or geographic routing — it's DNS-based, directing clients to the best-performing or nearest endpoint before the connection is even made."},
+    48:{q:"How do admins securely RDP into production VMs without any of them having a public IP?", a:"Azure Bastion — it provides browser-based RDP/SSH through the Azure portal over a private connection, so no VM ever needs a public IP for management access."},
+    49:{q:"Design a network topology for a company with a central security team and multiple business units.", a:"Hub-spoke — a central hub VNet with the firewall and shared services, and each business unit gets its own spoke VNet peered to the hub, so all their traffic is inspected centrally without units interfering with each other."},
+    50:{q:"How would you get notified before a disk fills up rather than after it causes an outage?", a:"A metric alert on free disk space with a threshold well before capacity (e.g., 15% free), routed to the on-call channel — proactive alerting instead of discovering it from a failure."},
+    51:{q:"How would you investigate a spike in failed sign-ins?", a:"Query the sign-in logs in Log Analytics with KQL, filtering for failures and grouping by source IP/account over the time window — patterns like many failures from one IP hint at a brute-force attempt."},
+    52:{q:"An API's response times have crept up over weeks. How would you find the cause?", a:"Application Insights — look at the dependency and request traces to see which downstream call or code path is actually getting slower, rather than guessing from the overall symptom."},
+    53:{q:"How do you decide which Azure Advisor recommendations to act on first?", a:"Prioritize by impact and risk — security recommendations affecting production first, then cost savings with no functional risk, deprioritizing anything requiring downtime until it's scheduled."},
+    54:{q:"How do you approach reviewing a missed practice exam question?", a:"I don't just re-read the correct answer — I figure out WHY my reasoning was wrong, since that's what actually prevents repeating the mistake on similar but differently-worded questions."},
+    55:{q:"How do you use a second practice exam differently from the first?", a:"Focus it entirely on the domains that were weakest the first time — the second exam should be a targeted check, not another broad first pass."},
+    56:{q:"How do you manage time pressure during a certification exam?", a:"I do a first pass answering everything I'm confident about, flag uncertain ones, and come back — this avoids getting stuck on one hard question and running out of time for easier ones later."},
+    57:{q:"How would you design identity for a company that just acquired another company with its own AD forest?", a:"Depends on the integration timeline and trust level needed — options range from a hybrid sync merging both into one Entra tenant, to federation trust between separate tenants as an interim step before full consolidation."},
+    58:{q:"How would you design role management for an org where admin access is highly sensitive?", a:"PIM-based just-in-time activation for all privileged roles, with approval required for the most sensitive ones, combined with access reviews on a schedule — no standing admin access anywhere."},
+    59:{q:"How would you design a landing zone for a company expecting to scale to 50+ subscriptions?", a:"A management group hierarchy mapped to business structure, policy assigned at the right level to cascade automatically, and a platform landing zone providing shared connectivity/identity/management so application landing zones onboard consistently without manual setup each time."},
+    60:{q:"How would you design centralized logging across dozens of subscriptions owned by different teams?", a:"A shared Log Analytics workspace (or workspace-per-team feeding a central Sentinel instance), with diagnostic settings enforced via policy so every subscription automatically routes logs centrally — no team can accidentally skip it."},
+    61:{q:"How would you design sign-in for a B2B SaaS product where each customer wants to use their own identity provider?", a:"A multi-tenant Entra ID app registration, allowing each customer organization to sign in with their own tenant rather than forcing them into yours — the standard pattern for enterprise B2B SaaS."},
+    62:{q:"Walk me through how you'd approach an unfamiliar architecture case study under exam time pressure.", a:"Identify the explicit constraints first (budget, compliance, RTO/RPO), since those eliminate wrong-but-plausible answers quickly, then match the remaining requirements to the service that most directly satisfies them without over-engineering."},
+    63:{q:"What's a common mistake candidates make on AZ-305 case studies?", a:"Picking the objectively 'best' technical solution instead of the one that fits the stated constraints — the exam often rewards the pragmatic, constraint-fitting answer over the most sophisticated one."},
+    64:{q:"Why would Cosmos DB's partition key choice make or break performance at scale?", a:"A poorly chosen key creates 'hot partitions' where most traffic hits one partition, bottlenecking throughput regardless of how much you scale — the key needs to spread load evenly and match your actual query patterns."},
+    65:{q:"When would you choose Managed Instance over Azure SQL Database?", a:"When the app needs near-full SQL Server compatibility — cross-database queries, SQL Agent jobs, or legacy features — that Azure SQL DB as a single database doesn't support, but you still don't want to manage the OS like a VM would require."},
+    66:{q:"How would you design storage to meet a 15-minute RPO requirement?", a:"GZRS with geo-restore capability, and depending on criticality, potentially application-level replication too — the redundancy tier alone dictates how much data loss is possible in a regional failure."},
+    67:{q:"How would you design a pipeline moving daily retail POS data into a reporting platform?", a:"Data Factory orchestrating extraction from source systems, landing in a staging area, then loading into Synapse for analytics — scheduled nightly with monitoring/alerting on pipeline failures."},
+    68:{q:"A regulated client insists on owning their own encryption keys. How do you design for that?", a:"Customer-managed keys stored in Key Vault, with the data services configured to use them instead of platform-managed keys — gives the client direct control over rotation and revocation, satisfying their compliance requirement."},
+    69:{q:"How do you weigh cost against resilience in a data storage design case study?", a:"I look for the RPO/RTO stated in the requirements — that number tells you exactly how much redundancy is actually justified, rather than defaulting to the most resilient (and most expensive) option available."},
+    70:{q:"What's a data architecture decision you'd defend even if it wasn't the cheapest option?", a:"Choosing geo-redundant storage for financial transaction records despite the cost premium — the cost of data loss for that category of data far outweighs the redundancy premium."},
+    71:{q:"How would you design backup retention to satisfy a 7-year regulatory requirement?", a:"Azure Backup with a long-term retention policy — daily backups short-term, weekly/monthly/yearly retention tiers extending out to meet the 7-year requirement, balancing cost against the compliance mandate."},
+    72:{q:"How would you design and validate a disaster recovery plan for a claims-processing system?", a:"Active-passive across regions using Site Recovery, with defined RTO/RPO targets, and — critically — a scheduled failover drill at least annually to prove the plan works, not just that it's configured."},
+    73:{q:"How would you design a payments system to hit a 99.99% uptime SLA?", a:"Zone-redundant deployment across the app, database, and load balancing tiers within a region — 99.99% typically requires zone redundancy at minimum, sometimes multi-region depending on the exact SLA math."},
+    74:{q:"A manufacturer says they can tolerate 1 hour of downtime but zero data loss. How does that shape your design?", a:"RTO of 1 hour is achievable with warm standby/fast failover; RPO of zero means synchronous replication is required, limiting options to same-region zone redundancy or synchronous cross-region replication where available — async replication is ruled out entirely."},
+    75:{q:"How do you identify the real business continuity requirement hidden in a vague case study prompt?", a:"Look for any stated tolerance for downtime or data loss, even indirectly phrased — like 'customers must never see stale data' implies a very tight RPO even if the number isn't stated explicitly."},
+    76:{q:"What's the difference between designing for high availability and designing for disaster recovery?", a:"HA keeps a system running through routine failures (a VM or zone going down); DR is about recovering after a major event takes out a whole region — different failure scopes, often requiring different design patterns layered together."},
+    77:{q:"How do you catch up effectively when you fall behind in a long study plan?", a:"Prioritize the highest-weighted exam domains first rather than trying to cover everything evenly — partial mastery of high-impact topics beats even coverage of everything."},
+    78:{q:"How do you decide between VM, container, and serverless for a new workload?", a:"I look at statefulness, runtime duration, and control needs — long-running/stateful leans VM, portable/scalable services lean containers, and short event-driven bursts lean serverless. It's workload-specific, not a universal answer."},
+    79:{q:"How would you design an order-processing system so inventory and shipping don't block order placement?", a:"Event-driven microservices — the order service publishes an event, and inventory/shipping subscribe and process asynchronously, decoupling order placement from downstream processing time."},
+    80:{q:"When would you recommend Virtual WAN over a traditional hub-spoke design?", a:"At larger scale — many regions and branch offices — Virtual WAN simplifies hub management that would otherwise require manually peering and maintaining many individual hubs."},
+    81:{q:"How would you prioritize which of 200 on-prem servers to migrate first?", a:"Use Azure Migrate's assessment to score readiness and dependencies, then sequence in waves starting with low-risk, well-understood workloads to build migration muscle before tackling complex, tightly-coupled systems."},
+    82:{q:"How would you design a news site to handle traffic spikes during breaking news without scaling the database?", a:"A CDN for static content plus a caching layer like Azure Cache for Redis in front of the database — most of the read load never reaches the database at all during a spike."},
+    83:{q:"How would you identify quick cost wins in an existing Azure environment?", a:"Right-sizing over-provisioned VMs, moving cold storage data to Archive tier, and converting steady-state workloads to Reserved Instances — usually the fastest, lowest-risk savings before considering architectural changes."},
+    84:{q:"How do you approach an infrastructure design case study that mixes compute, network, and cost constraints?", a:"I address them in the order they constrain each other — compute and network choices often determine feasibility, then I optimize cost within whatever design already satisfies the hard requirements."},
+    85:{q:"What's your process after a full practice exam for AZ-305?", a:"I categorize every wrong answer by domain, and if one domain has more than 2-3 misses, I go back to hands-on practice in that area rather than just re-reading — architecture concepts stick better with real application."},
+    86:{q:"How do you use a second AZ-305 practice exam differently from the first?", a:"Target it specifically at the weakest domain from the first exam rather than repeating a broad review — the goal shifts from discovery to confirmation."},
+    87:{q:"Why study the Azure Architecture Center specifically for this exam?", a:"AZ-305 case studies are frequently built directly around these documented reference patterns — recognizing the pattern (like hub-spoke or event-driven) often gets you most of the way to the right answer faster than reasoning from scratch."},
+    88:{q:"How do you know when you're actually ready for AZ-305 versus just familiar with the material?", a:"Being able to explain the reasoning behind a design choice out loud, unprompted, not just recognizing the right answer when I see it in multiple choice — production-level understanding versus recognition."},
+    89:{q:"What's your approach reviewing weak domains in the final days before an exam?", a:"Active recall over passive re-reading — I try to explain the concept from memory first, then check what I missed, rather than just re-reading notes which feels productive but teaches less."},
+    90:{q:"What's the value of a full-length timed mock exam right before the real thing?", a:"It's less about content review at that point and more about pacing and stamina — confirming I can maintain focus and time management across the full exam length, not just answer individual questions correctly."},
+    91:{q:"How do you handle a question on exam day that you genuinely don't know?", a:"Eliminate obviously wrong answers first to improve the odds, flag it, move on, and come back with fresh eyes later — dwelling on one question risks the ones I do know running out of time."},
+    92:{q:"How would you apply the Well-Architected Framework to review an existing system, not just a new design?", a:"Score the existing architecture against each pillar honestly, identify the biggest gaps (often security or reliability), and treat it as a prioritized backlog rather than trying to fix everything at once."},
+    93:{q:"Why is hands-on portal experience still valuable when most deployments are automated now?", a:"You'll still debug portal-created or legacy resources on the job, and understanding what's happening underneath the automation makes you far better at diagnosing when the automation itself goes wrong."},
+    94:{q:"How would you explain VNet peering vs. routing to someone new to Azure networking?", a:"Peering connects two VNets directly at the network level; routing (like User Defined Routes) controls HOW traffic flows once connectivity exists — peering is the 'is there a path,' routing is 'which path does traffic take.'"},
+    95:{q:"Why would a security team insist on Bastion instead of just tightly firewalling RDP?", a:"Even a tightly firewalled public RDP port is still an internet-facing attack surface; Bastion removes the public IP entirely, eliminating that surface rather than just restricting access to it."},
+    96:{q:"What would you change about a textbook hub-spoke design for a company with strict compliance needs?", a:"Add stricter NSG/firewall rules between spokes to prevent lateral movement, ensure logging is centralized and immutable, and potentially segment spokes further by data sensitivity rather than just by business unit."},
+    97:{q:"How do you decide what level of detail to include in an architecture diagram for a stakeholder audience?", a:"Match detail to audience — executives need the high-level flow and key decisions; engineers implementing it need IP ranges, resource names, and specific service configurations. Same architecture, different diagrams."},
+    98:{q:"How would you convince a team resistant to IaC that it's worth the learning curve?", a:"Show them a real scenario — recreating an environment from scratch after an accidental deletion. Manual recreation takes hours and risks inconsistency; a Bicep deployment takes minutes and is guaranteed identical."},
+    99:{q:"What's the value of writing infrastructure code in an editor instead of the portal, even for something simple?", a:"It's reviewable, versioned, and repeatable from day one — even a 'simple' resource benefits from that discipline once it needs to exist in three environments instead of one."},
+    100:{q:"How do you decide when to break a Bicep template into a separate module?", a:"When the same block of resources needs to be deployed more than once with different parameters — if it's genuinely one-off, a module adds unnecessary indirection."},
+    101:{q:"What did you learn from rebuilding the same infrastructure manually versus via Bicep?", a:"How much implicit knowledge manual deployment relies on — settings you 'just remember' to configure that Bicep forces you to make explicit, which is exactly why it prevents configuration drift."},
+    102:{q:"How does 'what-if' change your confidence deploying to production?", a:"It turns deployment from a leap of faith into a reviewed change — I can see exactly what will be created, modified, or deleted before committing, catching mistakes that would otherwise only surface after the fact."},
+    103:{q:"How would you explain the value of this portfolio project to an interviewer?", a:"It's proof I can take an architecture from diagram to working, reviewable code — not just describe a design, but actually implement and deploy it end to end."},
+    104:{q:"Why might an organization choose Terraform over Bicep despite being Azure-only today?", a:"Optionality — if they ever go multi-cloud, or if their team already has Terraform skills from other platforms, standardizing on it avoids retraining and keeps one consistent IaC workflow."},
+    105:{q:"What surprised you comparing the Terraform and Bicep experience for the same resource?", a:"How similar the actual thinking is — resources, parameters, outputs — despite different syntax; the hard part is the IaC mindset, and that transfers between tools once you have it."},
+    106:{q:"Why is Terraform state management such a common source of real-world incidents?", a:"Because state is the source of truth Terraform uses to know what exists — if it's lost, corrupted, or edited by two people simultaneously without locking, Terraform can make destructive assumptions about what it thinks is deployed."},
+    107:{q:"How is a Terraform module conceptually different from copy-pasting the same resource block?", a:"A module is a single maintained source of truth — fixing a bug or improving it updates every place it's used, whereas copy-pasted code silently diverges over time as each copy gets modified independently."},
+    108:{q:"How would you justify picking Terraform for an Azure-only startup, if at all?", a:"Honestly, for Azure-only with no multi-cloud plans, Bicep has less overhead — no separate state backend to manage and native Azure support. I'd only pick Terraform there if the team already had strong Terraform skills."},
+    109:{q:"Why put the same architecture in both Bicep and Terraform for a portfolio?", a:"It demonstrates I understand the underlying architecture independent of tooling, and gives me a credible answer for either tool in an interview instead of being locked into just one."},
+    110:{q:"Why does an org need a formal pipeline tool instead of engineers just running deployment scripts themselves?", a:"Consistency, auditability, and removing the 'it worked on my machine' risk — a pipeline runs the same way every time from the same environment, with a full history of who deployed what and when."},
+    111:{q:"What's the simplest possible useful pipeline, and why start there?", a:"One that just validates and builds on every push — starting simple proves the plumbing works before adding deployment risk, rather than debugging a complex pipeline and infrastructure changes simultaneously."},
+    112:{q:"Why split a pipeline into stages instead of one long script?", a:"Stages give you clear gates and visibility — you can see exactly which phase failed, require approval between specific stages, and re-run just the failed stage instead of the whole pipeline."},
+    113:{q:"What changes about IaC once it's actually running through a pipeline versus run manually?", a:"It becomes truly repeatable and enforced — no one can 'forget' to run terraform apply or run it with stale local state, because the pipeline is now the only path to production."},
+    114:{q:"Why require pull requests for infrastructure code specifically, more than for some app code?", a:"Infrastructure mistakes are often harder to reverse and can have blast-radius impact across an entire environment — the review gate matters more when a bad change could take down shared infrastructure."},
+    115:{q:"Walk me through why you'd add a manual approval gate specifically before a destroy action.", a:"Destructive actions are the one category where 'automated but reviewable' beats 'fully automated' — a human confirming intent before irreversible deletion is cheap insurance against an automation bug or fat-fingered input."},
+    116:{q:"Why shouldn't a pipeline authenticate using someone's personal Azure login?", a:"Personal credentials tie the pipeline to one person (breaks if they leave), can't be scoped tightly to just what the pipeline needs, and mix human and automated access in your audit logs — a service principal or managed identity solves all three."},
+    117:{q:"How would you pitch the Cloud Adoption Framework to a team that just wants to 'get moving' with a migration?", a:"CAF isn't bureaucracy for its own sake — skipping the Ready phase (landing zone/governance) means retrofitting security and structure onto a live environment later, which is far more disruptive than establishing it up front."},
+    118:{q:"What's the actual problem a landing zone accelerator solves that a single subscription doesn't?", a:"It gives every new subscription a consistent security and governance baseline automatically, instead of each team reinventing (or forgetting) network, identity, and policy setup independently."},
+    119:{q:"How would you explain a landing zone's management group hierarchy to someone new to the concept?", a:"Think of it like an org chart for governance — policies applied high up cascade down automatically, so you set the rule once at the right level instead of configuring every subscription individually."},
+    120:{q:"Why bundle policies into an initiative instead of assigning them one at a time?", a:"It's operationally simpler to manage and report on a named, versioned bundle — like 'baseline security policies v2' — than to track a dozen individual assignments that all need to move together."},
+    121:{q:"How would you design RBAC for a company with 3 business units and different environments per unit?", a:"Role assignments scoped as low as practical — ideally at the environment level within each business unit's management group — so a change in one unit's dev environment RBAC can't accidentally affect another unit or their prod."},
+    122:{q:"What's the hardest part of designing a landing zone for a fictional client versus following a template?", a:"Making real trade-off decisions instead of defaulting to the reference architecture — deciding what THIS client's compliance and scale needs actually require, and being able to justify deviations from the standard pattern."},
+    123:{q:"Why is Microsoft moving away from Blueprints toward newer patterns like Deployment Stacks?", a:"Blueprints had limitations around lifecycle management and drift detection that newer tools address more cleanly — worth knowing which is current so you're not designing around a deprecated pattern."},
+    124:{q:"How would you use secure score to justify a security budget to leadership?", a:"Secure score gives a quantifiable, trending metric — 'we're at 62% and here's the roadmap to 85%' is a much stronger budget conversation than a qualitative 'we need to improve security.'"},
+    125:{q:"What's the value of actually fixing real Defender recommendations versus just reading about the service?", a:"You encounter the real friction — dependencies, unexpected side effects, the actual remediation steps — that reading documentation alone never surfaces."},
+    126:{q:"Why would a company invest in Sentinel instead of just monitoring individual service dashboards?", a:"Correlation — a SIEM lets you connect signals across identity, network, and endpoint that look unremarkable individually but reveal an attack pattern when viewed together, which siloed dashboards can't show."},
+    127:{q:"How do you decide what actually deserves a page-someone alert versus a dashboard metric?", a:"If it requires immediate human action to prevent or limit damage, it's a page. If it's useful context but not urgent, it belongs on a dashboard — conflating the two is exactly how alert fatigue starts."},
+    128:{q:"How would you get a team to actually adopt a tagging standard instead of ignoring it?", a:"Enforce it via policy at deployment time so untagged resources can't be created, rather than relying on people remembering — voluntary standards without enforcement decay quickly."},
+    129:{q:"What problem does Azure Arc solve for a company that isn't fully cloud yet?", a:"It extends Azure's management plane — policy, monitoring, RBAC — to on-prem and multi-cloud servers, so hybrid environments get consistent governance instead of a split experience."},
+    130:{q:"What makes a security baseline project genuinely portfolio-worthy versus just a checklist you completed?", a:"Documentation of the reasoning — why each control was chosen for this specific environment — turns it from 'I did the steps' into 'I can design a security posture,' which is what actually gets tested in an interview."},
+    131:{q:"An interviewer asks you to defend a security decision you made. What's a strong way to answer?", a:"State the specific risk being mitigated, the trade-off you accepted (cost, friction, complexity), and why that trade-off made sense given the data sensitivity or threat model — not just 'because it's best practice.'"},
+    132:{q:"Why is writing your own KQL queries against messy real data more valuable than studying example syntax?", a:"Real data has nulls, inconsistent fields, and unexpected values that force you to actually understand the query logic, not just pattern-match a syntax example that always works cleanly."},
+    133:{q:"How would you handle a situation where cost-cutting recommendations conflict with reliability requirements?", a:"I'd flag the trade-off explicitly rather than silently picking one — right-sizing a database that's intentionally over-provisioned for a known future spike, for example, needs a business decision, not just a blind cost optimization."},
+    134:{q:"Why does a README matter as much as the code itself in a portfolio repo?", a:"A recruiter or interviewer skimming your GitHub decides whether to look closer within seconds — a clear README with the architecture and decisions is often the only part of your work that actually gets read."},
+    135:{q:"What's a realistic hybrid connectivity scenario you'd design for, beyond the textbook diagram?", a:"A company mid-migration needing on-prem AD to keep working alongside cloud resources during a multi-year transition — the design has to support a long coexistence period, not just a clean cutover."},
+    136:{q:"Why publish about what you built instead of just listing it on a resume?", a:"It's provable, discoverable expertise — anyone can list a skill, but explaining the reasoning behind a real project publicly demonstrates you actually understand it, not just used it once."},
+    137:{q:"How do you decide what goes in a Featured section versus the rest of your profile?", a:"Only the 2-3 things that best demonstrate real capability at the level I'm targeting — a cluttered Featured section dilutes the strongest pieces instead of highlighting them."},
+    138:{q:"What would make a hiring manager trust this project represents real skill, not just following a tutorial?", a:"Evidence of decisions that deviate from a generic tutorial — choices specific to a stated scenario, with trade-offs explained — that's what's hard to fake and easy to spot the difference on."},
+    139:{q:"How do you know a portfolio is actually ready to show, versus technically complete?", a:"Every piece has to survive someone asking 'why did you do it this way' — if I can't answer that confidently for a piece, it's not ready yet regardless of whether the code runs."},
+    140:{q:"Is a 4th certification worth the time investment at this point in a study plan?", a:"If it's low-incremental-effort given work already done (like Terraform after months of hands-on practice), yes — the marginal cost is low and it converts already-earned skill into a credential."},
+    141:{q:"How would you sequence a migration for a retailer with tightly-coupled legacy systems?", a:"Start with the most decoupled, lowest-risk systems to build confidence and process, then tackle tightly-coupled systems last with extra testing — never lead a migration with your riskiest, most interconnected system."},
+    142:{q:"What's different about presenting an architecture to a client versus documenting it for engineers?", a:"Leading with business outcomes and trade-offs in plain language, keeping deep technical justification available if asked but not leading with it — clients buy outcomes, engineers need implementation detail."},
+    143:{q:"How has your approach to architecture changed since starting this study plan?", a:"Moving from 'what's the textbook right answer' to 'what does THIS specific situation's constraints actually require' — real architecture is constraint-driven, not one-size-fits-best-practice."},
+    144:{q:"How do you decide what to specialize in next after a broad foundation like this?", a:"Match it to where the market and my genuine interest overlap — chasing every cert dilutes depth, so I'd rather go deep on 1-2 areas that compound with what I already know well."},
+    145:{q:"How would you summarize what this whole study plan actually built, beyond the certifications?", a:"A provable track record — working code, documented decisions, and certifications that together demonstrate I can design AND implement, not just describe, real Azure architecture."},
+    146:{q:"How would you justify learning Bicep specifically, given Terraform already exists?", a:"Native Azure integration — no separate state backend, first-class support in Azure DevOps/GitHub Actions, and it's usually the faster path for Azure-only teams even if Terraform remains more portable."},
+    147:{q:"How does 'what-if' change the risk profile of automated deployments?", a:"It gives you a dry-run safety check even inside a fully automated pipeline — catching an unintended change before it applies, without requiring a human to manually review every line of code each time."},
+    148:{q:"How would you structure Bicep modules for a company deploying the same landing zone to every new client?", a:"One parameterized core module capturing the shared structure, with client-specific values passed in via parameter files — new clients become a config change, not a rewrite."},
+    149:{q:"What's the actual risk of skipping 'terraform plan' before 'apply'?", a:"You lose the preview of exactly what will change — in a team environment, someone else's uncommitted local changes or drift could apply unexpectedly without that check."},
+    150:{q:"Why deploy in a disposable sandbox subscription before touching production with new Terraform code?", a:"It's the cheapest place to discover mistakes — a broken plan against a sandbox costs nothing; the same mistake against production could cause a real outage."},
+    151:{q:"How would you explain to a junior engineer why local Terraform state is dangerous for a team?", a:"If two people run apply against different local state copies, Terraform can lose track of what's actually deployed and make destructive assumptions — remote state with locking is the fix, giving one shared source of truth."},
+    152:{q:"What's the value of a vendor-neutral cert like Terraform Associate alongside Azure-specific certs?", a:"It signals IaC competency that transfers across clouds — valuable for consultancies or any role where multi-cloud exposure is plausible, not just an Azure specialization."},
+    153:{q:"Why does 'it works on my machine' mostly disappear once you containerize an app?", a:"The container packages the exact runtime, dependencies, and OS libraries the app needs — the same image runs identically in dev, CI, and production instead of depending on each environment's manually-installed setup matching."},
+    154:{q:"Why use a private registry like ACR instead of a public Docker Hub account for company images?", a:"Access control and reliability — private images aren't exposed publicly, and you're not dependent on a third party's public registry rate limits or uptime for your deployment pipeline."},
+    155:{q:"How would you explain to a non-technical stakeholder why Kubernetes is worth the complexity?", a:"It automatically handles failures, scaling, and rollouts that would otherwise require manual intervention — the complexity buys reliability and efficiency at a scale where manual management breaks down."},
+    156:{q:"What's the actual operational shift moving from one-VM-per-service to AKS?", a:"Density and automation — many services now share cluster resources efficiently, with Kubernetes handling placement, restarts, and scaling instead of each service needing its own dedicated, often underutilized VM."},
+    157:{q:"Why would a team package their app as a Helm chart instead of raw Kubernetes YAML?", a:"Helm bundles all the related resources and their configuration into one versioned, parameterized package — any engineer installs the whole application with one command instead of applying a dozen YAML files in the right order."},
+    158:{q:"How would you decide which Kubernetes cert to pursue first?", a:"KCNA if I need a fast, broad credential to prove foundational knowledge; CKA if I have real hands-on cluster admin experience and want the harder, more respected credential that actually tests operational skill."},
+    159:{q:"Why would a security team insist on hub-spoke instead of letting each team run their own flat VNet?", a:"Centralized traffic inspection and consistent policy enforcement — every spoke's traffic can be forced through the hub's firewall, which isn't possible if each team's network is independent."},
+    160:{q:"How would you justify the extra cost of ExpressRoute to a client who's happy with their VPN?", a:"If they have compliance requirements against routing over the public internet, or need more consistent low latency for a critical workload, that alone justifies it — otherwise VPN is often perfectly adequate and I wouldn't oversell ExpressRoute."},
+    161:{q:"How does defense in depth actually play out in a real network design?", a:"No single control is trusted alone — NSGs, ASGs, and a central firewall each independently restrict traffic, so a misconfiguration in one layer doesn't expose the whole environment."},
+    162:{q:"How would you explain when NOT to use Azure Front Door to someone who wants to use it everywhere?", a:"If the app is single-region with no need for global routing, caching, or WAF, Front Door adds cost and complexity a regional Load Balancer or App Gateway already solves more simply."},
+    163:{q:"Why would a financial services company insist on Private Link for every PaaS resource?", a:"Removing all public IP exposure on sensitive data stores is often a hard compliance requirement, not just a nice-to-have — Private Link is the mechanism that makes 'zero public exposure' actually achievable for PaaS services."},
+    164:{q:"Why pursue AZ-700 specifically if your networking experience is already solid?", a:"It converts practical experience into a credential recruiters and ATS systems can actually see — deep skill that isn't certified is often invisible in a resume screen."},
+    165:{q:"How would you sell PIM to a team that finds it 'annoying' compared to standing access?", a:"Frame it around incident cost, not inconvenience — the few extra seconds to activate a role are trivial compared to the blast radius of a compromised account with permanent standing admin rights."},
+    166:{q:"How does risk-based Conditional Access reduce friction compared to requiring MFA for everyone always?", a:"It only challenges sign-ins that actually look risky, based on real signals like impossible travel or leaked credentials — legitimate low-risk sign-ins stay frictionless instead of everyone paying an MFA tax on every login."},
+    167:{q:"Why do access reviews matter even in an org that's careful about initial access grants?", a:"Access naturally goes stale — role changes, project completions, offboarding gaps — reviews catch what initial careful granting can't, since nobody proactively removes access they no longer need."},
+    168:{q:"Why would an internal tool team push to integrate SSO instead of keeping their own login system?", a:"Security (one fewer credential store to breach) and user experience — users don't want yet another password, and centralized SSO makes offboarding actually complete instead of leaving orphaned accounts in forgotten systems."},
+    169:{q:"Why is SC-300 a natural next cert for someone whose practical strength is already identity?", a:"It's the highest-leverage cert relative to effort — formalizing existing deep practical skill into a recognized credential, rather than learning a new domain from scratch."},
+    170:{q:"Why does Git discipline matter even for a solo engineer working alone?", a:"It creates a safety net and history — you can always revert a bad change, and the habit transfers seamlessly the moment you do start collaborating, instead of learning it under pressure later."},
+    171:{q:"What's the value of automatically validating a Terraform plan on every PR, beyond catching syntax errors?", a:"It surfaces the actual infrastructure impact of a change during review — reviewers see what will really happen, not just whether the code compiles, catching logically wrong-but-valid changes."},
+    172:{q:"Why would an enterprise standardize on one pipeline tool instead of letting each team choose?", a:"Consistency in security scanning, approval gates, and auditability across the whole org — fragmented tooling makes governance and incident response much harder to reason about centrally."},
+    173:{q:"At what point does infrastructure code actually become 'infrastructure as code' in practice?", a:"Once it's the ONLY path to production, enforced by a pipeline — code sitting in a repo that someone still applies manually is really just a script, not yet true IaC discipline."},
+    174:{q:"Is AZ-400 worth pursuing if you're not in a dedicated DevOps role?", a:"It's more valuable as validated depth if you're already doing significant pipeline/automation work — for someone earlier in that journey, hands-on practice matters more than the cert itself right now."},
+    175:{q:"How would you use secure score to drive a security roadmap instead of just a report?", a:"Turn the highest-impact recommendations into a prioritized, owned backlog with target dates — the score becomes a tracked metric the team is accountable for improving, not just a static dashboard."},
+    176:{q:"What's the practical first step onboarding Sentinel for a company with no SIEM today?", a:"Connect the highest-value data sources first — identity and network logs typically — rather than trying to onboard everything at once, which delays getting any real value."},
+    177:{q:"How would you explain the value of proactive threat hunting versus just responding to alerts?", a:"Alerts only fire for known patterns someone already defined — hunting looks for anomalies nobody's written a rule for yet, catching novel or slow-moving attacks that alerting alone would miss."},
+    178:{q:"What's the real-world cost of a hardcoded secret leaking through source control?", a:"Beyond the breach itself, you often have to rotate every credential that touched that repo's history and audit everywhere it was used — Key Vault avoids that entire category of incident by never putting secrets in code."},
+    179:{q:"Why does correlating identity, endpoint, and cloud signals matter more than monitoring each separately?", a:"A single suspicious sign-in might be nothing; that same sign-in followed by unusual endpoint activity and a cloud resource change is a clear attack chain — XDR correlation reveals the story siloed alerts miss."},
+    180:{q:"How does AZ-500 complement someone whose background is already in hardening and compliance?", a:"It's a natural formalization — the exam covers exactly the operational security domains that hands-on hardening work already builds real experience in."},
+    181:{q:"Why centralize logs instead of just checking each resource's own logs when there's an issue?", a:"Correlating an incident across multiple resources requires querying them together — centralized logs let you see the full picture in one query instead of manually cross-referencing a dozen separate log sources."},
+    182:{q:"What's a KQL query you'd write in your first week on a new team to understand system health?", a:"Something simple like error count by resource over the last 24 hours — it immediately surfaces where problems are concentrated without needing deep system knowledge yet."},
+    183:{q:"How do you avoid building a dashboard nobody actually looks at?", a:"Tie it to a real decision or action someone makes regularly — a dashboard with no owner or decision attached to it tends to get built once and then ignored."},
+    184:{q:"How would you build a business case for investing time in FinOps practices?", a:"Show a concrete example of cost recommendations already sitting unused in Cost Management — it's hard to argue against savings that are already identified and just waiting to be acted on."},
+    185:{q:"How would you use the Well-Architected Framework in a real architecture review, not just as an exam topic?", a:"As a structured checklist against an actual design — scoring each pillar honestly surfaces gaps a purely subjective review might miss, and gives stakeholders a common vocabulary for trade-off discussions."}
+  };
+
   var DAY_INFO = {};
   DATA.forEach(function(phase){
     phase.weeks.forEach(function(week){
@@ -2320,6 +3135,16 @@
       { q:"Why bundle multiple Azure Policies into an initiative rather than assigning them individually?", options:["Policies can't be assigned individually","It simplifies applying and managing a related governance bundle at scale","Initiatives are free while individual policies cost money","Only initiatives support custom policies"], correct:1, explain:"Initiatives group related policies so you can assign and track them together instead of managing dozens of individual assignments." },
       { q:"What's the main value of Azure Advisor's cost recommendations in a FinOps practice?", options:["It automatically deletes unused resources","It surfaces concrete right-sizing/cost-saving opportunities for review","It sets your budget automatically","It replaces the need for tagging"], correct:1, explain:"Advisor surfaces actionable recommendations — a human still reviews and acts on them; it doesn't auto-delete or auto-budget." },
       { q:"Why document architecture decisions, not just implement them?", options:["Documentation is only for legal compliance","It has no real value beyond box-checking","Being able to justify decisions is part of what distinguishes architect-level work from admin-level execution","Only auditors read documentation"], correct:2, explain:"Explaining WHY, not just WHAT, is core to the architect role — it's what you'll be asked to do in reviews and interviews alike." }
+    ],
+    moderncloud: [
+      { q:"What's the main benefit of remote Terraform state over local state?", options:["It's faster","It enables team collaboration and locking","It's required by Azure","It reduces file size"], correct:1, explain:"Remote state with locking prevents conflicting concurrent applies and lets a team share one source of truth." },
+      { q:"Which Kubernetes object provides a stable network endpoint to a set of Pods?", options:["Deployment","Service","Namespace","ConfigMap"], correct:1, explain:"A Service gives Pods a stable address; Deployments manage the Pods themselves." },
+      { q:"A compliance-sensitive workload needs private, non-internet connectivity to Azure with consistent latency. What should you choose?", options:["Site-to-Site VPN","Public internet with TLS","ExpressRoute","NAT Gateway"], correct:2, explain:"ExpressRoute provides private connectivity outside the public internet, meeting stricter compliance and latency needs." },
+      { q:"What does PIM add on top of standard RBAC role assignment?", options:["Nothing, it's identical","Just-in-time, time-bound, approval-gated activation","Free role assignments","Automatic MFA for all users"], correct:1, explain:"PIM converts standing access into temporary, approved, logged activation." },
+      { q:"Why is a pull-request-based workflow valuable for infrastructure code specifically?", options:["It makes deployments faster","It creates a review and audit trail before changes reach production","It's required by Terraform","It replaces the need for testing"], correct:1, explain:"PRs add a human review gate and a permanent audit trail — critical for infrastructure since mistakes have real consequences." },
+      { q:"What is Microsoft Sentinel primarily used for?", options:["Container orchestration","A cloud-native SIEM centralizing security data","Cost management","Identity governance"], correct:1, explain:"Sentinel is Microsoft's cloud SIEM/SOAR platform for centralized security monitoring." },
+      { q:"What's the fastest practical first step in a FinOps cost-optimization effort?", options:["Migrate everything to a new region","Act on Cost Management's right-sizing and unused-resource recommendations","Delete all storage accounts","Switch every VM to the largest SKU"], correct:1, explain:"Acting on existing recommendations is usually the highest-return, lowest-effort first step." },
+      { q:"Why choose a Private Endpoint over a Service Endpoint for a PaaS resource?", options:["Private Endpoint is always cheaper","Private Endpoint assigns a private IP inside your VNet, fully removing public exposure","Service Endpoints don't exist anymore","There's no difference"], correct:1, explain:"Private Endpoints remove public exposure entirely; Service Endpoints keep the resource reachable via a public IP, just routed over the Azure backbone." }
     ]
   };
 
@@ -2370,6 +3195,29 @@
     ["A platform team keeps getting paged for the same recurring issue. What should happen after the third occurrence?", "Root-cause it and automate the fix or the detection — recurring manual firefighting is a sign the architecture, not the on-call rotation, needs to change."]
   ];
 
+  FLASHCARDS.moderncloud = [
+    ["What does Bicep's 'what-if' command do?", "Shows what changes a deployment would make before actually applying them."],
+    ["Why store Terraform state remotely instead of locally?", "It enables team collaboration and locking, avoiding conflicts when multiple people run Terraform against the same infrastructure."],
+    ["What's the difference between a Docker image and a container?", "An image is the packaged template; a container is a running instance of that image."],
+    ["What does Azure Container Registry (ACR) provide?", "A private, managed registry for storing and distributing container images within Azure."],
+    ["In Kubernetes, what's the difference between a Deployment and a Service?", "A Deployment manages Pod replicas and rollout; a Service provides a stable network endpoint to reach those Pods."],
+    ["What's the difference between KCNA and CKA?", "KCNA is an entry-level, multiple-choice Kubernetes fundamentals cert; CKA is a hands-on, performance-based exam testing real cluster administration."],
+    ["When would you choose ExpressRoute over a Site-to-Site VPN?", "When you need private, non-internet connectivity with more consistent latency and higher reliability — common for compliance-sensitive workloads."],
+    ["What's the difference between an NSG and an ASG?", "NSG filters traffic by IP/port rules; ASG groups VMs by application role so NSG rules can target them without hardcoding IPs."],
+    ["What does a Private Endpoint provide that a public PaaS resource doesn't?", "A private IP address inside your VNet, removing public internet exposure entirely."],
+    ["What is Privileged Identity Management (PIM) used for?", "Granting privileged roles just-in-time, with approval and a time limit, instead of standing permanent access."],
+    ["What's the difference between Conditional Access and Identity Protection?", "Conditional Access enforces policies (like requiring MFA); Identity Protection detects risk signals (like impossible travel) that Conditional Access policies can act on."],
+    ["What's an access review used for in Entra ID Governance?", "Periodically confirming that existing group or app access is still needed, catching stale permissions systematically."],
+    ["Why put infrastructure changes through a pull request instead of applying them directly?", "It creates a review step and an audit trail before changes reach production."],
+    ["What's the core purpose of a CI/CD pipeline for infrastructure code?", "To automatically validate and apply infrastructure changes consistently, instead of relying on someone manually running commands."],
+    ["What does Microsoft Defender for Cloud's secure score help you do?", "Prioritize which security recommendations to act on first, based on their impact."],
+    ["What is Microsoft Sentinel?", "A cloud-native SIEM (Security Information and Event Management) service that centralizes security data from many sources."],
+    ["Why store secrets in Key Vault instead of in code or config files?", "It removes the risk of secrets leaking through source control, and centralizes access control and rotation."],
+    ["What's the difference between Azure Monitor metrics and logs?", "Metrics are lightweight numeric time-series data; logs are detailed, queryable event records — often used together but queried differently."],
+    ["What's a practical first step in a FinOps cost-optimization pass?", "Reviewing Cost Management recommendations for right-sizing and unused resources — often the fastest wins."],
+    ["Why is Infrastructure as Code considered more valuable with a CI/CD pipeline in front of it?", "Without a pipeline, IaC is still a manually-run script; the pipeline is what makes changes reviewed, consistent, and repeatable."]
+  ];
+
   // Map each roadmap day to its best-matching flashcard (deck, index). null = no dedicated card (lab/review/exam day).
   var DAY_CARD = {
     1:{deck:"az900",idx:0}, 2:{deck:"az900",idx:4}, 3:{deck:"az900",idx:9},
@@ -2408,10 +3256,18 @@
     122:{deck:"phase4",idx:10}, 123:null, 124:null, 125:{deck:"phase4",idx:12}, 126:{deck:"phase4",idx:12}, 127:{deck:"phase4",idx:12},
     128:{deck:"phase4",idx:8}, 129:null, 130:{deck:"phase4",idx:12}, 131:{deck:"phase4",idx:7}, 132:null, 133:{deck:"phase4",idx:15},
     134:{deck:"phase4",idx:13}, 135:null, 136:{deck:"phase4",idx:13}, 137:{deck:"phase4",idx:13}, 138:{deck:"phase4",idx:13}, 139:{deck:"phase4",idx:13},
-    140:null, 141:{deck:"phase4",idx:14}, 142:{deck:"phase4",idx:7}, 143:null, 144:null, 145:{deck:"phase4",idx:13}
+    140:null, 141:{deck:"phase4",idx:14}, 142:{deck:"phase4",idx:7}, 143:null, 144:null, 145:{deck:"phase4",idx:13},
+
+    146:{deck:"moderncloud",idx:0}, 147:{deck:"moderncloud",idx:0}, 148:null, 149:{deck:"moderncloud",idx:1}, 150:null, 151:{deck:"moderncloud",idx:1}, 152:null,
+    153:{deck:"moderncloud",idx:2}, 154:{deck:"moderncloud",idx:3}, 155:{deck:"moderncloud",idx:4}, 156:{deck:"moderncloud",idx:4}, 157:null, 158:{deck:"moderncloud",idx:5},
+    159:null, 160:{deck:"moderncloud",idx:6}, 161:{deck:"moderncloud",idx:7}, 162:null, 163:{deck:"moderncloud",idx:8}, 164:null,
+    165:{deck:"moderncloud",idx:9}, 166:{deck:"moderncloud",idx:10}, 167:{deck:"moderncloud",idx:11}, 168:null, 169:null,
+    170:{deck:"moderncloud",idx:12}, 171:null, 172:null, 173:{deck:"moderncloud",idx:13}, 174:null,
+    175:{deck:"moderncloud",idx:14}, 176:{deck:"moderncloud",idx:15}, 177:null, 178:{deck:"moderncloud",idx:16}, 179:null, 180:null,
+    181:{deck:"moderncloud",idx:17}, 182:{deck:"moderncloud",idx:17}, 183:null, 184:{deck:"moderncloud",idx:18}, 185:{deck:"moderncloud",idx:19}
   };
 
-  var TOTAL_DAYS = 145;
+  var TOTAL_DAYS = 185;
   var progress = {};
   var timeSpent = {};   // { dayNum: totalSeconds }
   var dayNotes = {};    // { dayNum: text }
@@ -2435,7 +3291,12 @@
     }catch(e){ progress = {}; }
     try{
       var sVal = await store.get("roadmap-start-date");
-      if(sVal){ startDate = sVal; document.getElementById("start-date").value = sVal; }
+      if(sVal){
+        startDate = sVal;
+        var sInput = document.getElementById("start-date");
+        sInput.value = sVal;
+        sInput.disabled = true;
+      }
     }catch(e){ startDate = null; }
     try{
       var tVal = await store.get("time-spent");
@@ -2449,6 +3310,11 @@
       var qVal = await store.get("quiz-scores");
       if(qVal){ quizScores = JSON.parse(qVal); }
     }catch(e){ quizScores = {}; }
+    try{
+      var aVal = await store.get("activity-dates");
+      if(aVal){ activityDates = JSON.parse(aVal); }
+    }catch(e){ activityDates = {}; }
+    spRefreshStreak();
   }
 
   async function saveTimeSpent(){
@@ -2471,6 +3337,121 @@
     catch(e){ console.error("Storage error", e); }
   }
 
+  // ===== Streak tracking =====
+  var activityDates = {}; // { "YYYY-MM-DD": true }
+
+  function todayISO(){
+    var d = new Date();
+    return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+  }
+
+  async function recordActivity(){
+    var today = todayISO();
+    if(activityDates[today]) return; // already recorded today
+    activityDates[today] = true;
+    try{ await store.set("activity-dates", JSON.stringify(activityDates)); }
+    catch(e){ console.error("Storage error", e); }
+    spRefreshStreak();
+  }
+
+  function computeStreak(){
+    var streak = 0;
+    var cursor = new Date();
+    // if today has no activity yet, start counting from yesterday instead
+    if(!activityDates[todayISO()]){ cursor.setDate(cursor.getDate() - 1); }
+    while(true){
+      var iso = cursor.getFullYear() + "-" + pad(cursor.getMonth()+1) + "-" + pad(cursor.getDate());
+      if(activityDates[iso]){ streak++; cursor.setDate(cursor.getDate() - 1); }
+      else { break; }
+    }
+    return streak;
+  }
+
+  function spRefreshStreak(){
+    var el = document.getElementById("sp-streak");
+    if(!el) return;
+    var streak = computeStreak();
+    el.textContent = streak > 0 ? ("🔥 " + streak + "-day streak") : "🔥 0-day streak — mark a day complete to start one";
+  }
+
+  // ===== Phase completion celebration (signature moment) =====
+  function isPhaseComplete(pIdx){
+    var days = [];
+    DATA[pIdx].weeks.forEach(function(w){ w.days.forEach(function(d){ days.push(d[0]); }); });
+    return days.length > 0 && days.every(function(n){ return !!progress[n]; });
+  }
+
+  function celebratePhaseComplete(phaseTitle){
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // still show the banner, just skip confetti
+    } else {
+      var colors = ["#3B82F6","#8B5CF6","#10B981","#F97316","#EC4899","#FBBF24"];
+      for(var i=0;i<60;i++){
+        var piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = (Math.random()*100) + "vw";
+        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+        piece.style.setProperty("--rot", (Math.random()*720-360) + "deg");
+        piece.style.animationDuration = (1.8 + Math.random()*1.4) + "s";
+        piece.style.animationDelay = (Math.random()*0.4) + "s";
+        document.body.appendChild(piece);
+        (function(p){ setTimeout(function(){ p.remove(); }, 4000); })(piece);
+      }
+    }
+    var banner = document.createElement("div");
+    banner.className = "phase-complete-banner";
+    banner.innerHTML = '<div class="big">🎉 Phase complete!</div><div class="small">' + phaseTitle + ' — every day checked off.</div>';
+    document.body.appendChild(banner);
+    requestAnimationFrame(function(){ banner.classList.add("show"); });
+    setTimeout(function(){
+      banner.classList.remove("show");
+      setTimeout(function(){ banner.remove(); }, 350);
+    }, 2600);
+  }
+
+  // ===== Export / Import progress =====
+  function exportProgressData(){
+    var payload = {
+      exportedAt: new Date().toISOString(),
+      progress: progress,
+      timeSpent: timeSpent,
+      dayNotes: dayNotes,
+      quizScores: quizScores,
+      activityDates: activityDates,
+      startDate: startDate
+    };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "azure-roadmap-progress-" + todayISO() + ".json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function importProgressData(file){
+    var statusEl = document.getElementById("sp-backup-status");
+    try{
+      var text = await file.text();
+      var payload = JSON.parse(text);
+      if(!payload || typeof payload !== "object"){ throw new Error("Invalid file"); }
+      if(payload.progress){ progress = payload.progress; await saveProgress(); }
+      if(payload.timeSpent){ timeSpent = payload.timeSpent; await saveTimeSpent(); }
+      if(payload.dayNotes){ dayNotes = payload.dayNotes; await saveDayNotes(); }
+      if(payload.quizScores){ quizScores = payload.quizScores; await saveQuizScores(); }
+      if(payload.activityDates){ activityDates = payload.activityDates; try{ await store.set("activity-dates", JSON.stringify(activityDates)); }catch(e){} }
+      if(payload.startDate){ startDate = payload.startDate; await saveStartDate(startDate); document.getElementById("start-date").value = startDate; }
+      render();
+      spRefreshStreak();
+      statusEl.textContent = "Imported successfully.";
+      statusEl.style.color = "var(--teal)";
+    }catch(e){
+      console.error("Import failed", e);
+      statusEl.textContent = "Import failed — file isn't a valid export.";
+      statusEl.style.color = "var(--amber)";
+    }
+  }
+
   async function saveStartDate(v){
     try{ await store.set("roadmap-start-date", v); }
     catch(e){ console.error("Storage error", e); }
@@ -2486,8 +3467,16 @@
     return diffDays;
   }
 
-  var PHASE_COLORS = ["#3B82F6","#8B5CF6","#10B981","#F97316"];
-  var QUIZ_KEYS = ["az900","az104","az305","phase4"];
+      var PHASE_COLORS = ["#3B82F6","#8B5CF6","#10B981","#F97316","#EC4899"];
+  var QUIZ_KEYS = ["az900","az104","az305","phase4","moderncloud"];
+  var PHASE_ICONS = [
+    '<svg viewBox="0 0 20 20" fill="none"><path d="M6.5 15.5h8a3 3 0 0 0 .5-5.96 4.5 4.5 0 0 0-8.73-1.4A3.5 3.5 0 0 0 6.5 15.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 20 20" fill="none"><rect x="3.5" y="3.5" width="13" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.5"/><rect x="3.5" y="11" width="13" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="5.75" r=".8" fill="currentColor"/><circle cx="6" cy="13.25" r=".8" fill="currentColor"/></svg>',
+    '<svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 17.5 7 10 11.5 2.5 7 10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2.5 10.5 10 15l7.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    '<svg viewBox="0 0 20 20" fill="none"><path d="M10 2c2.5 1.6 4 4.4 4 7.5 0 1.7-.4 3-1 4.2l-3-1-3 1c-.6-1.2-1-2.5-1-4.2C6 6.4 7.5 3.6 10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="8.5" r="1.4" stroke="currentColor" stroke-width="1.3"/><path d="M7 13.5 5 17l3-1.2M13 13.5l2 3.5-3-1.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    '<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 10h15M10 2.5c2.2 2 3.4 4.8 3.4 7.5s-1.2 5.5-3.4 7.5c-2.2-2-3.4-4.8-3.4-7.5S7.8 4.5 10 2.5Z" stroke="currentColor" stroke-width="1.5"/></svg>'
+  ];
+  var PHASE_DAY_RANGES = [[1,14],[15,56],[57,91],[92,145],[146,185]];
 
   function renderCoursePhase(pIdx){
     var container = document.getElementById("phases");
@@ -2510,6 +3499,7 @@
     header.className = "phase-header";
     header.innerHTML =
       '<div class="phase-header-left">'+
+        '<div class="phase-icon">'+(PHASE_ICONS[pIdx]||"")+'</div>'+
         '<div class="phase-num font-mono">0'+(pIdx+1)+'</div>'+
         '<div>'+
           '<div class="phase-title font-tech">'+phase.code+' — '+phase.title+'</div>'+
@@ -2519,11 +3509,16 @@
       '<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">'+
         '<div class="quiz-badge'+(bestScore && bestScore.correct===bestScore.total ? ' pass' : '')+'">'+scoreText+'</div>'+
         '<button type="button" class="btn quiz-open-btn" data-quiz="'+quizKey+'">Take Quiz</button>'+
+        '<button type="button" class="btn mock-interview-btn" data-phase="'+pIdx+'">🎤 Mock Interview</button>'+
         '<div class="phase-progress-text">'+doneCount+' / '+allDays.length+'</div>'+
       '</div>';
     header.querySelector(".quiz-open-btn").addEventListener("click", function(e){
       e.stopPropagation();
       openQuiz(quizKey);
+    });
+    header.querySelector(".mock-interview-btn").addEventListener("click", function(e){
+      e.stopPropagation();
+      openMockInterview(pIdx);
     });
 
     var body = document.createElement("div");
@@ -2552,9 +3547,12 @@
         check.setAttribute("aria-checked", progress[num] ? "true" : "false");
         check.textContent = progress[num] ? "✓" : "";
         function toggle(){
+          var wasComplete = isPhaseComplete(pIdx);
           progress[num] = !progress[num];
+          if(progress[num]){ recordActivity(); }
           saveProgress();
           render();
+          if(!wasComplete && isPhaseComplete(pIdx)){ celebratePhaseComplete(phase.title); }
         }
         check.addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
         check.addEventListener("keydown", function(e){
@@ -2568,7 +3566,7 @@
           metaHtml += '<div class="day-meta"><b>Use case</b>'+usecase+'</div>';
         }
         var dayCard = DAY_CARD[num];
-        var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : (num <= 91 ? "az305" : "phase4"));
+        var fallbackDeck = num <= 14 ? "az900" : (num <= 56 ? "az104" : (num <= 91 ? "az305" : (num <= 145 ? "phase4" : "moderncloud")));
         var fcLabel = dayCard ? "Flashcard ⤢" : "Browse deck ⤢";
         var secs = timeSpent[num] || 0;
         var timeLabel = secs > 0 ? "⏱ " + Math.round(secs/60) + "m" : "";
@@ -2629,9 +3627,14 @@
     var totalSecs = Object.values(timeSpent).reduce(function(a,b){ return a+b; }, 0);
     var totalHrs = (totalSecs/3600).toFixed(1);
     document.getElementById("overall-stat").textContent = doneTotal + " / " + TOTAL_DAYS + " days · " + pct + "% · " + totalHrs + "h logged";
+    var fhFill = document.getElementById("fh-progress-fill");
+    var fhPct = document.getElementById("fh-progress-pct");
+    if(fhFill){ fhFill.style.width = pct + "%"; }
+    if(fhPct){ fhPct.textContent = doneTotal + "/" + TOTAL_DAYS + " · " + pct + "%"; }
     if(typeof spRefreshSnapshot === "function"){ spRefreshSnapshot(); }
     if(typeof spRefreshJumpToday === "function"){ spRefreshJumpToday(); }
     if(typeof spRenderWeekChart === "function"){ spRenderWeekChart(); }
+    if(typeof spRefreshStreak === "function"){ spRefreshStreak(); }
     document.getElementById("ruler-fill").style.width = pct + "%";
 
     var ticksEl = document.getElementById("ruler-ticks");
@@ -2680,62 +3683,74 @@
     });
   });
 
-  var renewalDates = { az104:null, az305:null };
+  // ===== Collapsible per-course topic/syllabus tree in the sidebar =====
+  function buildCourseNavTree(pIdx){
+    var container = document.getElementById("cnv-tree-" + pIdx);
+    if(!container || container.childElementCount) return;
+    var phase = DATA[pIdx];
+    var html = "";
+    phase.weeks.forEach(function(week, wIdx){
+      html += '<div class="cnv-week">' +
+        '<div class="cnv-week-label" data-week="'+pIdx+'-'+wIdx+'">' +
+          '<span>'+week.label+'</span>' +
+          '<span class="cnv-week-chevron">▾</span>' +
+        '</div>' +
+        '<div class="cnv-days" id="cnv-days-'+pIdx+'-'+wIdx+'">';
+      week.days.forEach(function(row){
+        var num = row[0], topic = row[1];
+        html += '<button type="button" class="cnv-day" data-day="'+num+'"><b>D'+num+'</b>'+topic+'</button>';
+      });
+      html += '</div></div>';
+    });
+    container.innerHTML = html;
 
-  async function loadRenewalDates(){
-    try{
-      var aVal = await store.get("az104-pass-date");
-      if(aVal){ renewalDates.az104 = aVal; document.getElementById("az104-date").value = aVal; }
-    }catch(e){}
-    try{
-      var bVal = await store.get("az305-pass-date");
-      if(bVal){ renewalDates.az305 = bVal; document.getElementById("az305-date").value = bVal; }
-    }catch(e){}
-    renderRenewalStatus();
+    container.querySelectorAll(".cnv-week-label").forEach(function(label){
+      label.addEventListener("click", function(e){
+        e.stopPropagation();
+        var days = document.getElementById("cnv-days-" + label.dataset.week);
+        var chevron = label.querySelector(".cnv-week-chevron");
+        days.classList.toggle("open");
+        chevron.classList.toggle("open");
+      });
+    });
+    container.querySelectorAll(".cnv-day").forEach(function(dayBtn){
+      if(progress[dayBtn.dataset.day]){ dayBtn.classList.add("done"); }
+      dayBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        var num = parseInt(dayBtn.dataset.day, 10);
+        switchCourse(pIdx);
+        openDayModal(num, "dm-overview");
+      });
+    });
   }
 
-  function daysBetween(a,b){ return Math.floor((b-a)/86400000); }
-
-  function renewalStatusText(passDateStr){
-    if(!passDateStr) return "Not yet passed";
-    var pass = new Date(passDateStr+"T00:00:00");
-    var now = new Date(); now.setHours(0,0,0,0);
-    var expiry = new Date(pass); expiry.setFullYear(expiry.getFullYear()+1);
-    var renewalOpens = new Date(expiry); renewalOpens.setMonth(renewalOpens.getMonth()-6);
-    if(now > expiry){
-      return "EXPIRED " + daysBetween(expiry, now) + "d ago — renew ASAP";
-    } else if(now >= renewalOpens){
-      return "Renewal window open · expires in " + daysBetween(now, expiry) + "d";
-    } else {
-      return "Valid · renewal opens in " + daysBetween(now, renewalOpens) + "d · expires in " + daysBetween(now, expiry) + "d";
-    }
-  }
-
-  function renderRenewalStatus(){
-    document.getElementById("az104-status").textContent = renewalStatusText(renewalDates.az104);
-    document.getElementById("az305-status").textContent = renewalStatusText(renewalDates.az305);
-  }
-
-  document.getElementById("az104-date").addEventListener("change", function(e){
-    renewalDates.az104 = e.target.value || null;
-    try{ store.set("az104-pass-date", renewalDates.az104 || ""); }catch(err){}
-    renderRenewalStatus();
-  });
-  document.getElementById("az305-date").addEventListener("change", function(e){
-    renewalDates.az305 = e.target.value || null;
-    try{ store.set("az305-pass-date", renewalDates.az305 || ""); }catch(err){}
-    renderRenewalStatus();
+  document.querySelectorAll(".cnv-toggle").forEach(function(toggle){
+    toggle.addEventListener("click", function(e){
+      e.stopPropagation();
+      var pIdx = parseInt(toggle.dataset.toggle, 10);
+      buildCourseNavTree(pIdx);
+      var tree = document.getElementById("cnv-tree-" + pIdx);
+      tree.classList.toggle("open");
+      toggle.classList.toggle("open");
+    });
   });
 
   document.getElementById("start-date").addEventListener("change", function(e){
+    if(startDate){ e.target.value = startDate; return; }
     startDate = e.target.value || null;
     saveStartDate(startDate || "");
+    if(startDate){ e.target.disabled = true; }
     render();
   });
 
   document.getElementById("reset-btn").addEventListener("click", function(){
     if(confirm("Clear all progress? This cannot be undone.")){
       progress = {};
+      startDate = null;
+      saveStartDate("");
+      var sInput = document.getElementById("start-date");
+      sInput.value = "";
+      sInput.disabled = false;
       saveProgress();
       render();
     }
@@ -2751,7 +3766,7 @@
     fcState.idx = 0;
   }
 
-  var DECK_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
+  var DECK_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice", moderncloud:"Phase 5 — Modern Cloud" };
 
   function fcRender(){
     var card = FLASHCARDS[fcState.deck][fcState.order[fcState.idx]];
@@ -2777,17 +3792,18 @@
       closeFlashcardModal();
       if(dmCurrentDay !== null){ closeDayModal(); }
       document.getElementById("quiz-overlay").classList.remove("open");
+      document.getElementById("mi-overlay").classList.remove("open");
+      document.getElementById("tips-overlay").classList.remove("open");
     }
   });
   document.getElementById("fc-open-az900").addEventListener("click", function(){ showDayFlashcard("az900", 0); });
   document.getElementById("fc-open-az104").addEventListener("click", function(){ showDayFlashcard("az104", 0); });
   document.getElementById("fc-open-az305").addEventListener("click", function(){ showDayFlashcard("az305", 0); });
   document.getElementById("fc-open-phase4").addEventListener("click", function(){ showDayFlashcard("phase4", 0); });
+  document.getElementById("fc-open-moderncloud").addEventListener("click", function(){ showDayFlashcard("moderncloud", 0); });
 
   // ===== Quiz =====
-  var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
-
-  var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice" };
+  var QUIZ_NAMES = { az900:"AZ-900 Fundamentals", az104:"AZ-104 Administrator", az305:"AZ-305 Solutions Architect", phase4:"Phase 4 — Real-World Practice", moderncloud:"Phase 5 — Modern Cloud" };
 
   // Exam-style quiz state: one question visible at a time, palette to jump around,
   // answers tracked but not scored until Submit.
@@ -2923,6 +3939,114 @@
   });
   document.getElementById("quiz-overlay").addEventListener("click", function(e){
     if(e.target.id === "quiz-overlay"){ document.getElementById("quiz-overlay").classList.remove("open"); }
+  });
+
+  // ===== Mock Interview (one per course, built from the existing per-day INTERVIEW_QUESTIONS bank) =====
+  var miState = { pIdx:0, days:[], idx:0 };
+
+  function openMockInterview(pIdx){
+    if(guestBlock()) return;
+    var range = PHASE_DAY_RANGES[pIdx];
+    var days = [];
+    for(var d = range[0]; d <= range[1]; d++){
+      if(INTERVIEW_QUESTIONS[d]){ days.push(d); }
+    }
+    miState = { pIdx:pIdx, days:days, idx:0 };
+    document.getElementById("mi-title").textContent = DATA[pIdx].code + " — Mock Interview";
+    miRenderQuestion();
+    document.getElementById("mi-overlay").classList.add("open");
+  }
+
+  function miRenderQuestion(){
+    var day = miState.days[miState.idx];
+    var iq = day ? INTERVIEW_QUESTIONS[day] : null;
+    document.getElementById("mi-q-text").textContent = iq ? iq.q : "No interview questions available for this course yet.";
+    document.getElementById("mi-model-text").textContent = iq ? iq.a : "";
+    document.getElementById("mi-model-wrap").style.display = "none";
+    document.getElementById("mi-reveal").textContent = "Reveal Model Answer";
+    document.getElementById("mi-position").textContent = "Question " + (miState.idx+1) + " of " + miState.days.length;
+    document.getElementById("mi-prev").disabled = (miState.idx <= 0);
+    document.getElementById("mi-next").disabled = (miState.idx >= miState.days.length-1);
+    document.getElementById("mi-answer").value = "";
+    document.getElementById("mi-feedback-wrap").style.display = "none";
+    document.getElementById("mi-feedback-status").textContent = "";
+    document.getElementById("mi-feedback-text").textContent = "";
+  }
+
+  document.getElementById("mi-reveal").addEventListener("click", function(){
+    var wrap = document.getElementById("mi-model-wrap");
+    var btn = document.getElementById("mi-reveal");
+    var showing = wrap.style.display === "block";
+    wrap.style.display = showing ? "none" : "block";
+    btn.textContent = showing ? "Reveal Model Answer" : "Hide Model Answer";
+  });
+
+  // ===== In-browser AI feedback (WebLLM — runs entirely on-device, no server, no API key) =====
+  var webllmEngine = null;
+  var WEBLLM_MODEL = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
+
+  async function ensureWebLLMEngine(onProgress){
+    if(webllmEngine) return webllmEngine;
+    var mod = await import("https://esm.run/@mlc-ai/web-llm");
+    webllmEngine = await mod.CreateMLCEngine(WEBLLM_MODEL, {
+      appConfig: Object.assign({}, mod.prebuiltAppConfig, { useIndexedDBCache: true }),
+      initProgressCallback: function(report){ if(onProgress) onProgress(report.text); }
+    });
+    return webllmEngine;
+  }
+
+  document.getElementById("mi-feedback-btn").addEventListener("click", async function(){
+    var answerBox = document.getElementById("mi-answer");
+    var answer = answerBox.value.trim();
+    var wrap = document.getElementById("mi-feedback-wrap");
+    var statusEl = document.getElementById("mi-feedback-status");
+    var textEl = document.getElementById("mi-feedback-text");
+    wrap.style.display = "block";
+    textEl.textContent = "";
+
+    if(!answer){
+      statusEl.textContent = "Type your answer above first, then ask for feedback.";
+      return;
+    }
+    if(!navigator.gpu){
+      statusEl.textContent = "Your browser doesn't support WebGPU, so in-browser AI feedback isn't available here — try a recent Chrome or Edge on desktop.";
+      return;
+    }
+
+    var btn = this;
+    btn.disabled = true;
+    try{
+      statusEl.textContent = "Loading local AI model (only happens once — a few hundred MB, cached after this)…";
+      var engine = await ensureWebLLMEngine(function(t){ statusEl.textContent = t; });
+      statusEl.textContent = "Thinking…";
+      var day = miState.days[miState.idx];
+      var iq = INTERVIEW_QUESTIONS[day];
+      var reply = await engine.chat.completions.create({
+        max_tokens: 180,
+        messages: [
+          { role:"system", content:"You are a supportive but honest interview coach. In 2-3 short sentences, compare the candidate's answer to the model answer: note what's solid, what's missing or off, and one concrete way to improve. Be direct and specific, plain text, no markdown." },
+          { role:"user", content:"Question: " + iq.q + "\n\nModel answer: " + iq.a + "\n\nCandidate's answer: " + answer }
+        ]
+      });
+      statusEl.textContent = "";
+      textEl.textContent = reply.choices[0].message.content;
+    }catch(err){
+      statusEl.textContent = "Couldn't run the local model (" + (err && err.message ? err.message : "unknown error") + "). Your browser or hardware may not support it — try a recent Chrome or Edge on desktop.";
+    }finally{
+      btn.disabled = false;
+    }
+  });
+  document.getElementById("mi-prev").addEventListener("click", function(){
+    if(miState.idx > 0){ miState.idx--; miRenderQuestion(); }
+  });
+  document.getElementById("mi-next").addEventListener("click", function(){
+    if(miState.idx < miState.days.length-1){ miState.idx++; miRenderQuestion(); }
+  });
+  document.getElementById("mi-close").addEventListener("click", function(){
+    document.getElementById("mi-overlay").classList.remove("open");
+  });
+  document.getElementById("mi-overlay").addEventListener("click", function(e){
+    if(e.target.id === "mi-overlay"){ document.getElementById("mi-overlay").classList.remove("open"); }
   });
 
   function showDayFlashcard(deck, idx){
@@ -3091,7 +4215,7 @@
   document.getElementById("dm-flashcard-btn").addEventListener("click", function(){
     if(dmCurrentDay === null) return;
     var dayCard = DAY_CARD[dmCurrentDay];
-    var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : (dmCurrentDay <= 91 ? "az305" : "phase4"));
+    var fallbackDeck = dmCurrentDay <= 14 ? "az900" : (dmCurrentDay <= 56 ? "az104" : (dmCurrentDay <= 91 ? "az305" : (dmCurrentDay <= 145 ? "phase4" : "moderncloud")));
     if(dayCard){ showDayFlashcard(dayCard.deck, dayCard.idx); }
     else { showDayFlashcard(fallbackDeck, 0); }
   });
@@ -3325,6 +4449,30 @@
   });
   document.getElementById("sp-close").addEventListener("click", spClosePanel);
 
+  var spPinned = false;
+  try{ spPinned = localStorage.getItem("sp-pinned") === "1"; }catch(e){}
+  var spPinCheck = document.getElementById("sp-pin-check");
+  spPinCheck.checked = spPinned;
+  spPinCheck.addEventListener("change", function(){
+    spPinned = spPinCheck.checked;
+    try{ localStorage.setItem("sp-pinned", spPinned ? "1" : "0"); }catch(e){}
+  });
+
+  document.addEventListener("click", function(e){
+    if(spPinned) return;
+    var panel = document.getElementById("side-panel");
+    if(!panel.classList.contains("open")) return;
+    if(panel.contains(e.target)) return;
+    if(e.target.closest && e.target.closest("#sp-toggle")) return;
+    spClosePanel();
+  });
+
+  document.querySelectorAll(".sp-cat-header").forEach(function(header){
+    header.addEventListener("click", function(){
+      header.parentElement.classList.toggle("open");
+    });
+  });
+
   // -- Clock --
   var WEEKDAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -3334,9 +4482,44 @@
     document.getElementById("sp-clock-time").textContent = hh + ":" + mm + ":" + ss;
     document.getElementById("sp-clock-date").textContent =
       WEEKDAY_NAMES[d.getDay()] + ", " + MONTH_NAMES[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+    var fhClock = document.getElementById("fh-clock");
+    var fhDate = document.getElementById("fh-date");
+    if(fhClock){ fhClock.textContent = hh + ":" + mm; }
+    if(fhDate){ fhDate.textContent = MONTH_NAMES[d.getMonth()] + " " + d.getDate(); }
   }
   spTickClock();
   setInterval(spTickClock, 1000);
+
+  // -- Floating compact header: shows once scrolled past the full title block --
+  (function initFloatingHeader(){
+    var header = document.getElementById("floating-header");
+    var titleblock = document.querySelector(".titleblock");
+    var accountBar = document.getElementById("account-bar");
+    var accountBarHome = accountBar.parentNode;
+    var accountBarAnchor = accountBar.nextSibling;
+    var fhRight = header.querySelector(".fh-right");
+    function onScroll(){
+      if(!titleblock) return;
+      var threshold = titleblock.getBoundingClientRect().bottom + window.scrollY;
+      if(window.scrollY > threshold){
+        header.classList.add("show");
+        if(accountBar.parentNode !== fhRight){
+          fhRight.appendChild(accountBar);
+          accountBar.classList.add("docked");
+        }
+      } else {
+        header.classList.remove("show");
+        if(accountBar.parentNode !== accountBarHome){
+          accountBarHome.insertBefore(accountBar, accountBarAnchor);
+          accountBar.classList.remove("docked");
+        }
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    header.addEventListener("click", function(){
+      window.scrollTo({ top:0, behavior:"smooth" });
+    });
+  })();
 
   // -- Study timer (Pomodoro-style countdown) --
   var spTimerSecs = 25*60;
@@ -3594,6 +4777,25 @@
       if(v){ document.getElementById("sp-quicknotes").value = v; }
     }catch(e){}
   }
+  document.getElementById("sp-export-btn").addEventListener("click", function(){
+    if(guestBlock()) return;
+    exportProgressData();
+    document.getElementById("sp-backup-status").textContent = "Export downloaded.";
+    document.getElementById("sp-backup-status").style.color = "var(--ink-dim)";
+  });
+  document.getElementById("sp-import-btn").addEventListener("click", function(){
+    if(guestBlock()) return;
+    document.getElementById("sp-import-file").click();
+  });
+  document.getElementById("sp-import-file").addEventListener("change", function(e){
+    if(e.target.files && e.target.files[0]){
+      if(confirm("Import will overwrite your current progress, notes, and quiz scores with the contents of this file. Continue?")){
+        importProgressData(e.target.files[0]);
+      }
+      e.target.value = "";
+    }
+  });
+
   document.getElementById("sp-quicknotes").addEventListener("input", function(){
     spQuickNotesDirty = true;
     document.getElementById("sp-quicknotes-status").textContent = "Unsaved…";
@@ -3655,8 +4857,8 @@
       activeCourse = computeDefaultActiveCourse();
       switchCourse(activeCourse);
     });
-    loadRenewalDates();
     spLoadQuickNotes();
+    maybeShowTips();
   }
 
   function showAuthError(msg){
@@ -3794,9 +4996,26 @@
     document.getElementById("sp-quicknotes").placeholder = "Sign up to use Quick Notes.";
     activeCourse = 0;
     switchCourse(0);
+    maybeShowTips();
   });
 
   document.getElementById("guest-register-btn").addEventListener("click", goToSignup);
+
+  function maybeShowTips(){
+    var seen = false;
+    try{ seen = localStorage.getItem("tips-seen") === "1"; }catch(e){}
+    if(seen) return;
+    document.getElementById("tips-overlay").classList.add("open");
+  }
+  function dismissTips(){
+    document.getElementById("tips-overlay").classList.remove("open");
+    try{ localStorage.setItem("tips-seen", "1"); }catch(e){}
+  }
+  document.getElementById("tips-got-it").addEventListener("click", dismissTips);
+  document.getElementById("tips-close").addEventListener("click", dismissTips);
+  document.getElementById("tips-overlay").addEventListener("click", function(e){
+    if(e.target.id === "tips-overlay"){ dismissTips(); }
+  });
 
 })();
 </script>
