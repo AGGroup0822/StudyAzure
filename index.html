@@ -6,6 +6,8 @@
 <title>Azure Certification Roadmap — AZ-900 / AZ-104 / AZ-305</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // ====== FILL THESE IN AFTER CREATING YOUR FREE SUPABASE PROJECT ======
+  // See setup instructions — Project Settings → API in your Supabase dashboard.
   window.SUPABASE_URL = "https://kujjjvzrqwwyxvznakks.supabase.co";
   window.SUPABASE_ANON_KEY = "sb_publishable_mbzK0gd6vq99msWCfEZzgQ_DHj9r3tW";
 </script>
@@ -1538,6 +1540,7 @@
     font-size:13px;color:var(--ink-muted);line-height:1.6;
     background:var(--panel-2);border-left:2px solid var(--teal);
     border-radius:6px;padding:12px;
+    max-height:220px;overflow-y:auto;
   }
   .mi-ai-badge{
     display:block;text-transform:none;letter-spacing:0;font-weight:400;
@@ -1550,6 +1553,7 @@
     background:color-mix(in srgb, var(--accent-2) 8%, var(--panel-2));
     border-left:2px solid var(--accent-2);
     border-radius:6px;padding:12px;white-space:pre-wrap;
+    max-height:220px;overflow-y:auto;
   }
   .mi-feedback-text:empty{display:none;}
 </style>
@@ -3982,17 +3986,40 @@
   });
 
   // ===== In-browser AI feedback (WebLLM — runs entirely on-device, no server, no API key) =====
-  var webllmEngine = null;
   var WEBLLM_MODEL = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
+  var webllmEnginePromise = null;
+  var webllmProgressHandler = null;
 
-  async function ensureWebLLMEngine(onProgress){
-    if(webllmEngine) return webllmEngine;
-    var mod = await import("https://esm.run/@mlc-ai/web-llm");
-    webllmEngine = await mod.CreateMLCEngine(WEBLLM_MODEL, {
-      appConfig: Object.assign({}, mod.prebuiltAppConfig, { useIndexedDBCache: true }),
-      initProgressCallback: function(report){ if(onProgress) onProgress(report.text); }
-    });
-    return webllmEngine;
+  // Returns a shared promise so a background preload (e.g. kicked off at login) and a
+  // later on-demand call (e.g. clicking "Get AI Feedback") both await the same single
+  // download/load instead of racing two concurrent engine instances. Whoever calls last
+  // "wins" the live progress callback, so the visible modal always gets real-time status
+  // even if a silent preload started the download earlier.
+  function ensureWebLLMEngine(onProgress){
+    webllmProgressHandler = onProgress || null;
+    if(!webllmEnginePromise){
+      webllmEnginePromise = (async function(){
+        var mod = await import("https://esm.run/@mlc-ai/web-llm");
+        return mod.CreateMLCEngine(WEBLLM_MODEL, {
+          appConfig: Object.assign({}, mod.prebuiltAppConfig, { useIndexedDBCache: true }),
+          initProgressCallback: function(report){ if(webllmProgressHandler) webllmProgressHandler(report.text); }
+        });
+      })().catch(function(err){
+        webllmEnginePromise = null; // let the next call retry from scratch
+        throw err;
+      });
+    }
+    return webllmEnginePromise;
+  }
+
+  // Silently start loading the model right after login, so it's likely already
+  // ready by the time the user opens a Mock Interview. Skipped entirely if the
+  // browser has no WebGPU (nothing to gain from downloading it), and failures
+  // are swallowed here — the on-demand call in the modal will retry and surface
+  // a real error to the user if it still doesn't work then.
+  function preloadWebLLM(){
+    if(!navigator.gpu) return;
+    ensureWebLLMEngine().catch(function(){});
   }
 
   document.getElementById("mi-feedback-btn").addEventListener("click", async function(){
