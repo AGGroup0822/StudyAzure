@@ -4058,7 +4058,10 @@
       statusEl.textContent = "";
       textEl.textContent = reply.choices[0].message.content;
     }catch(err){
-      statusEl.textContent = "Couldn't run the local model (" + (err && err.message ? err.message : "unknown error") + "). Your browser or hardware may not support it — try a recent Chrome or Edge on desktop.";
+      // Whatever failed — load or inference — drop the cached engine so the next
+      // click reloads fresh instead of retrying against a broken instance.
+      webllmEnginePromise = null;
+      statusEl.textContent = "Couldn't run the local model (" + (err && err.message ? err.message : "unknown error") + "). Try clicking \"Get AI Feedback\" again — it'll reload the model from scratch.";
     }finally{
       btn.disabled = false;
     }
